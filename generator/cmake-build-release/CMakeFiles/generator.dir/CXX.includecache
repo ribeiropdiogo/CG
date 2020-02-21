@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/ribeiro/Projetos/CG/generator/box.cpp
+iostream
+-
+box.h
+/Users/ribeiro/Projetos/CG/generator/box.h
+
+/Users/ribeiro/Projetos/CG/generator/box.h
+
+/Users/ribeiro/Projetos/CG/generator/main.cpp
+iostream
+-
+plane.h
+/Users/ribeiro/Projetos/CG/generator/plane.h
+box.h
+/Users/ribeiro/Projetos/CG/generator/box.h
+
+/Users/ribeiro/Projetos/CG/generator/plane.h
+
