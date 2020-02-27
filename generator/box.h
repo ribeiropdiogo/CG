@@ -8,7 +8,7 @@
 
 class box {
 public:
-    void generateModel();
+    void generateModel(int,int,int,char *);
 };
 
 

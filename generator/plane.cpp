@@ -12,6 +12,7 @@ void plane::generateModel(int size, char *file) {
 
     std::ofstream outfile(file);
 
+    //Sendo que o plano é constituído por 2 triângulos, vamos ter sempre no total 6 vértices.
     outfile << "6" << std::endl;
 
     //Triangle A

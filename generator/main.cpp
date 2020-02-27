@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
 
     if (figure == "plane"){
         plane p;
+
         //plane -> size & file
         int size = atoi(argv[2]);
         char *file = argv[3];
@@ -21,10 +22,15 @@ int main(int argc, char *argv[]) {
 
     } else if (figure == "box"){
         box b;
+
         //box -> X,Y,Z dimensions & file
+        int X = atoi(argv[2]);
+        int Y = atoi(argv[3]);
+        int Z = atoi(argv[4]);
+        char *file = argv[5];
 
         if (argc == 6)
-            b.generateModel();
+            b.generateModel(X,Y,Z,file);
         else
             cout<<"Wrong number of arguments!"<<endl;
     } else if (figure == "sphere"){
