@@ -4,11 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/ribeiro/Projetos/CG/generator/box.cpp" "/Users/ribeiro/Projetos/CG/generator/cmake-build-release/CMakeFiles/generator.dir/box.cpp.o"
-  "/Users/ribeiro/Projetos/CG/generator/main.cpp" "/Users/ribeiro/Projetos/CG/generator/cmake-build-release/CMakeFiles/generator.dir/main.cpp.o"
-  "/Users/ribeiro/Projetos/CG/generator/plane.cpp" "/Users/ribeiro/Projetos/CG/generator/cmake-build-release/CMakeFiles/generator.dir/plane.cpp.o"
+  "/home/angelo/CLionProjects/CG/generator/box.cpp" "/home/angelo/CLionProjects/CG/generator/cmake-build-release/CMakeFiles/generator.dir/box.cpp.o"
+  "/home/angelo/CLionProjects/CG/generator/cone.cpp" "/home/angelo/CLionProjects/CG/generator/cmake-build-release/CMakeFiles/generator.dir/cone.cpp.o"
+  "/home/angelo/CLionProjects/CG/generator/main.cpp" "/home/angelo/CLionProjects/CG/generator/cmake-build-release/CMakeFiles/generator.dir/main.cpp.o"
+  "/home/angelo/CLionProjects/CG/generator/plane.cpp" "/home/angelo/CLionProjects/CG/generator/cmake-build-release/CMakeFiles/generator.dir/plane.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "AppleClang")
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH

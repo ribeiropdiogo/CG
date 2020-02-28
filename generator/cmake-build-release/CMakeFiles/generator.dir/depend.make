@@ -4,7 +4,11 @@
 CMakeFiles/generator.dir/box.cpp.o: ../box.cpp
 CMakeFiles/generator.dir/box.cpp.o: ../box.h
 
+CMakeFiles/generator.dir/cone.cpp.o: ../cone.cpp
+CMakeFiles/generator.dir/cone.cpp.o: ../cone.h
+
 CMakeFiles/generator.dir/main.cpp.o: ../box.h
+CMakeFiles/generator.dir/main.cpp.o: ../cone.h
 CMakeFiles/generator.dir/main.cpp.o: ../main.cpp
 CMakeFiles/generator.dir/main.cpp.o: ../plane.h
 

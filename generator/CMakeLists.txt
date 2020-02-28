@@ -3,4 +3,4 @@ project(generator)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(generator main.cpp plane.cpp plane.h box.cpp box.h)
+add_executable(generator main.cpp plane.cpp plane.h box.cpp box.h cone.h cone.cpp)

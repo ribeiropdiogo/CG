@@ -6,13 +6,45 @@
 
 #IncludeRegexTransform: 
 
-/Users/ribeiro/Projetos/CG/generator/box.cpp
+/home/angelo/CLionProjects/CG/generator/box.cpp
 iostream
 -
 fstream
 -
 box.h
-/Users/ribeiro/Projetos/CG/generator/box.h
+/home/angelo/CLionProjects/CG/generator/box.h
 
-/Users/ribeiro/Projetos/CG/generator/box.h
+/home/angelo/CLionProjects/CG/generator/box.h
+
+/home/angelo/CLionProjects/CG/generator/cone.cpp
+iostream
+-
+fstream
+-
+math.h
+-
+cone.h
+/home/angelo/CLionProjects/CG/generator/cone.h
+
+/home/angelo/CLionProjects/CG/generator/cone.h
+
+/home/angelo/CLionProjects/CG/generator/main.cpp
+iostream
+-
+plane.h
+/home/angelo/CLionProjects/CG/generator/plane.h
+box.h
+/home/angelo/CLionProjects/CG/generator/box.h
+cone.h
+/home/angelo/CLionProjects/CG/generator/cone.h
+
+/home/angelo/CLionProjects/CG/generator/plane.cpp
+iostream
+-
+fstream
+-
+plane.h
+/home/angelo/CLionProjects/CG/generator/plane.h
+
+/home/angelo/CLionProjects/CG/generator/plane.h
 

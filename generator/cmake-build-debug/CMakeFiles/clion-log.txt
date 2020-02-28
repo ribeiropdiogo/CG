@@ -1,4 +1,4 @@
-"/Users/ribeiro/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/193.6015.37/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/ribeiro/Projetos/CG/generator
+/home/angelo/Downloads/CLion-2019.3.4/clion-2019.3.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/angelo/CLionProjects/CG/generator
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/ribeiro/Projetos/CG/generator/cmake-build-debug
+-- Build files have been written to: /home/angelo/CLionProjects/CG/generator/cmake-build-debug

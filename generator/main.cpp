@@ -1,6 +1,7 @@
 #include <iostream>
 #include "plane.h"
 #include "box.h"
+#include "cone.h"
 
 using namespace std;
 
@@ -35,8 +36,22 @@ int main(int argc, char *argv[]) {
             cout<<"Wrong number of arguments!"<<endl;
     } else if (figure == "sphere"){
         cout<<"You want a sphere!"<<endl;
+
     } else if (figure == "cone"){
         cout<<"You want a cone!"<<endl;
+
+        cone c;
+        float radius = atof(argv[2]);
+        float height = atof(argv[3]);
+        int slices = atoi(argv[4]);
+        int stacks = atoi(argv[5]);
+        char* file = argv[6];
+
+        if(argc == 7){
+            c.generateModel(radius,height,slices,stacks,file);
+        }else{
+            cout << "Wrong number of arguments!" << endl;
+        }
     } else {
         cout<<"Invalid figure!"<<endl;
     }
