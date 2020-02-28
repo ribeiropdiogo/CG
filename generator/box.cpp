@@ -31,27 +31,27 @@ void box::generateModel(int x, int y, int z, char *file) {
 
     //Face Inferior
     outfile << halfx << ", " << nhalfy << ", " << nhalfx  << std::endl;
-    outfile << nhalfx << ", " << nhalfy << ", " << nhalfx  << std::endl;
     outfile << halfx << ", " << nhalfy << ", " << halfx  << std::endl;
+    outfile << nhalfx << ", " << nhalfy << ", " << nhalfx  << std::endl;
 
     outfile << nhalfx << ", " << nhalfy << ", " << nhalfx  << std::endl;
-    outfile << nhalfx << ", " << nhalfy << ", " << halfx  << std::endl;
     outfile << halfx << ", " << nhalfy << ", " << halfx  << std::endl;
+    outfile << nhalfx << ", " << nhalfy << ", " << halfx  << std::endl;
 
     //Faces Laterais
     //Face 1
     outfile << halfx << ", " << nhalfy << ", " << halfz  << std::endl;
+    outfile << halfx << ", " << halfy << ", " << halfz  << std::endl;
     outfile << nhalfx << ", " << halfy << ", " << halfz  << std::endl;
-    outfile << halfx << ", " << nhalfy << ", " << halfz  << std::endl;
 
     outfile << nhalfx << ", " << nhalfy << ", " << halfz  << std::endl;
-    outfile << nhalfx << ", " << halfy << ", " << halfz  << std::endl;
     outfile << halfx << ", " << nhalfy << ", " << halfz  << std::endl;
+    outfile << nhalfx << ", " << halfy << ", " << halfz  << std::endl;
 
     //Face 2
     outfile << halfx << ", " << nhalfy << ", " << nhalfz  << std::endl;
-    outfile << halfx << ", " << nhalfy << ", " << nhalfz  << std::endl;
     outfile << nhalfx << ", " << halfy << ", " << nhalfz  << std::endl;
+    outfile << halfx << ", " << halfy << ", " << nhalfz  << std::endl;
 
     outfile << nhalfx << ", " << halfy << ", " << nhalfz  << std::endl;
     outfile << halfx << ", " << nhalfy << ", " << nhalfz  << std::endl;
@@ -59,21 +59,21 @@ void box::generateModel(int x, int y, int z, char *file) {
 
     //Face 3
     outfile << halfx << ", " << halfy << ", " << halfz  << std::endl;
-    outfile << halfx << ", " << halfy << ", " << nhalfz  << std::endl;
     outfile << halfx << ", " << nhalfy << ", " << halfz  << std::endl;
+    outfile << halfx << ", " << halfy << ", " << nhalfz  << std::endl;
 
     outfile << halfx << ", " << halfy << ", " << nhalfz  << std::endl;
-    outfile << halfx << ", " << nhalfy << ", " << nhalfz  << std::endl;
     outfile << halfx << ", " << nhalfy << ", " << halfz  << std::endl;
+    outfile << halfx << ", " << nhalfy << ", " << nhalfz  << std::endl;
 
     //Face 4
     outfile << nhalfx << ", " << halfy << ", " << halfz  << std::endl;
-    outfile << nhalfx << ", " << nhalfy << ", " << halfz  << std::endl;
     outfile << nhalfx << ", " << halfy << ", " << nhalfz  << std::endl;
+    outfile << nhalfx << ", " << nhalfy << ", " << halfz  << std::endl;
 
     outfile << nhalfx << ", " << halfy << ", " << nhalfz  << std::endl;
-    outfile << nhalfx << ", " << nhalfy << ", " << halfz  << std::endl;
     outfile << nhalfx << ", " << nhalfy << ", " << nhalfz  << std::endl;
+    outfile << nhalfx << ", " << nhalfy << ", " << halfz  << std::endl;
 
 
     outfile.close();
