@@ -1,3 +1,3 @@
-/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles/TP.dir
-/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles/TP.dir
+/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles/edit_cache.dir

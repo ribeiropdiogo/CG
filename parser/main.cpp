@@ -65,6 +65,9 @@ void renderScene(void) {
 // put the geometric transformations here
 
 // put drawing instructions here
+
+/* São percorridos todos os objetos presentes no vector para
+que estes sejam desenhados*/
 for (Object3d obj : objs)
     obj.drawObject();
     // End of frame
@@ -72,7 +75,7 @@ for (Object3d obj : objs)
 }
 
 int main(int argc, char **argv) {
-    TiXmlDocument doc("../teste.xml");
+    TiXmlDocument doc(argv[1]);
     if (!doc.LoadFile()) return 1;
     TiXmlHandle hDoc (&doc);
     TiXmlElement* pElem;
@@ -87,7 +90,12 @@ int main(int argc, char **argv) {
         pElem=hRoot.FirstChildElement().Element();
         for (pElem;pElem;pElem=pElem->NextSiblingElement())
         {
+            /* É utilizado tinyXML para ir buscar o atributo file 
+            ao model para desta forma saber qual o ficheiro que contem
+            os vertices necessarios para montar o modelo */
             obj.loadObject((char *) pElem->Attribute("file"));
+            /* Depois do objeto ser carregado é colocado num vector nativo de C++
+            onde será guardado para ser desenhado posteriormente */
             objs.push_back(obj);
         }
 

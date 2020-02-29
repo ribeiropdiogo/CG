@@ -4,11 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/ruimendes/3ano/CG/TP/main.cpp" "/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles/TP.dir/main.cpp.o"
-  "/home/ruimendes/3ano/CG/TP/tinystr.cpp" "/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles/TP.dir/tinystr.cpp.o"
-  "/home/ruimendes/3ano/CG/TP/tinyxml.cpp" "/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles/TP.dir/tinyxml.cpp.o"
-  "/home/ruimendes/3ano/CG/TP/tinyxmlerror.cpp" "/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles/TP.dir/tinyxmlerror.cpp.o"
-  "/home/ruimendes/3ano/CG/TP/tinyxmlparser.cpp" "/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles/TP.dir/tinyxmlparser.cpp.o"
+  "/home/ruimendes/3ano/CG/tp/parser/main.cpp" "/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles/TP.dir/main.cpp.o"
+  "/home/ruimendes/3ano/CG/tp/parser/tinystr.cpp" "/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles/TP.dir/tinystr.cpp.o"
+  "/home/ruimendes/3ano/CG/tp/parser/tinyxml.cpp" "/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles/TP.dir/tinyxml.cpp.o"
+  "/home/ruimendes/3ano/CG/tp/parser/tinyxmlerror.cpp" "/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles/TP.dir/tinyxmlerror.cpp.o"
+  "/home/ruimendes/3ano/CG/tp/parser/tinyxmlparser.cpp" "/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles/TP.dir/tinyxmlparser.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -43,10 +43,10 @@ RM = /opt/clion/bin/cmake/linux/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ruimendes/3ano/CG/TP
+CMAKE_SOURCE_DIR = /home/ruimendes/3ano/CG/tp/parser
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ruimendes/3ano/CG/TP/cmake-build-debug
+CMAKE_BINARY_DIR = /home/ruimendes/3ano/CG/tp/parser/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/TP.dir/depend.make
@@ -59,68 +59,68 @@ include CMakeFiles/TP.dir/flags.make
 
 CMakeFiles/TP.dir/main.cpp.o: CMakeFiles/TP.dir/flags.make
 CMakeFiles/TP.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/TP.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP.dir/main.cpp.o -c /home/ruimendes/3ano/CG/TP/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/TP.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP.dir/main.cpp.o -c /home/ruimendes/3ano/CG/tp/parser/main.cpp
 
 CMakeFiles/TP.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TP.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ruimendes/3ano/CG/TP/main.cpp > CMakeFiles/TP.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ruimendes/3ano/CG/tp/parser/main.cpp > CMakeFiles/TP.dir/main.cpp.i
 
 CMakeFiles/TP.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TP.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ruimendes/3ano/CG/TP/main.cpp -o CMakeFiles/TP.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ruimendes/3ano/CG/tp/parser/main.cpp -o CMakeFiles/TP.dir/main.cpp.s
 
 CMakeFiles/TP.dir/tinystr.cpp.o: CMakeFiles/TP.dir/flags.make
 CMakeFiles/TP.dir/tinystr.cpp.o: ../tinystr.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/TP.dir/tinystr.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP.dir/tinystr.cpp.o -c /home/ruimendes/3ano/CG/TP/tinystr.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/TP.dir/tinystr.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP.dir/tinystr.cpp.o -c /home/ruimendes/3ano/CG/tp/parser/tinystr.cpp
 
 CMakeFiles/TP.dir/tinystr.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TP.dir/tinystr.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ruimendes/3ano/CG/TP/tinystr.cpp > CMakeFiles/TP.dir/tinystr.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ruimendes/3ano/CG/tp/parser/tinystr.cpp > CMakeFiles/TP.dir/tinystr.cpp.i
 
 CMakeFiles/TP.dir/tinystr.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TP.dir/tinystr.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ruimendes/3ano/CG/TP/tinystr.cpp -o CMakeFiles/TP.dir/tinystr.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ruimendes/3ano/CG/tp/parser/tinystr.cpp -o CMakeFiles/TP.dir/tinystr.cpp.s
 
 CMakeFiles/TP.dir/tinyxml.cpp.o: CMakeFiles/TP.dir/flags.make
 CMakeFiles/TP.dir/tinyxml.cpp.o: ../tinyxml.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/TP.dir/tinyxml.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP.dir/tinyxml.cpp.o -c /home/ruimendes/3ano/CG/TP/tinyxml.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/TP.dir/tinyxml.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP.dir/tinyxml.cpp.o -c /home/ruimendes/3ano/CG/tp/parser/tinyxml.cpp
 
 CMakeFiles/TP.dir/tinyxml.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TP.dir/tinyxml.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ruimendes/3ano/CG/TP/tinyxml.cpp > CMakeFiles/TP.dir/tinyxml.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ruimendes/3ano/CG/tp/parser/tinyxml.cpp > CMakeFiles/TP.dir/tinyxml.cpp.i
 
 CMakeFiles/TP.dir/tinyxml.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TP.dir/tinyxml.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ruimendes/3ano/CG/TP/tinyxml.cpp -o CMakeFiles/TP.dir/tinyxml.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ruimendes/3ano/CG/tp/parser/tinyxml.cpp -o CMakeFiles/TP.dir/tinyxml.cpp.s
 
 CMakeFiles/TP.dir/tinyxmlerror.cpp.o: CMakeFiles/TP.dir/flags.make
 CMakeFiles/TP.dir/tinyxmlerror.cpp.o: ../tinyxmlerror.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/TP.dir/tinyxmlerror.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP.dir/tinyxmlerror.cpp.o -c /home/ruimendes/3ano/CG/TP/tinyxmlerror.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/TP.dir/tinyxmlerror.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP.dir/tinyxmlerror.cpp.o -c /home/ruimendes/3ano/CG/tp/parser/tinyxmlerror.cpp
 
 CMakeFiles/TP.dir/tinyxmlerror.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TP.dir/tinyxmlerror.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ruimendes/3ano/CG/TP/tinyxmlerror.cpp > CMakeFiles/TP.dir/tinyxmlerror.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ruimendes/3ano/CG/tp/parser/tinyxmlerror.cpp > CMakeFiles/TP.dir/tinyxmlerror.cpp.i
 
 CMakeFiles/TP.dir/tinyxmlerror.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TP.dir/tinyxmlerror.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ruimendes/3ano/CG/TP/tinyxmlerror.cpp -o CMakeFiles/TP.dir/tinyxmlerror.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ruimendes/3ano/CG/tp/parser/tinyxmlerror.cpp -o CMakeFiles/TP.dir/tinyxmlerror.cpp.s
 
 CMakeFiles/TP.dir/tinyxmlparser.cpp.o: CMakeFiles/TP.dir/flags.make
 CMakeFiles/TP.dir/tinyxmlparser.cpp.o: ../tinyxmlparser.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/TP.dir/tinyxmlparser.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP.dir/tinyxmlparser.cpp.o -c /home/ruimendes/3ano/CG/TP/tinyxmlparser.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/TP.dir/tinyxmlparser.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TP.dir/tinyxmlparser.cpp.o -c /home/ruimendes/3ano/CG/tp/parser/tinyxmlparser.cpp
 
 CMakeFiles/TP.dir/tinyxmlparser.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TP.dir/tinyxmlparser.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ruimendes/3ano/CG/TP/tinyxmlparser.cpp > CMakeFiles/TP.dir/tinyxmlparser.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ruimendes/3ano/CG/tp/parser/tinyxmlparser.cpp > CMakeFiles/TP.dir/tinyxmlparser.cpp.i
 
 CMakeFiles/TP.dir/tinyxmlparser.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TP.dir/tinyxmlparser.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ruimendes/3ano/CG/TP/tinyxmlparser.cpp -o CMakeFiles/TP.dir/tinyxmlparser.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ruimendes/3ano/CG/tp/parser/tinyxmlparser.cpp -o CMakeFiles/TP.dir/tinyxmlparser.cpp.s
 
 # Object files for target TP
 TP_OBJECTS = \
@@ -145,7 +145,7 @@ TP: /usr/lib/x86_64-linux-gnu/libglut.so
 TP: /usr/lib/x86_64-linux-gnu/libXmu.so
 TP: /usr/lib/x86_64-linux-gnu/libXi.so
 TP: CMakeFiles/TP.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable TP"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable TP"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TP.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -158,6 +158,6 @@ CMakeFiles/TP.dir/clean:
 .PHONY : CMakeFiles/TP.dir/clean
 
 CMakeFiles/TP.dir/depend:
-	cd /home/ruimendes/3ano/CG/TP/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ruimendes/3ano/CG/TP /home/ruimendes/3ano/CG/TP /home/ruimendes/3ano/CG/TP/cmake-build-debug /home/ruimendes/3ano/CG/TP/cmake-build-debug /home/ruimendes/3ano/CG/TP/cmake-build-debug/CMakeFiles/TP.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ruimendes/3ano/CG/tp/parser/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ruimendes/3ano/CG/tp/parser /home/ruimendes/3ano/CG/tp/parser /home/ruimendes/3ano/CG/tp/parser/cmake-build-debug /home/ruimendes/3ano/CG/tp/parser/cmake-build-debug /home/ruimendes/3ano/CG/tp/parser/cmake-build-debug/CMakeFiles/TP.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/TP.dir/depend
 
