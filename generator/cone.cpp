@@ -25,9 +25,9 @@ void cone::generateModel(float radius, float height, int slices, int stacks, cha
 
     // base
     for(int i = 0; i < slices; i++){
-        outfile << 0 << ", " << 0 << ", " << 0 << std::endl;
-        outfile << radius * sin(oneSlice * (i + 1)) << ", " << 0 << ", " << (radius * cos(oneSlice * (i + 1))) << std::endl;
-        outfile << radius * sin(oneSlice * i) << ", " << 0 << ", " << radius * cos(oneSlice * i)  << std::endl;
+        outfile << 0 << " " << 0 << " " << 0 << std::endl;
+        outfile << radius * sin(oneSlice * (i + 1)) << " " << 0 << " " << (radius * cos(oneSlice * (i + 1))) << std::endl;
+        outfile << radius * sin(oneSlice * i) << " " << 0 << " " << radius * cos(oneSlice * i)  << std::endl;
     }
 
 
@@ -40,14 +40,14 @@ void cone::generateModel(float radius, float height, int slices, int stacks, cha
             double currentHeight = oneStack * i;
 
             //primeiro triangulo
-            outfile << currentRadius * sin(oneSlice * j) << ", " << currentHeight << ", " << currentRadius * cos(oneSlice * j) << std::endl;
-            outfile << currentRadius * sin(oneSlice * (j + 1)) << ", " << currentHeight << ", " << currentRadius * cos(oneSlice * (j + 1)) << std::endl;
-            outfile << smallRadius * sin(oneSlice * j) << ", " << currentHeight + oneStack << ", " << smallRadius * cos(oneSlice * j)  << std::endl;
+            outfile << currentRadius * sin(oneSlice * j) << " " << currentHeight << " " << currentRadius * cos(oneSlice * j) << std::endl;
+            outfile << currentRadius * sin(oneSlice * (j + 1)) << " " << currentHeight << " " << currentRadius * cos(oneSlice * (j + 1)) << std::endl;
+            outfile << smallRadius * sin(oneSlice * j) << " " << currentHeight + oneStack << " " << smallRadius * cos(oneSlice * j)  << std::endl;
 
             //segundo triangulo
-            outfile << currentRadius * sin(oneSlice * (j + 1)) << ", " << currentHeight << ", " << currentRadius * cos(oneSlice * (j + 1)) << std::endl;
-            outfile << smallRadius * sin(oneSlice * (j + 1)) << ", " << currentHeight + oneStack << ", " << smallRadius * cos(oneSlice * (j + 1)) << std::endl;
-            outfile << smallRadius * sin(oneSlice * (j)) << ", " << currentHeight + oneStack << ", " << smallRadius * cos(oneSlice * (j))  << std::endl;
+            outfile << currentRadius * sin(oneSlice * (j + 1)) << " " << currentHeight << " " << currentRadius * cos(oneSlice * (j + 1)) << std::endl;
+            outfile << smallRadius * sin(oneSlice * (j + 1)) << " " << currentHeight + oneStack << " " << smallRadius * cos(oneSlice * (j + 1)) << std::endl;
+            outfile << smallRadius * sin(oneSlice * (j)) << " " << currentHeight + oneStack << " " << smallRadius * cos(oneSlice * (j))  << std::endl;
         }
         currentRadius = smallRadius;
     }
