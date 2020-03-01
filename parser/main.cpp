@@ -7,6 +7,7 @@
 #include <vector>
 
 std::vector<Object3d> objs;
+char mode;
 
 void changeSize(int w, int h) {
 
@@ -69,13 +70,14 @@ void renderScene(void) {
 /* São percorridos todos os objetos presentes no vector para
 que estes sejam desenhados*/
 for (Object3d obj : objs)
-    obj.drawObject();
+    obj.drawObject(mode);
     // End of frame
     glutSwapBuffers();
 }
 
 int main(int argc, char **argv) {
-    TiXmlDocument doc(argv[1]);
+    TiXmlDocument doc(argv[2]);
+    mode = argv[1][0];
     if (!doc.LoadFile()) return 1;
     TiXmlHandle hDoc (&doc);
     TiXmlElement* pElem;

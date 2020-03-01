@@ -34,25 +34,11 @@ GL/glut.h
 vector
 -
 
-/home/ruimendes/3ano/CG/tp/parser/tinystr.cpp
-tinystr.h
-/home/ruimendes/3ano/CG/tp/parser/tinystr.h
-
 /home/ruimendes/3ano/CG/tp/parser/tinystr.h
 assert.h
 -
 string.h
 -
-
-/home/ruimendes/3ano/CG/tp/parser/tinyxml.cpp
-ctype.h
--
-sstream
--
-iostream
--
-tinyxml.h
-/home/ruimendes/3ano/CG/tp/parser/tinyxml.h
 
 /home/ruimendes/3ano/CG/tp/parser/tinyxml.h
 ctype.h
@@ -73,18 +59,4 @@ sstream
 -
 tinystr.h
 /home/ruimendes/3ano/CG/tp/parser/tinystr.h
-
-/home/ruimendes/3ano/CG/tp/parser/tinyxmlerror.cpp
-tinyxml.h
-/home/ruimendes/3ano/CG/tp/parser/tinyxml.h
-
-/home/ruimendes/3ano/CG/tp/parser/tinyxmlparser.cpp
-ctype.h
--
-stddef.h
--
-tinyxml.h
-/home/ruimendes/3ano/CG/tp/parser/tinyxml.h
-windows.h
--
 

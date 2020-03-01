@@ -44,8 +44,11 @@ public:
     }
 
     // Função que desenha o objeto baseado nos vértices presentes no array pontos
-    void drawObject() {
-        glPolygonMode(GL_FRONT,GL_FILL);
+    void drawObject(char mode) {
+        if (mode=='f')
+            glPolygonMode(GL_FRONT,GL_FILL);
+        else if (mode=='l')
+            glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
         glBegin(GL_TRIANGLES);
         for (int i=0;i<numVertices*3;i+=3)
             glVertex3f(pontos[i],pontos[i+1],pontos[i+2]);
