@@ -1,8 +1,8 @@
 #include <iostream>
-#include "tinyxml.h"
-#include "Object3d.h"
-#include "tinystr.h"
-#include "tinyxml.h"
+#include "includes/tinyxml.h"
+#include "includes/Object3d.h"
+#include "includes/tinystr.h"
+#include "includes/tinyxml.h"
 #include <GL/glut.h>
 #include <vector>
 

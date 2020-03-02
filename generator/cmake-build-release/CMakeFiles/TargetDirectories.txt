@@ -1,3 +1,0 @@
-/home/angelo/CLionProjects/CG/generator/cmake-build-release/CMakeFiles/rebuild_cache.dir
-/home/angelo/CLionProjects/CG/generator/cmake-build-release/CMakeFiles/generator.dir
-/home/angelo/CLionProjects/CG/generator/cmake-build-release/CMakeFiles/edit_cache.dir

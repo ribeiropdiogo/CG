@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <math.h>
-#include "cone.h"
+#include "includes/cone.h"
 
 using namespace std;
 

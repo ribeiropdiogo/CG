@@ -1,15 +1,16 @@
 cmake_minimum_required(VERSION 3.5)
 
 # Project Name
-PROJECT(TP)
+PROJECT(parser)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})
+include_directories(includes)
 link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
-add_executable(${PROJECT_NAME} main.cpp Object3d.h tinystr.cpp tinystr.h tinyxml.cpp tinyxml.h tinyxmlerror.cpp tinyxmlparser.cpp)
+add_executable(${PROJECT_NAME} main.cpp includes/Object3d.h tinystr.cpp includes/tinystr.h tinyxml.cpp includes/tinyxml.h tinyxmlerror.cpp tinyxmlparser.cpp)
 
 if(NOT OPENGL_FOUND)
     message(ERROR " OPENGL not found!")

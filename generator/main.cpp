@@ -1,7 +1,7 @@
 #include <iostream>
-#include "plane.h"
-#include "box.h"
-#include "cone.h"
+#include "includes/plane.h"
+#include "includes/box.h"
+#include "includes/cone.h"
 
 using namespace std;
 

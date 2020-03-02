@@ -1,10 +1,5 @@
-//
-
-//
-
 #ifndef GENERATOR_PLANE_H
 #define GENERATOR_PLANE_H
-
 
 class plane {
 public:

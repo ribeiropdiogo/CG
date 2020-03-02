@@ -1,1 +1,9 @@
 .DS_Store
+/generator/cmake-build-debug/
+/generator/cmake-build-release/
+/parser/cmake-build-debug/
+/generator/CMakeFiles/
+/parser/CMakeFiles/
+/generator/bin/
+/parser/bin/
+/cmake-build-debug/
