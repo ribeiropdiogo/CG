@@ -26,7 +26,9 @@ public:
     void loadObject(char * filePath)
     {
         char * string = strdup(filePath);
-        char * useThis = strcat(strdup("../"),string);
+        char * workdir = strdup("../../samples/3D/");
+        workdir = (char*) realloc(workdir, strlen(workdir) + strlen(string) + 1);
+        char * useThis = strcat(workdir,string);
         ifstream inFile(useThis);
         inFile >> numVertices;
         /* alocado estado para um array de floats grande o suficiente para gerir todos os vertices do objeto */

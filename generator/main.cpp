@@ -1,7 +1,7 @@
 #include <iostream>
-#include "includes/plane.h"
-#include "includes/box.h"
-#include "includes/cone.h"
+#include "Plane.h"
+#include "Box.h"
+#include "Cone.h"
 
 using namespace std;
 
@@ -37,8 +37,8 @@ int main(int argc, char *argv[]) {
     } else if (figure == "sphere"){
         cout<<"You want a sphere!"<<endl;
 
-    } else if (figure == "cone"){
-        cout<<"You want a cone!"<<endl;
+    } else if (figure == "Cone"){
+        cout<<"You want a Cone!"<<endl;
 
         cone c;
         float radius = atof(argv[2]);

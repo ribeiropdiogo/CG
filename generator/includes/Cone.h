@@ -5,9 +5,11 @@
 #ifndef GENERATOR_CONE_H
 #define GENERATOR_CONE_H
 
-class cone {
+#include "Figure.h"
+
+class Cone : private Figure {
 public:
-    void generateModel(float,float,int,int, char *);
+    Cone(int stacks, int slices);
 };
 
 #endif //GENERATOR_CONE_H

@@ -10,7 +10,7 @@ include_directories(${OpenGL_INCLUDE_DIRS})
 include_directories(includes)
 link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
-add_executable(${PROJECT_NAME} main.cpp plane.cpp includes/plane.h box.cpp includes/box.h includes/cone.h cone.cpp Figure.cpp includes/Figure.h)
+add_executable(${PROJECT_NAME} main.cpp Plane.cpp includes/Plane.h Box.cpp includes/Box.h includes/Cone.h Cone.cpp Figure.cpp includes/Figure.h)
 
 if(NOT OPENGL_FOUND)
     message(ERROR " OPENGL not found!")

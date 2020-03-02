@@ -4,13 +4,13 @@
 #include <iostream>
 #include <fstream>
 #include <math.h>
-#include "includes/cone.h"
+#include "Cone.h"
 
 using namespace std;
 
 void cone::generateModel(float radius, float height, int slices, int stacks, char *file) {
 
-    cout<<"Generating model for the cone!"<<endl;
+    cout<<"Generating model for the Cone!"<<endl;
 
     int vertices = (3 * slices) + (6 * slices * stacks);
 

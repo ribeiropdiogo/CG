@@ -2,7 +2,7 @@
 // Created by syrayse on 01/03/20.
 //
 
-#include "includes/Figure.h"
+#include "Figure.h"
 
 Figure::Figure(int stacks, int slices) {
     m_stacks = stacks;

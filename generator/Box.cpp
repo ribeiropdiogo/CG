@@ -1,10 +1,17 @@
-#include <iostream>
-#include <fstream>
-#include "includes/box.h"
+#include "Box.h"
 
-using namespace std;
+Box::Box(float wx, float wy, float wz) : Box(wx,wy,wz,1) {}
 
-void box::generateModel(int x, int y, int z, char *file) {
+Box::Box(float wx, float wy, float wz,
+        int divisions) : Figure(divisions, divisions) {
+    float incX = wx / divisions;
+    float incY = wy / divisions;
+    float incZ = wz / divisions;
+
+
+}
+
+/*void Box::generateModel(int x, int y, int z, char *file) {
     cout<<"Generating model for the box!"<<endl;
 
     double halfx = x/2;
@@ -80,4 +87,4 @@ void box::generateModel(int x, int y, int z, char *file) {
 
     cout<<"Done!"<<endl;
 
-}
+}*/

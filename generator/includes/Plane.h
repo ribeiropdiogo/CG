@@ -1,9 +1,11 @@
 #ifndef GENERATOR_PLANE_H
 #define GENERATOR_PLANE_H
 
-class plane {
+#include "Figure.h"
+
+class Plane : private Figure {
 public:
-    void generateModel(int, char *);
+    Plane();
 };
 
 
