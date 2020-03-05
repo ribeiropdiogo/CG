@@ -1,10 +1,10 @@
 #include <iostream>
 #include "includes/tinyxml.h"
-#include "includes/Object3d.h"
 #include "includes/tinystr.h"
-#include "includes/tinyxml.h"
+#include <GL/glew.h>
 #include <GL/glut.h>
 #include <vector>
+#include "includes/Object3d.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -23,6 +23,10 @@ GLfloat alpha = 0.0f;
 GLfloat scale = 1.0f;
 
 GLfloat globeAngle = 0.0f;
+
+int n = 0;
+GLuint * buffers;
+GLuint * indexes;
 
 std::vector<Object3d> objs;
 
@@ -171,17 +175,25 @@ void drawAxes(void)
     glBegin(GL_LINES);
 // X axis in red
     glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(-100.0f, 0.0f, 0.0f);
     glVertex3f( 100.0f, 0.0f, 0.0f);
 // Y Axis in Green
     glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(0.0f, -100.0f, 0.0f);
     glVertex3f(0.0f, 100.0f, 0.0f);
 // Z Axis in Blue
     glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(0.0f, 0.0f, -100.0f);
     glVertex3f(0.0f, 0.0f, 100.0f);
     glEnd();
+}
+
+void renderObject(int i)
+{
+    glBindBuffer(GL_ARRAY_BUFFER,buffers[i]);
+    glVertexPointer(3,GL_FLOAT,0,0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indexes[i]);
+    glDrawElements(GL_TRIANGLES,3,GL_UNSIGNED_INT,NULL);
 }
 
 void renderScene(void) {
@@ -191,23 +203,22 @@ void renderScene(void) {
 
     // set the camera
     glLoadIdentity();
-    gluLookAt(5.0*sin(alpha)*cos(beta), 5.0 * sin(beta), 5.0*cos(alpha)*cos(beta),
+    gluLookAt(5.0, 5.0, 5.0,
               0.0,0.0,0.0,
               0.0f,1.0f,0.0f);
 
-    glPolygonMode(GL_FRONT_AND_BACK, mode);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     drawAxes();
 // put the geometric transformations here
 
 // put drawing instructions here
-    //drawCylinder(1, 1, 20);
+
 /* São percorridos todos os objetos presentes no vector para
 que estes sejam desenhados*/
-for (Object3d obj : objs)
-    obj.drawObject(mode);
-    // End of frame
-    glutSwapBuffers();
+for (int i=0;i<n;i++)
+    renderObject(i);
+glutSwapBuffers();
 }
 
 int main(int argc, char **argv) {
@@ -215,32 +226,24 @@ int main(int argc, char **argv) {
     char * workdir = strdup("../../samples/XML/");
     workdir = (char*) realloc(workdir, strlen(workdir) + strlen(file) + 1);
     char * dir = strcat(workdir, file);
-    TiXmlDocument doc(dir);
-    mode = argv[1][0];
+    TiXmlDocument doc("../../samples/XML/teste.xml");
+    switch(argv[1][0])
+    {
+        case 'l': mode = GL_LINE;
+        break;
+        case 'f': mode = GL_FILL;
+        break;
+    }
     if (!doc.LoadFile()) return 1;
-    TiXmlHandle hDoc (&doc);
-    TiXmlElement* pElem;
+    TiXmlHandle hDoc(&doc);
+    TiXmlElement *pElem;
     TiXmlHandle hRoot(0);
     Object3d obj;
-    pElem=hDoc.FirstChildElement().Element();
+    pElem = hDoc.FirstChildElement().Element();
     if (!pElem) return 1;
-    const char * string = pElem->Value();
-    hRoot=TiXmlHandle(pElem);
-    if (strcmp(string,"scene")==0)
-    {
-        pElem=hRoot.FirstChildElement().Element();
-        for (pElem;pElem;pElem=pElem->NextSiblingElement())
-        {
-            /* É utilizado tinyXML para ir buscar o atributo file 
-            ao model para desta forma saber qual o ficheiro que contem
-            os vertices necessarios para montar o modelo */
-            obj.loadObject((char *) pElem->Attribute("file"));
-            /* Depois do objeto ser carregado é colocado num vector nativo de C++
-            onde será guardado para ser desenhado posteriormente */
-            objs.push_back(obj);
-        }
+    const char *string = pElem->Value();
+    hRoot = TiXmlHandle(pElem);
 
-    }
 // init GLUT and the window
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
@@ -253,14 +256,40 @@ int main(int argc, char **argv) {
     glutReshapeFunc(changeSize);
     glutKeyboardFunc(handle_rotation);
     glutSpecialFunc(handle_keys);
+
+    glewInit();
+
 //  OpenGL settings
-    glEnable(GL_DEPTH_TEST);
+   glEnable(GL_DEPTH_TEST);
+    glEnableClientState(GL_VERTEX_ARRAY);
     glEnable(GL_CULL_FACE);
 
 // Read Objects
+
+    if (strcmp(string, "scene") == 0) {
+        pElem = hRoot.FirstChildElement().Element();
+        for (pElem; pElem; pElem = pElem->NextSiblingElement()) {
+
+            obj.loadObject((char *) pElem->Attribute("file"));
+            n++;
+            objs.push_back(obj);
+        }
+        buffers = (GLuint *) malloc(sizeof(GLuint) * n);
+        indexes = (GLuint *) malloc(sizeof(GLuint) * n);
+        glGenBuffers(n,buffers);
+        glGenBuffers(n,indexes);
+        for (int i=0;i<n;i++) {
+            glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
+            glBufferData(GL_ARRAY_BUFFER, objs.at(i).getPontos()->size() * sizeof(GLfloat),
+                         objs.at(i).getPontos()->data(), GL_STATIC_DRAW);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[i]);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, objs.at(i).getIndices()->size() * sizeof(GLuint),
+                         objs.at(0).getIndices()->data(), GL_STATIC_DRAW);
+        }
+    }
+
 // enter GLUT's main cycle
     glutMainLoop();
+        return 1;
 
-    return 1;
-}
-
+    }
