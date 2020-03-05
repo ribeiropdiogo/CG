@@ -2,6 +2,7 @@
 #include <memory.h>
 #include <vector>
 #include <fstream>
+#include "Sphere.h"
 #include "Plane.h"
 #include "Box.h"
 #include "Cone.h"
@@ -15,8 +16,9 @@ int main(int argc, char *argv[]) {
     char * dir = strcat(workdir, file);
 
 
-    Box plane(2,2,2, 1);
-    plane.dump_new(dir);
+    Sphere plane(1,5,5);
+    plane.dump_old(dir);
+
 
 
     /*

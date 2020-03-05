@@ -208,6 +208,7 @@ for (Object3d obj : objs)
     obj.drawObject(mode);
     // End of frame
     glutSwapBuffers();
+
 }
 
 int main(int argc, char **argv) {
