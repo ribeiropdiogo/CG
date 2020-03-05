@@ -1,31 +1,16 @@
-#include <iostream>
-#include <fstream>
 #include "Plane.h"
 
 using namespace std;
 
-void plane::generateModel(int size, char *file) {
-    cout<<"Generating model for the plane!"<<endl;
+Plane::Plane(float size) : Figure(1,1) {
+    m_size = size;
+    float half_size = size / 2;
 
-    double halfsize = size/2;
-    double nhalfsize = size/2 * -1;
+    Figure::addVertice(-half_size, 0.0, -half_size);
+    Figure::addVertice(half_size, 0.0, -half_size);
+    Figure::addVertice(-half_size, 0.0, half_size);
+    Figure::addVertice(half_size, 0.0, half_size);
 
-    std::ofstream outfile(file);
-
-    //Sendo que o plano é constituído por 2 triângulos, vamos ter sempre no total 6 vértices.
-    outfile << "6" << std::endl;
-
-    //Triangle A
-    outfile << halfsize << ", 0.0" << ", " << nhalfsize  << std::endl;
-    outfile << nhalfsize << ", 0.0" << ", " << nhalfsize  << std::endl;
-    outfile << halfsize << ", 0.0" << ", " << halfsize  << std::endl;
-
-    //Triangle B
-    outfile << nhalfsize << ", 0.0" << ", " << nhalfsize  << std::endl;
-    outfile << nhalfsize << ", 0.0" << ", " << halfsize  << std::endl;
-    outfile << halfsize << ", 0.0" << ", " << halfsize  << std::endl;
-
-    outfile.close();
-
-    cout<<"Done!"<<endl;
+    Figure::addIndex(0,2,3);
+    Figure::addIndex(0,3,1);
 }

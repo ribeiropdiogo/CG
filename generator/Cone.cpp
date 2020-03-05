@@ -8,6 +8,7 @@
 
 using namespace std;
 
+/*
 void cone::generateModel(float radius, float height, int slices, int stacks, char *file) {
 
     cout<<"Generating model for the Cone!"<<endl;
@@ -57,3 +58,4 @@ void cone::generateModel(float radius, float height, int slices, int stacks, cha
 
     cout<<"Done!"<<endl;
 }
+*/

@@ -1,4 +1,7 @@
 #include <iostream>
+#include <memory.h>
+#include <vector>
+#include <fstream>
 #include "Plane.h"
 #include "Box.h"
 #include "Cone.h"
@@ -6,7 +9,17 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
+    char * file = strdup(argv[1]);
+    char * workdir = strdup("../../samples/3D/");
+    workdir = (char*) realloc(workdir, strlen(workdir) + strlen(file) + 1);
+    char * dir = strcat(workdir, file);
 
+
+    Box plane(2,2,2, 1);
+    plane.dump_new(dir);
+
+
+    /*
     string figure = argv[1];
 
     if (figure == "plane"){
@@ -57,4 +70,5 @@ int main(int argc, char *argv[]) {
     }
 
     return 0;
+     */
 }

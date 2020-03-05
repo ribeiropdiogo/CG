@@ -3,10 +3,11 @@
 
 #include "Figure.h"
 
-class Plane : private Figure {
+class Plane : public Figure {
+private:
+    float m_size;
 public:
-    Plane();
+    Plane(float size);
 };
-
 
 #endif //GENERATOR_PLANE_H

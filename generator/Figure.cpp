@@ -1,7 +1,8 @@
 //
 // Created by syrayse on 01/03/20.
 //
-
+#include <fstream>
+#include <iostream>
 #include "Figure.h"
 
 Figure::Figure(int stacks, int slices) {
@@ -43,4 +44,42 @@ void Figure::addIndex(int x, int y, int z) {
     m_indexes.push_back(x);
     m_indexes.push_back(y);
     m_indexes.push_back(z);
+}
+
+void Figure::dump_old(char * file) {
+    vector<float> vertices = getVertices();
+    vector<int> indexes = getIndexes();
+    unsigned int t, nvertices = indexes.size();
+
+    std::ofstream outfile(file);
+
+    outfile << nvertices << endl;
+
+    for(unsigned int i = 0; i < nvertices; i++) {
+        t = 3*indexes[i];
+        outfile << vertices[t] << " " << vertices[t+1] << " " << vertices[t+2] << endl;
+    }
+
+    outfile.close();
+}
+
+void Figure::dump_new(char * file) {
+    vector<float> vertices = getVertices();
+    vector<int> indexes = getIndexes();
+    unsigned int t, nvertices = indexes.size();
+
+    std::ofstream outfile(file);
+
+    outfile << nvertices << endl;
+
+    for(unsigned int i = 0; i < vertices.size() / 3; i++) {
+        t = 3*i;
+        outfile << vertices[t] << " " << vertices[t+1] << " " << vertices[t+2] << endl;
+    }
+
+    for(unsigned int i = 0; i < nvertices; i++) {
+        outfile << indexes[i] << endl;
+    }
+
+    outfile.close();
 }

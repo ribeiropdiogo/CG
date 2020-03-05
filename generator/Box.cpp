@@ -1,4 +1,11 @@
+#include <iostream>
 #include "Box.h"
+
+float guessY(int side, float inc);
+float guessZ(int side, float inc);
+void resetArr(float* vec, float v1, float v2, float v3);
+void fillBands_fst(int* band1, int* band2, int divisions, int sp);
+void fillBands_snd(int* band1, int* band2, int divisions, int sp);
 
 Box::Box(float wx, float wy, float wz) : Box(wx,wy,wz,1) {}
 
@@ -7,84 +14,231 @@ Box::Box(float wx, float wy, float wz,
     float incX = wx / divisions;
     float incY = wy / divisions;
     float incZ = wz / divisions;
+    float actX, actY, actZ;
+    actX = actY = actZ = 0;
+    float currVertex[3] = {-wx/2, -wy/2, wz/2};
+    int j,tmp,k1,k2;
 
+    int count = 0;
 
+    // Create biggest band
+    genLateral(currVertex, divisions, wy, incY, incZ);
+    indexLateralBack(divisions);
+
+    resetArr(currVertex,-wx/2, -wy/2, wz/2);
+
+    count = Figure::getVerticeSize() / 3;
+
+    tmp = genStripes(currVertex, divisions, incX, incY, incZ);
+    indexStripes(divisions, count);
+
+    currVertex[2] = wz/2;
+
+    genLateral(currVertex, divisions, wy, incY, incZ);
+    indexLateralFront(divisions, count + tmp);
+
+    if(divisions > 1) {
+        indexGap(0, divisions, true);
+        indexGap(count + tmp - 4 * divisions, divisions, false);
+    }
+    else {
+        indexGapSpecial();
+    }
 }
 
-/*void Box::generateModel(int x, int y, int z, char *file) {
-    cout<<"Generating model for the box!"<<endl;
+int Box::genStripes(float * currVertex, int divisions, float incX, float incY, float incZ) {
+    int count = 0;
+    float actY, actZ;
 
-    double halfx = x/2;
-    double nhalfx = x/2 * -1;
+    for(int i = 1; i < divisions; i++) {
+        currVertex[0] += incX;
 
-    double halfy = y/2;
-    double nhalfy = y/2 * -1;
+        for(int side = 0; side < 4; side++) {
+            actY = guessY(side, incY);
+            actZ = guessZ(side, incZ);
 
-    double halfz = z/2;
-    double nhalfz = z/2 * -1;
+            for(int j = 0; j < divisions; j++) {
+                Figure::addVertice(currVertex[0],currVertex[1],currVertex[2]);
+                count++;
+                currVertex[1] += actY;
+                currVertex[2] += actZ;
+            }
 
-    std::ofstream outfile(file);
+        }
+    }
 
-    outfile << "36" << std::endl;
+    currVertex[0] += incX;
 
-    //Face Superior
-    outfile << halfx << ", " << halfy << ", " << nhalfx  << std::endl;
-    outfile << nhalfx << ", " << halfy << ", " << nhalfx  << std::endl;
-    outfile << halfx << ", " << halfy << ", " << halfx  << std::endl;
+    return count;
+}
 
-    outfile << nhalfx << ", " << halfy << ", " << nhalfx  << std::endl;
-    outfile << nhalfx << ", " << halfy << ", " << halfx  << std::endl;
-    outfile << halfx << ", " << halfy << ", " << halfx  << std::endl;
+void Box::indexStripes(int divisions, int count) {
+    int j, k1, k2, wrapcount = 4 * divisions;
+    for(int i = 1, k = 0; i < divisions - 1; i++, k+=wrapcount) {
+        for(j = 0; j < wrapcount - 1; j++) {
+            k1 = count + k + j;
+            k2 = count + k + j + wrapcount;
 
-    //Face Inferior
-    outfile << halfx << ", " << nhalfy << ", " << nhalfx  << std::endl;
-    outfile << halfx << ", " << nhalfy << ", " << halfx  << std::endl;
-    outfile << nhalfx << ", " << nhalfy << ", " << nhalfx  << std::endl;
+            Figure::addIndex(k1 +1, k1, k2);
+            Figure::addIndex(k1 + 1, k2, k2+1);
+        }
 
-    outfile << nhalfx << ", " << nhalfy << ", " << nhalfx  << std::endl;
-    outfile << halfx << ", " << nhalfy << ", " << halfx  << std::endl;
-    outfile << nhalfx << ", " << nhalfy << ", " << halfx  << std::endl;
+        k1 = count + k + j;
+        k2 = count + k + j + wrapcount;
 
-    //Faces Laterais
-    //Face 1
-    outfile << halfx << ", " << nhalfy << ", " << halfz  << std::endl;
-    outfile << halfx << ", " << halfy << ", " << halfz  << std::endl;
-    outfile << nhalfx << ", " << halfy << ", " << halfz  << std::endl;
+        Figure::addIndex(count + k, k1, k2);
+        Figure::addIndex(count + k, k2, count + k + wrapcount);
+    }
+}
 
-    outfile << nhalfx << ", " << nhalfy << ", " << halfz  << std::endl;
-    outfile << halfx << ", " << nhalfy << ", " << halfz  << std::endl;
-    outfile << nhalfx << ", " << halfy << ", " << halfz  << std::endl;
+void Box::genLateral(float* currVertex, int divisions, float wy, float incY, float incZ) {
+    for(int i = 0; i <= divisions; i++) {
 
-    //Face 2
-    outfile << halfx << ", " << nhalfy << ", " << nhalfz  << std::endl;
-    outfile << nhalfx << ", " << halfy << ", " << nhalfz  << std::endl;
-    outfile << halfx << ", " << halfy << ", " << nhalfz  << std::endl;
+        currVertex[1] = -wy/2;
 
-    outfile << nhalfx << ", " << halfy << ", " << nhalfz  << std::endl;
-    outfile << halfx << ", " << nhalfy << ", " << nhalfz  << std::endl;
-    outfile << nhalfx << ", " << nhalfy << ", " << nhalfz  << std::endl;
+        for(int j = 0; j <= divisions; j++) {
+            Figure::addVertice(currVertex[0],currVertex[1],currVertex[2]);
+            currVertex[1] += incY;
+        }
 
-    //Face 3
-    outfile << halfx << ", " << halfy << ", " << halfz  << std::endl;
-    outfile << halfx << ", " << nhalfy << ", " << halfz  << std::endl;
-    outfile << halfx << ", " << halfy << ", " << nhalfz  << std::endl;
+        currVertex[2] -= incZ;
+    }
+}
 
-    outfile << halfx << ", " << halfy << ", " << nhalfz  << std::endl;
-    outfile << halfx << ", " << nhalfy << ", " << halfz  << std::endl;
-    outfile << halfx << ", " << nhalfy << ", " << nhalfz  << std::endl;
+void Box::indexLateralBack(int divisions) {
+    int k1, k2;
+    for(int i = 0; i < divisions; i++) {
+        for(int j = 0; j < divisions; j++) {
+            k1 = (divisions+1)*i + j;
+            k2 = k1 + divisions + 1;
 
-    //Face 4
-    outfile << nhalfx << ", " << halfy << ", " << halfz  << std::endl;
-    outfile << nhalfx << ", " << halfy << ", " << nhalfz  << std::endl;
-    outfile << nhalfx << ", " << nhalfy << ", " << halfz  << std::endl;
+            Figure::addIndex(k1,k1+1,k2);
+            Figure::addIndex(k2,k1+1,k2+1);
+        }
+    }
+}
 
-    outfile << nhalfx << ", " << halfy << ", " << nhalfz  << std::endl;
-    outfile << nhalfx << ", " << nhalfy << ", " << nhalfz  << std::endl;
-    outfile << nhalfx << ", " << nhalfy << ", " << halfz  << std::endl;
+void Box::indexLateralFront(int divisions, int count) {
+    int k1, k2;
+    for(int i = 0; i < divisions; i++) {
+        for(int j = 0; j < divisions; j++) {
+            k1 = count + (divisions+1)*i + j;
+            k2 = k1 + divisions + 1;
 
+            Figure::addIndex(k1,k2,k1+1);
+            Figure::addIndex(k1+1,k2,k2+1);
+        }
+    }
+}
 
-    outfile.close();
+void Box::indexGap(int sp, int divisions, bool right) {
+    int* band1 = (int*)malloc(sizeof(int)*divisions*4);
+    int* band2 = (int*)malloc(sizeof(int)*divisions*4);
+    int i, n, bs = (divisions + 1) * (divisions + 1);
 
-    cout<<"Done!"<<endl;
+    if(right)
+        fillBands_fst(band1, band2, divisions, sp);
+    else
+        fillBands_snd(band1, band2, divisions, sp);
 
-}*/
+    bindBand(band1, band2, divisions*4 - 1);
+}
+
+void Box::indexGapSpecial() {
+    int band1[4] = {0,1,3,2};
+    int band2[4] = {4,5,7,6};
+    bindBand(band1, band2, 3);
+}
+
+void Box::bindBand(int* band1, int* band2, int sz) {
+    int i;
+    for(i = 0; i < sz; i++) {
+        Figure::addIndex(band1[i], band2[i], band1[i+1]);
+        Figure::addIndex(band2[i], band2[i+1], band1[i+1]);
+    }
+
+    Figure::addIndex(band1[i],band2[i],band1[0]);
+    Figure::addIndex(band2[i],band2[0],band1[0]);
+}
+
+float guessY(int side, float inc) {
+    float r = 0;
+    switch(side) {
+        case 0:
+            r = inc;
+            break;
+        case 2:
+            r = -inc;
+            break;
+    }
+    return r;
+}
+
+float guessZ(int side, float inc) {
+    float r = 0;
+    switch(side) {
+        case 3:
+            r = inc;
+            break;
+        case 1:
+            r = -inc;
+            break;
+    }
+    return r;
+}
+
+void resetArr(float* vec, float v1, float v2, float v3) {
+    vec[0] = v1;
+    vec[1] = v2;
+    vec[2] = v3;
+}
+
+void fillBands_fst(int* band1, int* band2, int divisions, int sp) {
+    int i, n, bs = (divisions + 1) * (divisions + 1);
+
+    for(i = 0; i <= divisions; i++) {
+        band1[i] = sp + i;
+    }
+
+    for(n = 2; n <= divisions; n++, i++) {
+        band1[i] = sp + (divisions + 1)*n - 1;
+    }
+
+    for(n = bs - 1; n >= bs - divisions - 1; n--, i++) {
+        band1[i] = sp + n;
+    }
+
+    for(n = divisions - 1; n >= 1; n--, i++) {
+        band1[i] = sp + (divisions + 1)*n;
+    }
+
+    for(i = 0; i < divisions*4; i++) {
+        band2[i] = sp + bs + i;
+    }
+}
+
+void fillBands_snd(int* band1, int* band2, int divisions, int sp) {
+    int i, n, bs = (divisions + 1) * (divisions + 1);
+
+    for(i = 0; i < divisions*4; i++) {
+        band1[i] = sp + i;
+    }
+
+    sp += i;
+
+    for(i = 0; i <= divisions; i++) {
+        band2[i] = sp + i;
+    }
+
+    for(n = 2; n <= divisions; n++, i++) {
+        band2[i] = sp  + (divisions + 1)*n - 1;
+    }
+
+    for(n = bs - 1; n >= bs - divisions - 1; n--, i++) {
+        band2[i] = sp + n;
+    }
+
+    for(n = divisions - 1; n >= 1; n--, i++) {
+        band2[i] = sp + (divisions + 1)*n ;
+    }
+}
