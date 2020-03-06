@@ -11,13 +11,17 @@
 #include <iostream>
 #include <fstream>
 #include <GL/glut.h>
+#include <vector>
 
 using namespace std;
 
 class Object3d {
 private:
     int numVertices;
-    float * pontos;
+    vector<GLfloat> points;
+    vector<GLuint> index;
+    vector<GLfloat> * pontos = &points;
+    vector<GLuint> * indices = &index;
 public:
     /* A função loadObject começa por ir buscar
     o ficheiro que contem a informação dos vertices
@@ -29,12 +33,23 @@ public:
         char * workdir = strdup("../../samples/3D/");
         workdir = (char*) realloc(workdir, strlen(workdir) + strlen(string) + 1);
         char * useThis = strcat(workdir,string);
+        float x,y,z;
+        unsigned int tempI;
         ifstream inFile(useThis);
         inFile >> numVertices;
         /* alocado estado para um array de floats grande o suficiente para gerir todos os vertices do objeto */
-        pontos = (float *) malloc(sizeof(float)*3*numVertices);
-        for (int i=0;i<numVertices*3;i+=3)
-            inFile >> pontos[i] >> pontos[i+1] >> pontos[i+2];
+        for (int i=0;i<numVertices;i++)
+        {
+            inFile >> x >> y >> z;
+            pontos->push_back(x);
+            pontos->push_back(y);
+            pontos->push_back(z);
+        }
+        while (!inFile.eof())
+        {
+            inFile >> tempI;
+            indices->push_back(tempI);
+        }
         inFile.close();
     }
 
@@ -42,19 +57,17 @@ public:
     void destroyObject()
     {
         numVertices=0;
-        free(pontos);
+        pontos->clear();
+        indices->clear();
     }
 
-    // Função que desenha o objeto baseado nos vértices presentes no array pontos
-    void drawObject(char mode) {
-        if (mode=='f')
-            glPolygonMode(GL_FRONT,GL_FILL);
-        else if (mode=='l')
-            glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-        glBegin(GL_TRIANGLES);
-        for (int i=0;i<numVertices*3;i+=3)
-            glVertex3f(pontos[i],pontos[i+1],pontos[i+2]);
-        glEnd();
+    vector<GLfloat> * getPontos()
+    {
+        return pontos;
+    }
+    vector<GLuint> * getIndices()
+    {
+        return indices;
     }
 };
 
