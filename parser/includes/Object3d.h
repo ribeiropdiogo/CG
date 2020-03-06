@@ -20,8 +20,7 @@ private:
     int numVertices;
     vector<GLfloat> points;
     vector<GLuint> index;
-    vector<GLfloat> * pontos = &points;
-    vector<GLuint> * indices = &index;
+
 public:
     /* A função loadObject começa por ir buscar
     o ficheiro que contem a informação dos vertices
@@ -29,6 +28,7 @@ public:
     por os ficheiros dentro da pasta parser e não dentro da pasta cmake-build-debug*/
     void loadObject(char * filePath)
     {
+        //destroyObject();
         char * string = strdup(filePath);
         char * workdir = strdup("../../samples/3D/");
         workdir = (char*) realloc(workdir, strlen(workdir) + strlen(string) + 1);
@@ -37,18 +37,19 @@ public:
         unsigned int tempI;
         ifstream inFile(useThis);
         inFile >> numVertices;
+        numVertices=numVertices;
         /* alocado estado para um array de floats grande o suficiente para gerir todos os vertices do objeto */
         for (int i=0;i<numVertices;i++)
         {
             inFile >> x >> y >> z;
-            pontos->push_back(x);
-            pontos->push_back(y);
-            pontos->push_back(z);
+            points.push_back(x);
+            points.push_back(y);
+            points.push_back(z);
         }
         while (!inFile.eof())
         {
             inFile >> tempI;
-            indices->push_back(tempI);
+            index.push_back(tempI);
         }
         inFile.close();
     }
@@ -57,17 +58,17 @@ public:
     void destroyObject()
     {
         numVertices=0;
-        pontos->clear();
-        indices->clear();
+        points.clear();
+        index.clear();
     }
 
-    vector<GLfloat> * getPontos()
+    vector<GLfloat> getPontos()
     {
-        return pontos;
+        return points;
     }
-    vector<GLuint> * getIndices()
+    vector<GLuint> getIndices()
     {
-        return indices;
+        return index;
     }
 };
 
