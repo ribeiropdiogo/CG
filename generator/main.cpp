@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     char * dir = strcat(workdir, file);
 
 
-    Sphere plane(1,5,5);
+    Cone plane(1,2,500,500);
     plane.dump_old(dir);
 
 

@@ -8,54 +8,57 @@
 
 using namespace std;
 
-/*
-void cone::generateModel(float radius, float height, int slices, int stacks, char *file) {
+Cone::Cone(float radius, float height, int stacks, int slices)
+    : Figure(stacks, slices) {
+    float oneSlice = (M_PI * 2.0f) / slices;
+    float oneStack = height / (float) stacks;
+    float oneRadius = radius / (float) stacks;
+    float currentRadius = radius;
+    int i,t1, t2, k1, k2, count;
 
-    cout<<"Generating model for the Cone!"<<endl;
+    Figure::addVertice(0.0, 0.0, 0.0);
 
-    int vertices = (3 * slices) + (6 * slices * stacks);
+    for(i = 0; i < stacks; i++){
 
-    double oneSlice = (M_PI * 2.0f) / slices;
-    double oneStack = height / (float) stacks;
-    double oneRadius = radius / (float) stacks;
-    double currentRadius = radius;
-    std::ofstream outfile(file);
-
-    //vertices
-    outfile << vertices << std::endl;
-
-    // base
-    for(int i = 0; i < slices; i++){
-        outfile << 0 << " " << 0 << " " << 0 << std::endl;
-        outfile << radius * sin(oneSlice * (i + 1)) << " " << 0 << " " << (radius * cos(oneSlice * (i + 1))) << std::endl;
-        outfile << radius * sin(oneSlice * i) << " " << 0 << " " << radius * cos(oneSlice * i)  << std::endl;
-    }
-
-
-    // superficie lateral
-    for(int i = 0; i < stacks; i++){
-        double smallRadius = currentRadius - oneRadius;
+        float currentHeight = oneStack * i;
 
         for(int j = 0; j < slices; j++){
-
-            double currentHeight = oneStack * i;
-
-            //primeiro triangulo
-            outfile << currentRadius * sin(oneSlice * j) << " " << currentHeight << " " << currentRadius * cos(oneSlice * j) << std::endl;
-            outfile << currentRadius * sin(oneSlice * (j + 1)) << " " << currentHeight << " " << currentRadius * cos(oneSlice * (j + 1)) << std::endl;
-            outfile << smallRadius * sin(oneSlice * j) << " " << currentHeight + oneStack << " " << smallRadius * cos(oneSlice * j)  << std::endl;
-
-            //segundo triangulo
-            outfile << currentRadius * sin(oneSlice * (j + 1)) << " " << currentHeight << " " << currentRadius * cos(oneSlice * (j + 1)) << std::endl;
-            outfile << smallRadius * sin(oneSlice * (j + 1)) << " " << currentHeight + oneStack << " " << smallRadius * cos(oneSlice * (j + 1)) << std::endl;
-            outfile << smallRadius * sin(oneSlice * (j)) << " " << currentHeight + oneStack << " " << smallRadius * cos(oneSlice * (j))  << std::endl;
+            polarVertex(oneSlice, oneSlice, currentRadius, currentHeight, j, j);
         }
-        currentRadius = smallRadius;
+        currentRadius -= oneRadius;
     }
 
+    count = Figure::getVerticeSize() / 3;
+    Figure::addVertice(0.0, height, 0.0);
 
-    outfile.close();
+    for(i = 0; i < stacks - 1; i++) {
+        t1 = k1 = i*slices + 1;
+        t2 = k2 = k1 + slices;
 
-    cout<<"Done!"<<endl;
+        for(int j = 0; j < slices  - 1; j++, k1++, k2++) {
+            Figure::addIndex(k1, k1 + 1, k2);
+            Figure::addIndex(k2, k1 + 1, k2 + 1);
+        }
+
+        Figure::addIndex(k1, t1, k2);
+        Figure::addIndex(k2, t1, t2);
+    }
+
+    for(i = 1; i < slices; i++) {
+        Figure::addIndex(0, i + 1, i);
+    }
+    Figure::addIndex(0, 1, i);
+
+    t1 = count - slices;
+    for(i = 0; i < slices; i++) {
+        Figure::addIndex(t1 + i, t1 + i + 1, count);
+    }
+    Figure::addIndex(count - 1, t1, count);
 }
-*/
+
+void Cone::polarVertex(double al, double be, float radius, float sz, int i, int j) {
+    float px = radius * sin(al * i);
+    float py = sz;
+    float pz = radius * cos(be * j);
+    Figure::addVertice(px, py, pz);
+}
