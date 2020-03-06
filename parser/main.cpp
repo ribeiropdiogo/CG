@@ -106,12 +106,12 @@ void drawAxes(void)
     glEnd();
 }
 
-void renderObject(int i)
+void renderObject(int i,Object3d obj)
 {
     glBindBuffer(GL_ARRAY_BUFFER,buffers[i]);
     glVertexPointer(3,GL_FLOAT,0,0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indexes[i]);
-    glDrawElements(GL_TRIANGLES,3,GL_UNSIGNED_INT,NULL);
+    glDrawElements(GL_TRIANGLES,obj.getIndices()->size(),GL_UNSIGNED_INT,NULL);
 }
 
 void renderScene(void) {
@@ -135,8 +135,9 @@ void renderScene(void) {
 
 /* São percorridos todos os buffers para
 que estes sejam desenhados*/
-for (int i=0;i<n;i++)
-    renderObject(i);
+int i =0;
+for (Object3d obj : objs)
+    renderObject(i,obj);
 glutSwapBuffers();
 }
 
