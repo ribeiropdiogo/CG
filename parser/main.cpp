@@ -55,44 +55,6 @@ void changeSize(int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
-void drawCylinder(float radius, float height, int slices)
-{
-    float currx, futx, currz, futz;
-    double y = height / 2;
-    double rotation = 2 * M_PI / slices;
-    glBegin(GL_TRIANGLES);
-    // Topo
-    for (int i = 0; i < slices; i++) {
-        currx = radius * cos(rotation * i);
-        futx = radius * cos(rotation * (i + 1));
-        currz = radius * sin(rotation * i);;
-        futz = radius * sin(rotation * (i + 1));
-        // Topo
-        glVertex3f(currx, y, currz);
-        glVertex3f(0.0f, y, 0.0f);
-        glVertex3f(futx, y, futz);
-
-        // Lateral 1
-        glVertex3f(currx, y, currz);
-        glVertex3f(futx, y, futz);
-        glVertex3f(currx, -y, currz);
-
-        // Lateral 2
-        glVertex3f(futx, y, futz);
-        glVertex3f(futx, -y, futz);
-        glVertex3f(currx, -y, currz);
-
-        // Base
-        glVertex3f(futx, -y, futz);
-        glVertex3f(0.0f, -y, 0.0f);
-        glVertex3f(currx, -y, currz);
-    }
-    // Lateral
-
-    // Base
-    glEnd();
-}
-
 void handle_rotation(unsigned char key, int x, int y) {
     switch (key) {
         case 'b':
@@ -209,12 +171,12 @@ void renderScene(void) {
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    drawAxes();
 // put the geometric transformations here
 
 // put drawing instructions here
+ drawAxes();
 
-/* São percorridos todos os objetos presentes no vector para
+/* São percorridos todos os buffers para
 que estes sejam desenhados*/
 for (int i=0;i<n;i++)
     renderObject(i);
@@ -226,14 +188,8 @@ int main(int argc, char **argv) {
     char * workdir = strdup("../../samples/XML/");
     workdir = (char*) realloc(workdir, strlen(workdir) + strlen(file) + 1);
     char * dir = strcat(workdir, file);
-    TiXmlDocument doc("../../samples/XML/teste.xml");
-    switch(argv[1][0])
-    {
-        case 'l': mode = GL_LINE;
-        break;
-        case 'f': mode = GL_FILL;
-        break;
-    }
+
+    TiXmlDocument doc(dir);
     if (!doc.LoadFile()) return 1;
     TiXmlHandle hDoc(&doc);
     TiXmlElement *pElem;
