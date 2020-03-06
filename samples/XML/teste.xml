@@ -1,3 +1,5 @@
 <scene>
+    <model file="loles2.3d"/>
     <model file="loles.3d"/>
+    <model file="try.3d"/>
 </scene>

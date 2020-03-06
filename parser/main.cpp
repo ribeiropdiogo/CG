@@ -111,7 +111,7 @@ void renderObject(int i,Object3d obj)
     glBindBuffer(GL_ARRAY_BUFFER,buffers[i]);
     glVertexPointer(3,GL_FLOAT,0,0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indexes[i]);
-    glDrawElements(GL_TRIANGLES,obj.getIndices()->size(),GL_UNSIGNED_INT,NULL);
+    glDrawElements(GL_TRIANGLES,obj.getIndices().size(),GL_UNSIGNED_INT,NULL);
 }
 
 void renderScene(void) {
@@ -135,24 +135,23 @@ void renderScene(void) {
 
 /* São percorridos todos os buffers para
 que estes sejam desenhados*/
-int i =0;
-for (Object3d obj : objs)
-    renderObject(i++,obj);
+for (int i=0;i<n;i++)
+    renderObject(i,objs[i]);
 glutSwapBuffers();
 }
 
 int main(int argc, char **argv) {
-    char * file = strdup(argv[2]);
+    char * file = strdup(argv[1]);
     char * workdir = strdup("../../samples/XML/");
     workdir = (char*) realloc(workdir, strlen(workdir) + strlen(file) + 1);
     char * dir = strcat(workdir, file);
+    //objs.reserve(1);
 
     TiXmlDocument doc(dir);
     if (!doc.LoadFile()) return 1;
     TiXmlHandle hDoc(&doc);
     TiXmlElement *pElem;
     TiXmlHandle hRoot(0);
-    Object3d obj;
     pElem = hDoc.FirstChildElement().Element();
     if (!pElem) return 1;
     const char *string = pElem->Value();
@@ -178,26 +177,25 @@ int main(int argc, char **argv) {
     glEnable(GL_CULL_FACE);
 
 // Read Objects
-
     if (strcmp(string, "scene") == 0) {
         pElem = hRoot.FirstChildElement().Element();
         for (pElem; pElem; pElem = pElem->NextSiblingElement()) {
-
-            obj.loadObject((char *) pElem->Attribute("file"));
+            objs.resize(n+1);
+            objs[n].loadObject((char *) pElem->Attribute("file"));
             n++;
-            objs.push_back(obj);
         }
+        //printf("%p %p",objs[0].getIndices().data(),objs[1].getIndices().data());
         buffers = (GLuint *) malloc(sizeof(GLuint) * n);
         indexes = (GLuint *) malloc(sizeof(GLuint) * n);
         glGenBuffers(n,buffers);
         glGenBuffers(n,indexes);
         for (int i=0;i<n;i++) {
             glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-            glBufferData(GL_ARRAY_BUFFER, objs.at(i).getPontos()->size() * sizeof(GLfloat),
-                         objs.at(i).getPontos()->data(), GL_STATIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, objs[i].getPontos().size() * sizeof(GLfloat),
+                         objs[i].getPontos().data(), GL_STATIC_DRAW);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[i]);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, objs.at(i).getIndices()->size() * sizeof(GLuint),
-                         objs.at(i).getIndices()->data(), GL_STATIC_DRAW);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, objs[i].getIndices().size() * sizeof(GLuint),
+                         objs[i].getIndices().data(), GL_STATIC_DRAW);
         }
     }
 
