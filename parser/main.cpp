@@ -28,7 +28,7 @@ int n = 0;
 GLuint * buffers;
 GLuint * indexes;
 
-Object3d * objs;
+std::vector<Object3d> objs;
 
 void changeSize(int w, int h) {
 
@@ -145,7 +145,7 @@ int main(int argc, char **argv) {
     char * workdir = strdup("../../samples/XML/");
     workdir = (char*) realloc(workdir, strlen(workdir) + strlen(file) + 1);
     char * dir = strcat(workdir, file);
-    objs = (Object3d *) malloc(sizeof(Object3d));
+    //objs.reserve(1);
 
     TiXmlDocument doc(dir);
     if (!doc.LoadFile()) return 1;
@@ -180,9 +180,9 @@ int main(int argc, char **argv) {
     if (strcmp(string, "scene") == 0) {
         pElem = hRoot.FirstChildElement().Element();
         for (pElem; pElem; pElem = pElem->NextSiblingElement()) {
+            objs.resize(n+1);
             objs[n].loadObject((char *) pElem->Attribute("file"));
             n++;
-            objs = (Object3d*)realloc(objs,sizeof(Object3d)*(n+1));
         }
         //printf("%p %p",objs[0].getIndices().data(),objs[1].getIndices().data());
         buffers = (GLuint *) malloc(sizeof(GLuint) * n);
