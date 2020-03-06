@@ -26,7 +26,7 @@ public:
     int getIndexSize();
     vector<float> getVertices();
     vector<int> getIndexes();
-    void dump_old(char * file);
+    void dump_old(char * file);    // DEPRECATED
     void dump_new(char * file);
 protected:
     void addVertice(float x, float y, float z);

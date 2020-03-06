@@ -57,12 +57,6 @@ void changeSize(int w, int h) {
 
 void handle_rotation(unsigned char key, int x, int y) {
     switch (key) {
-        case 'b':
-            angle -= 10.0f;
-            break;
-        case 'n':
-            angle += 10.0f;
-            break;
         case '1':
             mode = GL_FILL;
             break;
@@ -88,44 +82,6 @@ void handle_rotation(unsigned char key, int x, int y) {
         case 'a':
             alpha -= M_PI / 100;
             break;
-        case 'x':
-            basescale += 0.1f;
-            height += 0.1f;
-            break;
-        case 'c':
-            basescale -= 0.1f;
-            height -= 0.1f;
-            break;
-        case 'q':
-            scale += 0.1f;
-            break;
-        case 'e':
-            scale -= 0.1f;
-            break;
-        case 'g':
-            globeAngle += 10.0f;
-            break;
-        default:;
-    }
-
-    glutPostRedisplay();
-}
-
-void handle_keys(int key, int x, int y) {
-    switch (key) {
-        case GLUT_KEY_UP:
-            height += 0.05f;
-            break;
-        case GLUT_KEY_DOWN:
-            if(height > 0.0f)
-                height -= 0.05f;
-            break;
-        case GLUT_KEY_RIGHT:
-            dispx += 0.2f;
-            break;
-        case GLUT_KEY_LEFT:
-            dispx -= 0.2f;
-            break;
         default:;
     }
 
@@ -137,15 +93,15 @@ void drawAxes(void)
     glBegin(GL_LINES);
 // X axis in red
     glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(-100.0f, 0.0f, 0.0f);
+    glVertex3f(0.0f, 0.0f, 0.0f);
     glVertex3f( 100.0f, 0.0f, 0.0f);
 // Y Axis in Green
     glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(0.0f, -100.0f, 0.0f);
+    glVertex3f(0.0f, 0.0f, 0.0f);
     glVertex3f(0.0f, 100.0f, 0.0f);
 // Z Axis in Blue
     glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0f, 0.0f, -100.0f);
+    glVertex3f(0.0f, 0.0f, 0.0f);
     glVertex3f(0.0f, 0.0f, 100.0f);
     glEnd();
 }
@@ -165,11 +121,12 @@ void renderScene(void) {
 
     // set the camera
     glLoadIdentity();
-    gluLookAt(5.0, 5.0, 5.0,
+
+    gluLookAt(5.0*sin(alpha)*cos(beta), 5.0 * sin(beta), 5.0*cos(alpha)*cos(beta),
               0.0,0.0,0.0,
               0.0f,1.0f,0.0f);
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPolygonMode(GL_FRONT_AND_BACK, mode);
 
 // put the geometric transformations here
 
@@ -211,7 +168,6 @@ int main(int argc, char **argv) {
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
     glutKeyboardFunc(handle_rotation);
-    glutSpecialFunc(handle_keys);
 
     glewInit();
 

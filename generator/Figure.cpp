@@ -70,7 +70,7 @@ void Figure::dump_new(char * file) {
 
     std::ofstream outfile(file);
 
-    outfile << nvertices << endl;
+    outfile << vertices.size() / 3  << endl;
 
     for(unsigned int i = 0; i < vertices.size() / 3; i++) {
         t = 3*i;
