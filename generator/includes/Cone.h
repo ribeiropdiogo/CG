@@ -7,9 +7,11 @@
 
 #include "Figure.h"
 
-class Cone : private Figure {
+class Cone : public Figure {
 public:
-    Cone(int stacks, int slices);
+    Cone(float radius, float height, int stacks, int slices);
+private:
+    void polarVertex(double al, double be, float radius, float sz, int i, int j);
 };
 
 #endif //GENERATOR_CONE_H

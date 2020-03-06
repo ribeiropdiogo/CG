@@ -7,9 +7,11 @@
 
 #include "Figure.h"
 
-class Sphere : private Figure {
+class Sphere : public Figure {
 public:
     Sphere(float radius, int stacks, int slices);
+private:
+    void polarVertex(double al, double be, float radius, int i, int j);
 };
 
 #endif //GENERATOR_SPHERE_H
