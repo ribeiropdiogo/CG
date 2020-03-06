@@ -9,68 +9,70 @@
 
 using namespace std;
 
+char * redir(char * file);
+
 int main(int argc, char *argv[]) {
-    char * file = strdup(argv[1]);
-    char * workdir = strdup("../../samples/3D/");
-    workdir = (char*) realloc(workdir, strlen(workdir) + strlen(file) + 1);
-    char * dir = strcat(workdir, file);
 
 
-    Cone plane(1,2,500,500);
-    plane.dump_old(dir);
-
-
-
-    /*
     string figure = argv[1];
 
     if (figure == "plane"){
-        plane p;
-
         //plane -> size & file
-        int size = atoi(argv[2]);
-        char *file = argv[3];
+        float size = atof(argv[2]);
+        char *file = redir(argv[3]);
+
+        Plane p(size);
 
         if (argc == 4)
-            p.generateModel(size,file);
+            p.dump_old(file);
         else
             cout<<"Wrong number of arguments!"<<endl;
 
     } else if (figure == "box"){
-        box b;
 
         //box -> X,Y,Z dimensions & file
-        int X = atoi(argv[2]);
-        int Y = atoi(argv[3]);
-        int Z = atoi(argv[4]);
-        char *file = argv[5];
+        float X = atof(argv[2]);
+        float Y = atof(argv[3]);
+        float Z = atof(argv[4]);
+        char *file = redir(argv[5]);
 
-        if (argc == 6)
-            b.generateModel(X,Y,Z,file);
-        else
+        if(argc == 6) {
+            Box box(X,Y,Z);
+            box.dump_old(file);
+        } else if (argc == 7) {
+            Box box2(X,Y,Z, atoi(argv[6]));
+            box2.dump_old(file);
+        } else {
             cout<<"Wrong number of arguments!"<<endl;
+        }
+
     } else if (figure == "sphere"){
-        cout<<"You want a sphere!"<<endl;
+        if(argc != 6) {
+            cout<<"Wrong number of arguments!"<<endl;
+        } else {
+            Sphere sp(atof(argv[2]), atoi(argv[3]), atoi(argv[4]));
+            sp.dump_old(redir(argv[5]));
+        }
 
-    } else if (figure == "Cone"){
-        cout<<"You want a Cone!"<<endl;
-
-        cone c;
-        float radius = atof(argv[2]);
-        float height = atof(argv[3]);
-        int slices = atoi(argv[4]);
-        int stacks = atoi(argv[5]);
-        char* file = argv[6];
-
-        if(argc == 7){
-            c.generateModel(radius,height,slices,stacks,file);
-        }else{
-            cout << "Wrong number of arguments!" << endl;
+    } else if (figure == "cone"){
+        if(argc != 7) {
+            cout<<"Wrong number of arguments!"<<endl;
+        } else {
+            Cone cone(atof(argv[2]), atof(argv[3]), atoi(argv[4]), atoi(argv[5]));
+            cone.dump_old(redir(argv[6]));
         }
     } else {
         cout<<"Invalid figure!"<<endl;
     }
 
     return 0;
-     */
+}
+
+char * redir(char * file) {
+    char *workdir, *dir;
+    file = strdup(file);
+    workdir = strdup("../../samples/3D/");
+    workdir = (char*) realloc(workdir, strlen(workdir) + strlen(file) + 1);
+    dir = strcat(workdir, file);
+    return dir;
 }
