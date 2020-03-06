@@ -197,7 +197,7 @@ int main(int argc, char **argv) {
                          objs.at(i).getPontos()->data(), GL_STATIC_DRAW);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[i]);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, objs.at(i).getIndices()->size() * sizeof(GLuint),
-                         objs.at(0).getIndices()->data(), GL_STATIC_DRAW);
+                         objs.at(i).getIndices()->data(), GL_STATIC_DRAW);
         }
     }
 
