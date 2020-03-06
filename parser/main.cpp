@@ -137,7 +137,7 @@ void renderScene(void) {
 que estes sejam desenhados*/
 int i =0;
 for (Object3d obj : objs)
-    renderObject(i,obj);
+    renderObject(i++,obj);
 glutSwapBuffers();
 }
 
