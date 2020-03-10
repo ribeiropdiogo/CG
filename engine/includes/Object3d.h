@@ -18,7 +18,6 @@ using namespace std;
 class Object3d {
 private:
     int numVertices;
-    int m_bufferid;
     vector<GLfloat> points;
     vector<GLuint> index;
 
@@ -27,11 +26,10 @@ public:
     o ficheiro que contem a informação dos vertices
     (é utilizada a concatenação com a string ../ para que se possam
     por os ficheiros dentro da pasta parser e não dentro da pasta cmake-build-debug*/
-    void loadObject(int bufferid, char * filePath)
+    explicit Object3d(string filePath)
     {
         //destroyObject();
-        m_bufferid = bufferid;
-        char * string = strdup(filePath);
+        char * string = strdup(filePath.c_str());
         char * workdir = strdup("../../samples/3D/");
         workdir = (char*) realloc(workdir, strlen(workdir) + strlen(string) + 1);
         char * useThis = strcat(workdir,string);
@@ -73,9 +71,6 @@ public:
         return index;
     }
 
-    int getBufferId() {
-        return m_bufferid;
-    }
 };
 
 

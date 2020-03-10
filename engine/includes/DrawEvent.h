@@ -5,15 +5,17 @@
 #ifndef GENERATOR_DRAWEVENT_H
 #define GENERATOR_DRAWEVENT_H
 
-#include "Object3d.h"
 #include <GL/glew.h>
+#include "Object3d.h"
 
 class DrawEvent  {
 private:
-    Object3d m_obj;
+    unsigned int m_id;
+    Object3d * m_obj;
 public:
-    DrawEvent(Object3d obj);
-    Object3d getObj();
+    DrawEvent(unsigned int id, Object3d * obj);
+    Object3d * getObj();
+    unsigned int getBufferId();
 };
 
 #endif //GENERATOR_DRAWEVENT_H

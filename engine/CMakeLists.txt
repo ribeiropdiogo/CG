@@ -12,7 +12,7 @@ link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
 include_directories(includes)
 
-add_executable(${PROJECT_NAME} includes/DrawEvent.h DrawEvent.cpp includes/TransformEvent.h TransformEvent.cpp includes/Group.h Group.cpp)
+add_executable(${PROJECT_NAME} includes/DrawEvent.h DrawEvent.cpp includes/TransformEvent.h TransformEvent.cpp includes/Group.h Group.cpp includes/Engine.h includes/EngineMotion.h EngineMotion.cpp Engine.cpp main.cpp)
 
 if(NOT OPENGL_FOUND)
     message(ERROR " OPENGL not found!")

@@ -5,17 +5,20 @@
 #ifndef GENERATOR_GROUP_H
 #define GENERATOR_GROUP_H
 
+#include <vector>
 #include "TransformEvent.h"
+#include "DrawEvent.h"
 
 using namespace std;
 
 class Group {
 private:
-    queue<TransformEvent> transformations;
-    queue<DrawEvent> drawings;
+    vector<TransformEvent> transformations;
+    vector<DrawEvent> drawings;
     int n_subgroups;
-    void popDraw(GLuint * buffers, GLuint * indexes);
+    void popDraw(int idx, GLuint * buffers, GLuint * indexes);
 public:
+    Group();
     void pushTransformation(TransformEvent te);
     void pushDraw(DrawEvent de);
     int publish(GLuint * buffers, GLuint * indexes);
