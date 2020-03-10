@@ -22,6 +22,7 @@ public:
     void pushTransformation(TransformEvent te);
     void pushDraw(DrawEvent de);
     int publish(GLuint * buffers, GLuint * indexes);
+    int addSubgroup();
 };
 
 #endif //GENERATOR_GROUP_H

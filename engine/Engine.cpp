@@ -3,7 +3,7 @@
 #include "Engine.h"
 
 EngineMotion Engine::motion;
-vector<Group> Engine::groups;
+vector<Group*> Engine::groups;
 GLuint * Engine::buffers;
 GLuint * Engine::indexes;
 
@@ -19,7 +19,7 @@ void Engine::wrap_special(int key, int x, int y) {
     motion.handle_special(key, x, y);
 }
 
-Group Engine::latestGroup(){
+Group * Engine::latestGroup(){
     return groups.back();
 }
 
@@ -33,8 +33,9 @@ DrawEvent Engine::newDrawing(const string& file){
     }
     else {
         // Não existe em memoria;
-        Object3d newObj(file);
-        event = new DrawEvent(numObjs++, &newObj);
+        Object3d newObj;
+        newObj.loadObject(file);
+        event = new DrawEvent(numObjs++, newObj);
         loadedEvents.insert({file, *event});
     }
 
@@ -42,7 +43,6 @@ DrawEvent Engine::newDrawing(const string& file){
 }
 
 void Engine::bindAllObjects() {
-    Object3d * obj = nullptr;
     unsigned int idx, N = loadedEvents.size();
 
     cout << N << endl;
@@ -54,15 +54,15 @@ void Engine::bindAllObjects() {
     glGenBuffers(N, indexes);
 
     for(auto elem : loadedEvents) {
-        obj = elem.second.getObj();
+        Object3d obj = elem.second.getObj();
         idx = elem.second.getBufferId();
 
         glBindBuffer(GL_ARRAY_BUFFER, buffers[idx]);
-        glBufferData(GL_ARRAY_BUFFER, obj->getPontos().size() * sizeof(GLfloat),
-                     obj->getPontos().data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, obj.getPontos().size() * sizeof(GLfloat),
+                     obj.getPontos().data(), GL_STATIC_DRAW);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[idx]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj->getIndices().size() * sizeof(GLuint),
-                     obj->getIndices().data(), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj.getIndices().size() * sizeof(GLuint),
+                     obj.getIndices().data(), GL_STATIC_DRAW);
     }
 }
 
@@ -72,11 +72,11 @@ int Engine::runGroups(int idx) {
     if(idx < groups.size()) {
         nprocd = 1;
 
-        Group group = groups[idx];
+        Group * group = groups[idx];
 
         glPushMatrix();
 
-        tmp = group.publish(buffers, indexes);
+        tmp = group->publish(buffers, indexes);
 
         for(int j = 0; j < tmp; j++) {
             nprocd += runGroups(idx + nprocd);
@@ -150,22 +150,25 @@ void Engine::close(){
 }
 
 void Engine::newGroup(){
-    Group g;
-    groups.push_back(g);
+    groups.push_back(new Group());
 }
 
 void Engine::newObj(const string& file){
     DrawEvent event = newDrawing(file);
 
     if(!groups.empty()) {
-        Group last = groups.back();
-        last.pushDraw(event);
+        Group * last = groups.back();
+        last->pushDraw(event);
     }
 }
 
 void Engine::newTransform(TransformEvent te){
     if(!groups.empty()) {
-        Group last = groups.back();
-        last.pushTransformation(te);
+        Group * last = groups.back();
+        last->pushTransformation(te);
     }
+}
+
+void Engine::addSubgroup(int group) {
+    groups[group]->addSubgroup();
 }

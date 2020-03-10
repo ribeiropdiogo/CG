@@ -11,10 +11,10 @@
 class DrawEvent  {
 private:
     unsigned int m_id;
-    Object3d * m_obj;
+    Object3d m_obj;
 public:
-    DrawEvent(unsigned int id, Object3d * obj);
-    Object3d * getObj();
+    DrawEvent(unsigned int id, Object3d obj);
+    Object3d getObj();
     unsigned int getBufferId();
 };
 

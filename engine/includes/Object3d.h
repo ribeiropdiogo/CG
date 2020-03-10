@@ -22,11 +22,14 @@ private:
     vector<GLuint> index;
 
 public:
+    Object3d() {
+        numVertices = 0;
+    }
     /* A função loadObject começa por ir buscar
     o ficheiro que contem a informação dos vertices
     (é utilizada a concatenação com a string ../ para que se possam
     por os ficheiros dentro da pasta parser e não dentro da pasta cmake-build-debug*/
-    explicit Object3d(string filePath)
+    void loadObject(string filePath)
     {
         //destroyObject();
         char * string = strdup(filePath.c_str());
@@ -37,7 +40,7 @@ public:
         unsigned int tempI;
         ifstream inFile(useThis);
         inFile >> numVertices;
-        numVertices=numVertices;
+
         /* alocado estado para um array de floats grande o suficiente para gerir todos os vertices do objeto */
         for (int i=0;i<numVertices;i++)
         {

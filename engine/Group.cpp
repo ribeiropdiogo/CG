@@ -10,12 +10,12 @@ Group::Group() {
 }
 
 void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
-    Object3d * obj = drawings[idx].getObj();
+    Object3d obj = drawings[idx].getObj();
     unsigned int i = drawings[idx].getBufferId();
     glBindBuffer(GL_ARRAY_BUFFER,buffers[i]);
     glVertexPointer(3,GL_FLOAT,0,0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indexes[i]);
-    glDrawElements(GL_TRIANGLES,obj->getIndices().size(),GL_UNSIGNED_INT,nullptr);
+    glDrawElements(GL_TRIANGLES,obj.getIndices().size(),GL_UNSIGNED_INT,nullptr);
 }
 
 void Group::pushTransformation(TransformEvent te) {
@@ -36,4 +36,8 @@ int Group::publish(GLuint * buffers, GLuint * indexes) {
     }
 
     return n_subgroups;
+}
+
+int Group::addSubgroup() {
+    return ++n_subgroups;
 }

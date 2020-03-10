@@ -3,12 +3,12 @@
 //
 #include "DrawEvent.h"
 
-DrawEvent::DrawEvent(unsigned int id, Object3d * obj) {
+DrawEvent::DrawEvent(unsigned int id, Object3d obj) {
     m_id = id;
     m_obj = obj;
 }
 
-Object3d * DrawEvent::getObj() {
+Object3d DrawEvent::getObj() {
     return m_obj;
 }
 

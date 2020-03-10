@@ -81,8 +81,25 @@ int main(int argc, char ** argv) {
 
     e.newGroup();
 
-    e.newObj("../../samples/3D/loles.3d");
-    cout << "Tou bem?" << endl;
+    e.newTransform(*(new TransformEvent(1,1,0,0,45)));
+
+    e.newObj("loles2.3d");
+
+    e.newGroup();
+
+    e.addSubgroup(0);
+
+    e.newTransform(*(new TransformEvent(2,2,0,0)));
+
+    e.newObj("loles2.3d");
+
+    e.newGroup();
+
+    e.addSubgroup(0);
+
+    e.newTransform(*(new TransformEvent(2,-2,0,0)));
+
+    e.newObj("loles2.3d");
 
 
     e.loop();

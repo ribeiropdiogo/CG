@@ -36,7 +36,7 @@ private:
      * que foram encontrados no ficheiro XML, os grupos
      * são posteriormente processados por ordem de chegada.
      */
-    static vector<Group> groups;
+    static vector<Group*> groups;
 
     /**
      * Numero de objetos distintos já encontrados.
@@ -59,7 +59,7 @@ private:
      * processado.
      * @return Grupo mais recente.
      */
-    Group latestGroup();
+    Group * latestGroup();
 
     /**
      * Permite a criação de um novo DrawEvent, associado
@@ -159,6 +159,8 @@ public:
      * @param te Transformação a ser associada.
      */
     void newTransform(TransformEvent te);
+
+    void addSubgroup(int group);
 };
 
 #endif //GENERATOR_ENGINE_H
