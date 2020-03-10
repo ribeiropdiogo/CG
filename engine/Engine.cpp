@@ -35,6 +35,7 @@ DrawEvent Engine::newDrawing(const string& file){
         // Não existe em memoria;
         Object3d newObj(file);
         event = new DrawEvent(numObjs++, &newObj);
+        loadedEvents.insert({file, *event});
     }
 
     return *event;
@@ -43,6 +44,8 @@ DrawEvent Engine::newDrawing(const string& file){
 void Engine::bindAllObjects() {
     Object3d * obj = nullptr;
     unsigned int idx, N = loadedEvents.size();
+
+    cout << N << endl;
 
     buffers = (GLuint *) malloc(sizeof(GLuint) * N);
     indexes = (GLuint *) malloc(sizeof(GLuint) * N);

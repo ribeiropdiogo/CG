@@ -11,10 +11,13 @@ include_directories(${OpenGL_INCLUDE_DIRS})
 link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
 include_directories(includes)
+
+add_executable(${PROJECT_NAME} main.cpp tinystr.cpp includes/tinystr.h tinyxml.cpp includes/tinyxml.h tinyxmlerror.cpp tinyxmlparser.cpp ../engine/includes/Engine.h )
+
 include_directories(../engine)
 include_directories(../engine/includes)
+target_link_libraries(${PROJECT_NAME} engine)
 
-add_executable(${PROJECT_NAME} main.cpp tinystr.cpp includes/tinystr.h tinyxml.cpp includes/tinyxml.h tinyxmlerror.cpp tinyxmlparser.cpp ../engine/includes/Engine.h)
 if(NOT OPENGL_FOUND)
     message(ERROR " OPENGL not found!")
 endif(NOT OPENGL_FOUND)

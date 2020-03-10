@@ -7,6 +7,8 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <Engine.h>
+
 /*
 GLuint * buffers;
 GLuint * indexes;
@@ -73,5 +75,17 @@ int main(int argc, char **argv) {
     }*/
 
 int main(int argc, char ** argv) {
+    Engine e;
+
+    e.start(&argc, argv);
+
+    e.newGroup();
+
+    e.newObj("../../samples/3D/loles.3d");
+    cout << "Tou bem?" << endl;
+
+
+    e.loop();
+
     return 0;
 }
