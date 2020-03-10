@@ -128,16 +128,16 @@ void renderScene(void) {
 
     glPolygonMode(GL_FRONT_AND_BACK, mode);
 
-// put the geometric transformations here
+    // put the geometric transformations here
 
-// put drawing instructions here
- drawAxes();
+    // put drawing instructions here
+     drawAxes();
 
-/* São percorridos todos os buffers para
-que estes sejam desenhados*/
-for (int i=0;i<n;i++)
-    renderObject(i,objs[i]);
-glutSwapBuffers();
+    /* São percorridos todos os buffers para
+    que estes sejam desenhados*/
+    for (int i=0;i<n;i++)
+        renderObject(objs[i].getBufferId(),objs[i]);
+    glutSwapBuffers();
 }
 
 int main(int argc, char **argv) {
@@ -181,7 +181,7 @@ int main(int argc, char **argv) {
         pElem = hRoot.FirstChildElement().Element();
         for (pElem; pElem; pElem = pElem->NextSiblingElement()) {
             objs.resize(n+1);
-            objs[n].loadObject((char *) pElem->Attribute("file"));
+            objs[n].loadObject(n, (char *) pElem->Attribute("file"));
             n++;
         }
         //printf("%p %p",objs[0].getIndices().data(),objs[1].getIndices().data());
