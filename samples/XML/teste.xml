@@ -1,5 +1,20 @@
 <scene>
-    <model file="loles2.3d"/>
-    <model file="loles.3d"/>
-    <model file="try.3d"/>
+    <group>
+        <rotate angle="45" axisX="1"/>
+        <models>
+            <model file="loles2.3d" />
+        </models>
+        <group>
+            <translate X="2"/>
+            <models>
+                <model file="loles2.3d"/>
+            </models>
+        </group>
+        <group>
+            <translate X="-4"/>
+            <models>
+                <model file="loles2.3d"/>
+            </models>
+        </group>
+    </group>
 </scene>
