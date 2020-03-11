@@ -27,7 +27,8 @@ public:
     void loadGroup(Engine * e,TiXmlElement * elem, bool isSub, int * parentGroup,int * currentGroup)
     {
         e->newGroup();
-        if (isSub) e->addSubgroup(*parentGroup);
+        if (isSub)
+            e->addSubgroup(*parentGroup);
         TiXmlElement * aux;
         float x,y,z,angle;
         x=y=z=angle=0;
@@ -68,8 +69,8 @@ public:
             else if (strcmp(s,"group")==0)
             {
                 (*parentGroup) = (*currentGroup);
-                (*currentGroup) = (*currentGroup) + 1;
-                loadGroup(e,aux,true,parentGroup,currentGroup);
+                int newCurrentGroup = (*currentGroup)+1;
+                loadGroup(e,aux,true,parentGroup,&newCurrentGroup);
             }
             else if (strcmp(s,"models")==0)
                 for (TiXmlElement * models = aux->FirstChildElement();models;models=models->NextSiblingElement())

@@ -11,7 +11,7 @@
             </models>
         </group>
         <group>
-            <translate X="-4"/>
+            <translate X="-2"/>
             <models>
                 <model file="loles2.3d"/>
             </models>
