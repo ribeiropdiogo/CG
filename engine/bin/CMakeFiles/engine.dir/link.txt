@@ -1,0 +1,2 @@
+/usr/bin/ar qc libengine.a  CMakeFiles/engine.dir/DrawEvent.cpp.o CMakeFiles/engine.dir/TransformEvent.cpp.o CMakeFiles/engine.dir/Group.cpp.o CMakeFiles/engine.dir/EngineMotion.cpp.o CMakeFiles/engine.dir/Engine.cpp.o
+/usr/bin/ranlib libengine.a

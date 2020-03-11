@@ -1,6 +1,7 @@
 #include <iostream>
 #include "includes/tinyxml.h"
 #include "includes/tinystr.h"
+#include "includes/Txml.h"
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include <vector>
@@ -76,33 +77,10 @@ int main(int argc, char **argv) {
 
 int main(int argc, char ** argv) {
     Engine e;
-
+    Txml txml;
+    txml.loadFile(argv[1]);
     e.start(&argc, argv);
-
-    e.newGroup();
-
-    e.newTransform(*(new TransformEvent(1,1,0,0,45)));
-
-    e.newObj("loles2.3d");
-
-    e.newGroup();
-
-    e.addSubgroup(0);
-
-    e.newTransform(*(new TransformEvent(2,2,0,0)));
-
-    e.newObj("loles2.3d");
-
-    e.newGroup();
-
-    e.addSubgroup(0);
-
-    e.newTransform(*(new TransformEvent(2,-2,0,0)));
-
-    e.newObj("loles2.3d");
-
-
+    txml.loadEngine(&e);
     e.loop();
-
     return 0;
 }

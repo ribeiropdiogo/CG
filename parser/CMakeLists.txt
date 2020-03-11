@@ -12,7 +12,7 @@ link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
 include_directories(includes)
 
-add_executable(${PROJECT_NAME} main.cpp tinystr.cpp includes/tinystr.h tinyxml.cpp includes/tinyxml.h tinyxmlerror.cpp tinyxmlparser.cpp ../engine/includes/Engine.h )
+add_executable(${PROJECT_NAME} main.cpp tinystr.cpp includes/tinystr.h tinyxml.cpp includes/tinyxml.h tinyxmlerror.cpp tinyxmlparser.cpp ../engine/includes/Engine.h includes/Txml.h)
 
 include_directories(../engine)
 include_directories(../engine/includes)
