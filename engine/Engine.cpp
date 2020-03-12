@@ -78,6 +78,8 @@ int Engine::runGroups(int idx) {
 
         tmp = group->publish(buffers, indexes);
 
+        cout << "idx: " << idx << ", subgroups: " << tmp << endl;
+
         for(int j = 0; j < tmp; j++) {
             nprocd += runGroups(idx + nprocd);
         }

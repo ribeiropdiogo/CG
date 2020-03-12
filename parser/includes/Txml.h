@@ -39,6 +39,7 @@ public:
         for (aux=elem->FirstChildElement();aux;aux=aux->NextSiblingElement())
         {
             const char * s = aux->Value();
+            x = y = z = 0.0;
             if (strcmp(s,"rotate")==0)
             {
                 if (aux->Attribute("axisX"))
@@ -68,7 +69,7 @@ public:
                     y = (float) atof(aux->Attribute("axisY"));
                 if (aux->Attribute("axisZ"))
                     z = (float) atof(aux->Attribute("axisZ"));
-                e->newTransform( * (new TransformEvent(3,x,y,z)));
+                e->newTransform( * (new TransformEvent(0,x,y,z)));
             }
             else if (strcmp(s,"group")==0)
             {
