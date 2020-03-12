@@ -10,6 +10,11 @@ GLfloat mode = GL_FILL; // GL_FILL, GL_LINE; GL_POINT
 GLfloat beta = 0.0f;
 GLfloat alpha = 0.0f;
 
+
+GLfloat zoom = 5.0f;
+GLfloat left = 0.0f;
+GLfloat right = 0.0f;
+
 void EngineMotion::handle_ascii(unsigned char key, int x, int y) {
     switch (key) {
         case '1':
@@ -45,13 +50,31 @@ void EngineMotion::handle_ascii(unsigned char key, int x, int y) {
 
 void EngineMotion::handle_special(int key, int x, int y) {
 
-}
+    switch (key) {
+        case GLUT_KEY_LEFT :
+            left += 2 * M_PI / 100;
+            right -= 2 * M_PI / 100;
+            break;
+        case GLUT_KEY_RIGHT :
+            right += 2 * M_PI / 100;
+            left -= 2 * M_PI / 100;
+            break;
+        case GLUT_KEY_UP :
+            zoom -= 2 * M_PI / 100;
+            break;
+        case GLUT_KEY_DOWN :
+            zoom += 2 * M_PI / 100;
+            break;
+    }
+
+    glutPostRedisplay();
+    }
 
 void EngineMotion::place_camera() {
     glLoadIdentity();
 
-    gluLookAt(5.0*sin(alpha)*cos(beta), 5.0 * sin(beta), 5.0*cos(alpha)*cos(beta),
-              0.0,0.0,0.0,
+    gluLookAt(zoom * sin(alpha)*cos(beta), zoom * sin(beta), zoom * cos(alpha)*cos(beta),
+              left, 0.0f, right,
               0.0f,1.0f,0.0f);
 
     glPolygonMode(GL_FRONT_AND_BACK, mode);
