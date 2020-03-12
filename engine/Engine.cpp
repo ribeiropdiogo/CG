@@ -1,5 +1,9 @@
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
 #include <GL/glew.h>
 #include <GL/glut.h>
+#endif
 #include "Engine.h"
 
 EngineMotion Engine::motion;
@@ -134,7 +138,9 @@ void Engine::start(int *eargc, char **argv){
     glutKeyboardFunc(wrap_ascii);
     glutSpecialFunc(wrap_special);
 
-    glewInit();
+    #ifndef __APPLE__
+        glewInit();
+    #endif
 
     glEnable(GL_DEPTH_TEST);
     glEnableClientState(GL_VERTEX_ARRAY);

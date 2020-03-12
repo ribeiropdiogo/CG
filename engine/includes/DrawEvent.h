@@ -5,7 +5,10 @@
 #ifndef GENERATOR_DRAWEVENT_H
 #define GENERATOR_DRAWEVENT_H
 
+#ifdef __APPLE__
+#else
 #include <GL/glew.h>
+#endif
 #include "Object3d.h"
 
 class DrawEvent  {

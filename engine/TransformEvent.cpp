@@ -6,7 +6,11 @@
 // 2 is a translation
 
 #include "TransformEvent.h"
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
 #include <GL/glut.h>
+#endif
 
 TransformEvent::TransformEvent(int type, float x, float y, float z)
     : TransformEvent(type, x, y, z, 0.0f){}
