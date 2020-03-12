@@ -8,3 +8,5 @@
 /parser/bin/
 /cmake-build-debug/
 /engine/bin/
+/samples/3D/
+/samples/XML/
