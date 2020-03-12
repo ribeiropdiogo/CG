@@ -24,13 +24,17 @@ public:
         strcat(sampleDir,string);
     }
 
-    void loadGroup(Engine * e,TiXmlElement * elem, bool isSub, int * parentGroup,int * currentGroup)
+    void loadGroup(Engine * e,TiXmlElement * elem, bool isSub, int * parentGroup,int * currentGroup,int * latestGroup)
     {
         e->newGroup();
         if (isSub)
+        {
             e->addSubgroup(*parentGroup);
+            printf("idPai: %d idAtual: %d\n",*parentGroup,*currentGroup);
+        }
         TiXmlElement * aux;
         float x,y,z,angle;
+        int hCurrent;
         x=y=z=angle=0;
         for (aux=elem->FirstChildElement();aux;aux=aux->NextSiblingElement())
         {
@@ -68,9 +72,12 @@ public:
             }
             else if (strcmp(s,"group")==0)
             {
-                (*parentGroup) = (*currentGroup);
-                int newCurrentGroup = (*currentGroup)+1;
-                loadGroup(e,aux,true,parentGroup,&newCurrentGroup);
+                hCurrent=*currentGroup;
+                *parentGroup=*currentGroup;
+                *latestGroup=*latestGroup+1;
+                *currentGroup=*latestGroup;
+                loadGroup(e,aux,true,parentGroup,currentGroup,latestGroup);
+                *currentGroup=hCurrent;
             }
             else if (strcmp(s,"models")==0)
                 for (TiXmlElement * models = aux->FirstChildElement();models;models=models->NextSiblingElement())
@@ -90,12 +97,13 @@ public:
         const char *line = pElem->Value();
         hRoot = TiXmlHandle(pElem);
         int currentGroup=0;
-        int parentGroup=-1;
+        int parentGroup=0;
+        int latestGroup=0;
         if (strcmp(line, "scene") == 0) {
             pElem = hRoot.FirstChildElement().Element();
             for (pElem; pElem; pElem = pElem->NextSiblingElement()) {
                 if (strcmp(pElem->Value(),"group")==0)
-                    loadGroup(e,pElem,false,&parentGroup,&currentGroup);
+                    loadGroup(e,pElem,false,&parentGroup,&currentGroup,&latestGroup);
             }
         }
     }

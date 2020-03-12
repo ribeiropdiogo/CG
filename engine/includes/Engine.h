@@ -161,6 +161,7 @@ public:
     void newTransform(TransformEvent te);
 
     void addSubgroup(int group);
+
 };
 
 #endif //GENERATOR_ENGINE_H

@@ -50,10 +50,6 @@ vector
 
 ../engine/includes/TransformEvent.h
 
-/home/ruimendes/3ano/CG/tp/engine/DrawEvent.cpp
-DrawEvent.h
-/home/ruimendes/3ano/CG/tp/engine/DrawEvent.h
-
 /home/ruimendes/3ano/CG/tp/engine/Engine.cpp
 GL/glew.h
 -
@@ -61,24 +57,4 @@ GL/glut.h
 -
 Engine.h
 /home/ruimendes/3ano/CG/tp/engine/Engine.h
-
-/home/ruimendes/3ano/CG/tp/engine/EngineMotion.cpp
-GL/glut.h
--
-math.h
--
-EngineMotion.h
-/home/ruimendes/3ano/CG/tp/engine/EngineMotion.h
-
-/home/ruimendes/3ano/CG/tp/engine/Group.cpp
-GL/glew.h
--
-Group.h
-/home/ruimendes/3ano/CG/tp/engine/Group.h
-
-/home/ruimendes/3ano/CG/tp/engine/TransformEvent.cpp
-TransformEvent.h
-/home/ruimendes/3ano/CG/tp/engine/TransformEvent.h
-GL/glut.h
--
 

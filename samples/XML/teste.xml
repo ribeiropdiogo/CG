@@ -1,19 +1,48 @@
 <scene>
     <group>
-        <rotate angle="45" axisX="1"/>
+        <scale axisX="0.5" axisY="0.5" axisZ="0.5" />
         <models>
             <model file="loles2.3d" />
         </models>
         <group>
-            <translate X="2"/>
-            <models>
-                <model file="loles2.3d"/>
-            </models>
+            <translate Z="1" X="0" Y="0" />
+            <group>
+                <translate X="1" Z="0" Y="0"/>
+                <rotate angle="45" axisY="1" axisX="0" axisZ="0" />
+                <models>
+                    <model file="loles2.3d"/>
+                </models>
+            </group>
+            <group>
+                <translate X="-1" Z="0" Y="0"/>
+                <rotate angle="45" axisY="1" axisX="0" axisZ="0" />
+                <models>
+                    <model file="loles2.3d"/>
+                </models>
+            </group>
         </group>
         <group>
-            <translate X="-2"/>
+            <translate Z="0" X="0" Y="2" />
+            <group>
+                <translate X="2" Z="0" Y="0"/>
+                <rotate angle="45" axisY="1" axisX="0" axisZ="0" />
+                <models>
+                    <model file="loles2.3d"/>
+                </models>
+            </group>
+            <group>
+                <translate X="-2" Z="0" Y="0"/>
+                <rotate angle="45" axisY="1" axisX="0" axisZ="0" />
+                <models>
+                    <model file="loles2.3d"/>
+                </models>
+            </group>
+        </group>
+
+        <group>
+            <translate Z="0" X="0" Y="-1"/>
             <models>
-                <model file="loles2.3d"/>
+                <model file="loles2.3d" />
             </models>
         </group>
     </group>
