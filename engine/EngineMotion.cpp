@@ -9,13 +9,17 @@
 GLfloat mode = GL_FILL; // GL_FILL, GL_LINE; GL_POINT
 GLfloat beta = 0.0f;
 GLfloat alpha = 0.0f;
+GLfloat raio = 5.0f;
 
+GLfloat px = raio * sin(alpha)*cos(beta);
+GLfloat py = raio * sin(beta);
+GLfloat pz = raio * cos(alpha)*cos(beta);
 
-GLfloat zoom = 5.0f;
-GLfloat left = 0.0f;
-GLfloat right = 0.0f;
+GLfloat x = 0.0f;
+GLfloat y = 0.0f;
+GLfloat z = 0.0f;
 
-void EngineMotion::handle_ascii(unsigned char key, int x, int y) {
+void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
     switch (key) {
         case '1':
             mode = GL_FILL;
@@ -42,30 +46,47 @@ void EngineMotion::handle_ascii(unsigned char key, int x, int y) {
         case 'a':
             alpha -= M_PI / 100;
             break;
+        case 'h':
+            y += M_PI / 100;
+            break;
+        case 'j':
+            y -= M_PI / 100;
+            break;
+        case 'r':
+            x = y = z = 0.0f;
+            raio = 5.0f;
+            alpha = beta = 0.0f;
+            break;
         default:;
     }
+
+    px = raio * sin(alpha)*cos(beta);
+    py = raio * sin(beta);
+    pz = raio * cos(alpha)*cos(beta);
 
     glutPostRedisplay();
 }
 
-void EngineMotion::handle_special(int key, int x, int y) {
+void EngineMotion::handle_special(int key, int xn, int yn) {
 
     switch (key) {
         case GLUT_KEY_LEFT :
-            left += 2 * M_PI / 100;
-            right -= 2 * M_PI / 100;
+            x += 2 * M_PI / 100;
             break;
         case GLUT_KEY_RIGHT :
-            right += 2 * M_PI / 100;
-            left -= 2 * M_PI / 100;
+            x -= 2 * M_PI / 100;
             break;
         case GLUT_KEY_UP :
-            zoom -= 2 * M_PI / 100;
+            raio -= 2 * M_PI / 100;
             break;
         case GLUT_KEY_DOWN :
-            zoom += 2 * M_PI / 100;
+            raio += 2 * M_PI / 100;
             break;
     }
+
+    px = raio * sin(alpha)*cos(beta);
+    py = raio * sin(beta);
+    pz = raio * cos(alpha)*cos(beta);
 
     glutPostRedisplay();
     }
@@ -73,8 +94,8 @@ void EngineMotion::handle_special(int key, int x, int y) {
 void EngineMotion::place_camera() {
     glLoadIdentity();
 
-    gluLookAt(zoom * sin(alpha)*cos(beta), zoom * sin(beta), zoom * cos(alpha)*cos(beta),
-              left, 0.0f, right,
+    gluLookAt(z+px, y+py, z+pz,
+              x, y, z,
               0.0f,1.0f,0.0f);
 
     glPolygonMode(GL_FRONT_AND_BACK, mode);
