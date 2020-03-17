@@ -8,25 +8,18 @@
 #include "EngineMotion.h"
 
 GLfloat mode = GL_FILL; // GL_FILL, GL_LINE; GL_POINT
-GLfloat alpha = 0.0f;
 GLfloat speed = 1.0f;
-
-GLfloat px = 0.0f;//raio * sin(alpha)*cos(beta);
-GLfloat py = 0.0f;//raio * sin(beta);
-GLfloat pz = 5.0f;//raio * cos(alpha)*cos(beta);
-
-GLfloat x = 0.0f;
-GLfloat y = 0.0f;
-GLfloat z = 0.0f;
-
-GLfloat upX = 0.0f;
-GLfloat upY = 1.0f;
-GLfloat upZ = 0.0f;
 
 GLfloat tx = 0.0f;
 GLfloat ty = 0.0f;
 GLfloat tz = 0.0f;
 
+// angle of rotation for the camera direction
+float alpha=0.0, beta=0.0f;
+// actual vector representing the camera's direction
+float lx=0.0f,lz=-1.0f, ly=0.0f;
+// XZ position of the camera
+float x=0.0f,z=5.0f,y=1.0f;
 
 
 
@@ -34,8 +27,8 @@ void EngineMotion::rotate(){
 }
 
 void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
-    float fraction = M_PI/100;
-    float rotation = M_PI/4;
+    float fraction = 2.0f;
+    float rotation = M_PI/100;
     switch (key) {
         case '1':
             mode = GL_FILL;
@@ -47,22 +40,20 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
             mode = GL_POINT;
             break;
         case 'w':
-            tz += fraction * speed;
+            x += lx * fraction;
+            z += lz * fraction;
+            y += ly * fraction;
             break;
         case 's':
-            tz -= fraction * speed;
+            x -= lx * fraction;
+            z -= lz * fraction;
+            y -= ly * fraction;
             break;
         case 'd':
-            tx -= fraction * speed;
+            //x += lx * fraction;
             break;
         case 'a':
-            tx += fraction * speed;
-            break;
-        case 'q':
-            alpha += rotation * speed;
-            break;
-        case 'e':
-            alpha -= rotation * speed;
+            //x -= lx*fraction;
             break;
         case 'z':
             speed -= 0.1f;
@@ -74,7 +65,7 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
             break;
         case 'r':
             speed = 1.0f;
-            alpha = tx = ty = tz = 0.0f;
+            beta = tx = ty = tz = 0.0f;
             break;
 
         default:;
@@ -84,35 +75,44 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
 }
 
 void EngineMotion::handle_special(int key, int xn, int yn) {
-    float fraction = M_PI/100;
     switch (key) {
         case GLUT_KEY_LEFT :
+            alpha -= 0.01f;
             break;
         case GLUT_KEY_RIGHT :
+            alpha += 0.01f;
             break;
         case GLUT_KEY_UP :
-            ty -= fraction*speed;
+            beta -= 0.01f;
             break;
         case GLUT_KEY_DOWN :
-            ty += fraction*speed;
+            beta += 0.01f;
             break;
     }
 
+    lx = sin(alpha);
+    lz = -cos(alpha);
+    ly = -sin(beta);
 
     glutPostRedisplay();
-    }
+}
 
 void EngineMotion::place_camera() {
     glLoadIdentity();
 
-    gluLookAt(px, py, pz, // onde esta a camara
-              x, y, z,    // para onde estas a olhar
-              upX,upY,upZ); // vetor up
+    gluLookAt(	x, y, z,
+                  x+lx, y+ly,  z+lz,
+                  0.0f, 1.0f,  0.0f);
 
     glPolygonMode(GL_FRONT_AND_BACK, mode);
 
-    glTranslatef(tx,ty,tz);
-    glRotatef(alpha,0.0f,1.0f,0.0f);
+    /*glTranslatef(0,0,tz);
+
+    glRotatef(-beta, 1.0f, 0.0f, 0.0f);
+
+    glTranslatef(tx,0,0);*/
+
+
 }
 
 void EngineMotion::projection_size(int w, int h) {
