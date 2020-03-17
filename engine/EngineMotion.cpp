@@ -8,14 +8,12 @@
 #include "EngineMotion.h"
 
 GLfloat mode = GL_FILL; // GL_FILL, GL_LINE; GL_POINT
-GLfloat beta = 0.0f;
 GLfloat alpha = 0.0f;
-GLfloat alpha2 = M_PI/4;
-GLfloat raio = 5.0f;
+GLfloat speed = 1.0f;
 
-GLfloat px = raio * sin(alpha)*cos(beta);
-GLfloat py = raio * sin(beta);
-GLfloat pz = raio * cos(alpha)*cos(beta);
+GLfloat px = 0.0f;//raio * sin(alpha)*cos(beta);
+GLfloat py = 0.0f;//raio * sin(beta);
+GLfloat pz = 5.0f;//raio * cos(alpha)*cos(beta);
 
 GLfloat x = 0.0f;
 GLfloat y = 0.0f;
@@ -25,43 +23,19 @@ GLfloat upX = 0.0f;
 GLfloat upY = 1.0f;
 GLfloat upZ = 0.0f;
 
-GLfloat step = M_PI / 100;
+GLfloat tx = 0.0f;
+GLfloat ty = 0.0f;
+GLfloat tz = 0.0f;
 
-void EngineMotion::updateAspectR(){
-    if ((alpha>=0 && alpha < M_PI/4) || (alpha>=M_PI/2 && alpha < (3*M_PI/4))){
-        x -= step * tan(alpha2);
-        z -= step * tan(alpha);
-    } else if ((alpha>=M_PI && alpha < (5*M_PI/4)) || (alpha>=(3*M_PI/2) && alpha < (7*M_PI/4))){
-        x += step * tan(alpha2);
-        z += step * tan(alpha);
-    } else if ((alpha>=(M_PI/4) && alpha < (M_PI/2)) || (alpha>=(3*M_PI/4) && alpha < M_PI/4)){
-        x += step * tan(alpha);
-        z += step * tan(alpha2);
-    } else if ((alpha>=(5*M_PI/4) && alpha < (3*M_PI/2)) || (alpha>=(7*M_PI/4) && alpha < (2*M_PI))){
-        x += step * tan(alpha2);
-        z += step * tan(alpha);
-    }
-    //std::cout << "alpha: " << alpha << std::endl;
-}
 
-void EngineMotion::updateAspectL(){
-    if ((alpha>=0 && alpha < M_PI/4) || (alpha>=M_PI/2 && alpha < (3*M_PI/4))){
-        x += step * tan(alpha2);
-        z += step * tan(alpha);
-    } else if ((alpha>=M_PI && alpha < (5*M_PI/4)) || (alpha>=(3*M_PI/2) && alpha < (7*M_PI/4))){
-        x -= step * tan(alpha2);
-        z -= step * tan(alpha);
-    } else if ((alpha>=(M_PI/4) && alpha < (M_PI/2)) || (alpha>=(3*M_PI/4) && alpha < M_PI/4)){
-        x -= step * tan(alpha);
-        z -= step * tan(alpha2);
-    } else if ((alpha>=(5*M_PI/4) && alpha < (3*M_PI/2)) || (alpha>=(7*M_PI/4) && alpha < (2*M_PI))){
-        x += step * tan(alpha2);
-        z += step * tan(alpha);
-    }
-    //std::cout << "alpha: " << alpha << std::endl;
+
+
+void EngineMotion::rotate(){
 }
 
 void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
+    float fraction = M_PI/100;
+    float rotation = M_PI/4;
     switch (key) {
         case '1':
             mode = GL_FILL;
@@ -73,79 +47,56 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
             mode = GL_POINT;
             break;
         case 'w':
-            beta += step;
-            if (beta > M_PI / 2)
-                beta -= step;
+            tz += fraction * speed;
             break;
         case 's':
-            beta -= step;
-            if (beta < -M_PI / 2)
-                beta += step;
+            tz -= fraction * speed;
             break;
         case 'd':
-            if (alpha < 2*M_PI)
-                alpha += step;
-            else{
-                alpha -= 2 * M_PI;
-                alpha += step;
-            }
-            alpha2 += step;
+            tx -= fraction * speed;
             break;
         case 'a':
-            if (alpha > -2*M_PI)
-                alpha -= step;
-            else {
-                alpha += 2 * M_PI;
-                alpha -= step;
-            }
-            alpha2 -= step;
+            tx += fraction * speed;
             break;
-        case 'h':
-            y += step;
+        case 'q':
+            alpha += rotation * speed;
             break;
-        case 'j':
-            y -= step;
+        case 'e':
+            alpha -= rotation * speed;
+            break;
+        case 'z':
+            speed -= 0.1f;
+            if (speed <= 0.0f)
+                speed = 0.1f;
+            break;
+        case 'x':
+            speed += 0.1f;
             break;
         case 'r':
-            x = y = z = 0.0f;
-            raio = 5.0f;
-            alpha = beta = 0.0f;
-            alpha2 = M_PI / 4;
-            upX = 0.0f;
-            upZ = 0.0f;
-            upY = 1.0f;
+            speed = 1.0f;
+            alpha = tx = ty = tz = 0.0f;
             break;
+
         default:;
     }
-
-    px = raio * sin(alpha)*cos(beta);
-    py = raio * sin(beta);
-    pz = raio * cos(alpha)*cos(beta);
-
 
     glutPostRedisplay();
 }
 
 void EngineMotion::handle_special(int key, int xn, int yn) {
-
+    float fraction = M_PI/100;
     switch (key) {
         case GLUT_KEY_LEFT :
-            updateAspectL();
             break;
         case GLUT_KEY_RIGHT :
-            updateAspectR();
             break;
         case GLUT_KEY_UP :
-            raio -= 2 * M_PI / 100;
+            ty -= fraction*speed;
             break;
         case GLUT_KEY_DOWN :
-            raio += 2 * M_PI / 100;
+            ty += fraction*speed;
             break;
     }
-
-    px = raio * sin(alpha)*cos(beta);
-    py = raio * sin(beta);
-    pz = raio * cos(alpha)*cos(beta);
 
 
     glutPostRedisplay();
@@ -154,12 +105,14 @@ void EngineMotion::handle_special(int key, int xn, int yn) {
 void EngineMotion::place_camera() {
     glLoadIdentity();
 
-    gluLookAt(px, py, pz,
-              x, y, z,
-              upX,upY,upZ);
-    std::cout << "alpha: " << alpha << std::endl;
+    gluLookAt(px, py, pz, // onde esta a camara
+              x, y, z,    // para onde estas a olhar
+              upX,upY,upZ); // vetor up
 
     glPolygonMode(GL_FRONT_AND_BACK, mode);
+
+    glTranslatef(tx,ty,tz);
+    glRotatef(alpha,0.0f,1.0f,0.0f);
 }
 
 void EngineMotion::projection_size(int w, int h) {

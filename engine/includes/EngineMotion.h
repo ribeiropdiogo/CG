@@ -60,6 +60,12 @@ public:
     void updateAspectR();
 
     void updateAspectL();
+
+    void rotateLeft();
+
+    void rotateRight();
+
+    void rotate();
 };
 
 #endif //GENERATOR_ENGINEMOTION_H
