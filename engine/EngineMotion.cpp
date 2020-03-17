@@ -27,7 +27,7 @@ void EngineMotion::rotate(){
 }
 
 void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
-    float fraction = 2.0f;
+    float fraction = 0.5f;
     float rotation = M_PI/100;
     switch (key) {
         case '1':
@@ -40,14 +40,14 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
             mode = GL_POINT;
             break;
         case 'w':
-            x += lx * fraction;
-            z += lz * fraction;
-            y += ly * fraction;
+            x += lx * fraction * speed;
+            z += lz * fraction * speed;
+            y += ly * fraction * speed;
             break;
         case 's':
-            x -= lx * fraction;
-            z -= lz * fraction;
-            y -= ly * fraction;
+            x -= lx * fraction * speed;
+            z -= lz * fraction * speed;
+            y -= ly * fraction * speed;
             break;
         case 'd':
             //x += lx * fraction;
@@ -66,6 +66,10 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
         case 'r':
             speed = 1.0f;
             beta = tx = ty = tz = 0.0f;
+            lx=0.0f;
+            lz=-1.0f;
+            ly=0.0f;
+            x=0.0f;z=5.0f;y=1.0f;
             break;
 
         default:;
@@ -75,18 +79,19 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
 }
 
 void EngineMotion::handle_special(int key, int xn, int yn) {
+    float fraction = M_PI/100;
     switch (key) {
         case GLUT_KEY_LEFT :
-            alpha -= 0.01f;
+            alpha -= fraction * speed;
             break;
         case GLUT_KEY_RIGHT :
-            alpha += 0.01f;
+            alpha += fraction * speed;
             break;
         case GLUT_KEY_UP :
-            beta -= 0.01f;
+            beta -= fraction * speed;
             break;
         case GLUT_KEY_DOWN :
-            beta += 0.01f;
+            beta += fraction * speed;
             break;
     }
 
