@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="generator"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\engine\;CMake Files\generator\;CMake Files\parser\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/ribeiro/Projetos/CG/cmake-build-release"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/ribeiro/Projetos/CG/cmake-build-release"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/ribeiro/Projetos/CG/cmake-build-release"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="engine">
+				<Option output="/Users/ribeiro/Projetos/CG/engine/bin/libengine.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ribeiro/Projetos/CG/engine/bin"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/ribeiro/Projetos/CG/engine/includes"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/GLUT.framework/Headers"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/engine/bin/Makefile&quot;  VERBOSE=1 engine"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/engine/bin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/engine/bin/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/engine/bin/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="engine/fast">
+				<Option output="/Users/ribeiro/Projetos/CG/engine/bin/libengine.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ribeiro/Projetos/CG/engine/bin"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/ribeiro/Projetos/CG/engine/includes"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/GLUT.framework/Headers"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/engine/bin/Makefile&quot;  VERBOSE=1 engine/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/engine/bin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/engine/bin/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/engine/bin/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="generator">
+				<Option output="/Users/ribeiro/Projetos/CG/generator/bin/generator" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ribeiro/Projetos/CG/generator/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/ribeiro/Projetos/CG/generator/includes"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/GLUT.framework/Headers"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/generator/bin/Makefile&quot;  VERBOSE=1 generator"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/generator/bin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/generator/bin/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/generator/bin/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="generator/fast">
+				<Option output="/Users/ribeiro/Projetos/CG/generator/bin/generator" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ribeiro/Projetos/CG/generator/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/ribeiro/Projetos/CG/generator/includes"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/GLUT.framework/Headers"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/generator/bin/Makefile&quot;  VERBOSE=1 generator/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/generator/bin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/generator/bin/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/generator/bin/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="parser">
+				<Option output="/Users/ribeiro/Projetos/CG/parser/bin/parser" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ribeiro/Projetos/CG/parser/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/ribeiro/Projetos/CG/parser/includes"/>
+					<Add directory="/Users/ribeiro/Projetos/CG/parser/../engine"/>
+					<Add directory="/Users/ribeiro/Projetos/CG/parser/../engine/includes"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/GLUT.framework/Headers"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/parser/bin/Makefile&quot;  VERBOSE=1 parser"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/parser/bin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/parser/bin/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/parser/bin/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="parser/fast">
+				<Option output="/Users/ribeiro/Projetos/CG/parser/bin/parser" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ribeiro/Projetos/CG/parser/bin"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/ribeiro/Projetos/CG/parser/includes"/>
+					<Add directory="/Users/ribeiro/Projetos/CG/parser/../engine"/>
+					<Add directory="/Users/ribeiro/Projetos/CG/parser/../engine/includes"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/GLUT.framework/Headers"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/parser/bin/Makefile&quot;  VERBOSE=1 parser/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/parser/bin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/parser/bin/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ribeiro/Projetos/CG/parser/bin/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/DrawEvent.cpp">
+			<Option target="engine"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/Engine.cpp">
+			<Option target="engine"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/EngineMotion.cpp">
+			<Option target="engine"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/Group.cpp">
+			<Option target="engine"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/TransformEvent.cpp">
+			<Option target="engine"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/includes/DrawEvent.h">
+			<Option target="engine"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/includes/Engine.h">
+			<Option target="engine"/>
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/includes/EngineMotion.h">
+			<Option target="engine"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/includes/Group.h">
+			<Option target="engine"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/includes/TransformEvent.h">
+			<Option target="engine"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/Box.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/Cone.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/Figure.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/Plane.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/Sphere.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/includes/Box.h">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/includes/Cone.h">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/includes/Figure.h">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/includes/Plane.h">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/includes/Sphere.h">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/main.cpp">
+			<Option target="generator"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/parser/includes/Txml.h">
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/parser/includes/tinystr.h">
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/parser/includes/tinyxml.h">
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/parser/main.cpp">
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/parser/tinystr.cpp">
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/parser/tinyxml.cpp">
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/parser/tinyxmlerror.cpp">
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/parser/tinyxmlparser.cpp">
+			<Option target="parser"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\engine\"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/generator/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\generator\"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/parser/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\parser\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

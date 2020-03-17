@@ -1,0 +1,11 @@
+/Users/ribeiro/Projetos/CG/cmake-build-release/CMakeFiles/rebuild_cache.dir
+/Users/ribeiro/Projetos/CG/cmake-build-release/CMakeFiles/edit_cache.dir
+/Users/ribeiro/Projetos/CG/engine/bin/CMakeFiles/rebuild_cache.dir
+/Users/ribeiro/Projetos/CG/engine/bin/CMakeFiles/edit_cache.dir
+/Users/ribeiro/Projetos/CG/engine/bin/CMakeFiles/engine.dir
+/Users/ribeiro/Projetos/CG/generator/bin/CMakeFiles/rebuild_cache.dir
+/Users/ribeiro/Projetos/CG/generator/bin/CMakeFiles/edit_cache.dir
+/Users/ribeiro/Projetos/CG/generator/bin/CMakeFiles/generator.dir
+/Users/ribeiro/Projetos/CG/parser/bin/CMakeFiles/rebuild_cache.dir
+/Users/ribeiro/Projetos/CG/parser/bin/CMakeFiles/edit_cache.dir
+/Users/ribeiro/Projetos/CG/parser/bin/CMakeFiles/parser.dir
