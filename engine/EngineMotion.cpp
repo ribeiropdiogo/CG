@@ -5,26 +5,20 @@
 #endif
 #include <math.h>
 #include <iostream>
+#include <Vec3.h>
 #include "EngineMotion.h"
 
 GLfloat mode = GL_FILL; // GL_FILL, GL_LINE; GL_POINT
 GLfloat speed = 1.0f;
 
-GLfloat tx = 0.0f;
-GLfloat ty = 0.0f;
-GLfloat tz = 0.0f;
-
 // angle of rotation for the camera direction
 float alpha=0.0, beta=0.0f;
 // actual vector representing the camera's direction
-float lx=0.0f,lz=-1.0f, ly=0.0f;
+Vec3 l(0.0f, 0.0f, -1.0f);
+//float lx=0.0f,lz=-1.0f, ly=0.0f;
 // XZ position of the camera
-float x=0.0f,z=5.0f,y=1.0f;
-
-
-
-void EngineMotion::rotate(){
-}
+Vec3 p(0.0, 1.0f,5.0f);
+//float x=0.0f,z=5.0f,y=1.0f;
 
 void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
     float fraction = 0.5f;
@@ -40,20 +34,18 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
             mode = GL_POINT;
             break;
         case 'w':
-            x += lx * fraction * speed;
-            z += lz * fraction * speed;
-            y += ly * fraction * speed;
+            p = p + (l * fraction * speed);
             break;
         case 's':
-            x -= lx * fraction * speed;
-            z -= lz * fraction * speed;
-            y -= ly * fraction * speed;
+            p = p - (l * fraction * speed);
             break;
         case 'd':
             //x += lx * fraction;
+            p = p + (l.crossprod((*new Vec3(0.0f,1.0f, 0.0f))) * fraction * speed);
             break;
         case 'a':
             //x -= lx*fraction;
+            p = p - (l.crossprod((*new Vec3(0.0f,1.0f, 0.0f))) * fraction * speed);
             break;
         case 'z':
             speed -= 0.1f;
@@ -65,11 +57,9 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
             break;
         case 'r':
             speed = 1.0f;
-            beta = tx = ty = tz = 0.0f;
-            lx=0.0f;
-            lz=-1.0f;
-            ly=0.0f;
-            x=0.0f;z=5.0f;y=1.0f;
+            beta = 0.0f;
+            l = *(new Vec3(0.0f, 0.0f, -1.0f));
+            p = *(new Vec3(0.0f, 1.0f, 5.0f));
             break;
 
         default:;
@@ -95,9 +85,7 @@ void EngineMotion::handle_special(int key, int xn, int yn) {
             break;
     }
 
-    lx = sin(alpha);
-    lz = -cos(alpha);
-    ly = -sin(beta);
+    l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
 
     glutPostRedisplay();
 }
@@ -105,19 +93,13 @@ void EngineMotion::handle_special(int key, int xn, int yn) {
 void EngineMotion::place_camera() {
     glLoadIdentity();
 
-    gluLookAt(	x, y, z,
-                  x+lx, y+ly,  z+lz,
+    Vec3 fut = p + l;
+
+    gluLookAt(	p.getX(), p.getY(), p.getZ(),
+                  fut.getX(), fut.getY(),  fut.getZ(),
                   0.0f, 1.0f,  0.0f);
 
     glPolygonMode(GL_FRONT_AND_BACK, mode);
-
-    /*glTranslatef(0,0,tz);
-
-    glRotatef(-beta, 1.0f, 0.0f, 0.0f);
-
-    glTranslatef(tx,0,0);*/
-
-
 }
 
 void EngineMotion::projection_size(int w, int h) {

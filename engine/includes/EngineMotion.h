@@ -52,20 +52,6 @@ public:
      * @param h Altura da tela.
      */
     virtual void projection_size(int w, int h);
-
-    void moveCenario();
-
-    void updateAspect();
-
-    void updateAspectR();
-
-    void updateAspectL();
-
-    void rotateLeft();
-
-    void rotateRight();
-
-    void rotate();
 };
 
 #endif //GENERATOR_ENGINEMOTION_H
