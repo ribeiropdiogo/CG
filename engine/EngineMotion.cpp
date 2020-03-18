@@ -46,6 +46,8 @@ void move_front();
 void move_back();
 void move_left();
 void move_right();
+void move_down();
+void move_up();
 void inc_speed();
 void dec_speed();
 void reset_world();
@@ -142,6 +144,8 @@ void EngineMotion::build_key_mappers() {
     keyboardMappers['a'] = move_left;
     keyboardMappers['s'] = move_back;
     keyboardMappers['d'] = move_right;
+    keyboardMappers['o'] = move_up;
+    keyboardMappers['p'] = move_down;
     keyboardMappers['z'] = inc_speed;
     keyboardMappers['x'] = dec_speed;
     keyboardMappers['r'] = reset_world;
@@ -192,6 +196,14 @@ void move_left() {
 
 void move_right() {
     p = p + (l.crossprod((*new Vec3(0.0f,1.0f, 0.0f))) * speed);
+}
+
+void move_down() {
+    p = p - *(new Vec3(0.0f, speed, 0.0f));
+}
+
+void move_up() {
+    p = p + *(new Vec3(0.0f, speed, 0.0f));
 }
 
 void inc_speed() {
