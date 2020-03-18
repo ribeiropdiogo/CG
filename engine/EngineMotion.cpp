@@ -58,6 +58,7 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
         case 'r':
             speed = 1.0f;
             beta = 0.0f;
+            alpha = 0.0f;
             l = *(new Vec3(0.0f, 0.0f, -1.0f));
             p = *(new Vec3(0.0f, 1.0f, 5.0f));
             break;

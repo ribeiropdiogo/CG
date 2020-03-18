@@ -195,6 +195,9 @@
 		<Unit filename="/Users/ribeiro/Projetos/CG/engine/TransformEvent.cpp">
 			<Option target="engine"/>
 		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/Vec3.cpp">
+			<Option target="engine"/>
+		</Unit>
 		<Unit filename="/Users/ribeiro/Projetos/CG/engine/includes/DrawEvent.h">
 			<Option target="engine"/>
 		</Unit>
@@ -209,6 +212,9 @@
 			<Option target="engine"/>
 		</Unit>
 		<Unit filename="/Users/ribeiro/Projetos/CG/engine/includes/TransformEvent.h">
+			<Option target="engine"/>
+		</Unit>
+		<Unit filename="/Users/ribeiro/Projetos/CG/engine/includes/Vec3.h">
 			<Option target="engine"/>
 		</Unit>
 		<Unit filename="/Users/ribeiro/Projetos/CG/generator/Box.cpp">
