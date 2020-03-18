@@ -23,6 +23,14 @@ void Engine::wrap_special(int key, int x, int y) {
     motion.handle_special(key, x, y);
 }
 
+void Engine::wrap_up_ascii(unsigned char key, int x, int y) {
+    motion.up_ascii(key, x, y);
+}
+
+void Engine::wrap_up_special(int key, int x, int y) {
+    motion.up_special(key, x, y);
+}
+
 Group * Engine::latestGroup(){
     return groups.back();
 }
@@ -133,10 +141,17 @@ void Engine::start(int *eargc, char **argv){
     glutInitWindowSize(800,800);
     glutCreateWindow(WIN_NAME.c_str());
 
+    motion.build_key_mappers();
+    motion.build_special_mappers();
+
     glutDisplayFunc(renderScene);
+    glutIdleFunc(renderScene);
     glutReshapeFunc(wrap_proj);
+    glutIgnoreKeyRepeat(1);
     glutKeyboardFunc(wrap_ascii);
     glutSpecialFunc(wrap_special);
+    glutKeyboardUpFunc(wrap_up_ascii);
+    glutSpecialUpFunc(wrap_up_special);
 
     #ifndef __APPLE__
         glewInit();
