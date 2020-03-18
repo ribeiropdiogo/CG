@@ -218,7 +218,7 @@ void dec_speed() {
 }
 
 void reset_world() {
-    speed = 1.0f;
+    speed = 0.1f;
     beta = 0.0f;
     alpha = 0.0f;
     l = *(new Vec3(0.0f, 0.0f, -1.0f));
