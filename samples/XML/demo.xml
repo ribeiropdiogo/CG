@@ -1,0 +1,130 @@
+<scene>
+    <group>
+        <group>
+            <!-- Sol -->
+            <scale axisX="9.3" axisY="9.3" axisZ="9.3"/>
+            <models>
+                <model file="sphere.3d"/>
+            </models>
+        </group>
+        <group>
+            <!-- Mercurio -->
+            <translate X="19.18" Y="0" Z="0"/>
+            <scale axisX="0.38" axisY="0.38" axisZ="0.38"/>
+            <models>
+                <model file="sphere.3d"/>
+            </models>
+        </group>
+        <group>
+            <!-- Venus -->
+            <translate X="25.62" Y="0" Z="0"/>
+            <scale axisX="0.66" axisY="0.66" axisZ="0.66"/>
+            <models>
+                <model file="sphere.3d"/>
+            </models>
+        </group>
+        <group>
+            <!-- Terra -->
+            <translate X="30.09" Y="0" Z="0"/>
+            <models>
+                <model file="sphere.3d"/>
+            </models>
+            <group>
+                <!-- Lua -->
+                <translate X="0" Y="0" Z="1.5"/>
+                <scale axisX="0.25" axisY="0.25" axisZ="0.25" />
+                <models>
+                    <model file="sphere.3d"/>
+                </models>
+            </group>
+        </group>
+        <group>
+            <!-- Marte -->
+            <translate X="37.08" Y="0" Z="0"/>
+            <scale axisX="0.43" axisY="0.43" axisZ="0.43"/>
+            <models>
+                <model file="sphere.3d"/>
+            </models>
+            <group>
+                <!-- Phobos -->
+                <translate X="0" Y="0" Z="1.5"/>
+                <scale axisX="0.2" axisY="0.2" axisZ="0.2" />
+                <models>
+                    <model file="sphere.3d"/>
+                </models>
+            </group>
+            <group>
+                <!-- Deimos -->
+                <translate X="0" Y="0" Z="-1.5"/>
+                <scale axisX="0.1" axisY="0.1" axisZ="0.1" />
+                <models>
+                    <model file="sphere.3d"/>
+                </models>
+            </group>
+        </group>
+        <group>
+            <!-- Jupiter -->
+            <translate X="64.05" Y="0" Z="0"/>
+            <scale axisX="3.48" axisY="3.48" axisZ="3.48"/>
+            <models>
+                <model file="sphere.3d"/>
+            </models>
+            <group>
+                <!-- Europa -->
+                <translate X="0" Y="0" Z="-1.2"/>
+                <scale axisX="0.05" axisY="0.05" axisZ="0.05" />
+                <models>
+                    <model file="sphere.3d"/>
+                </models>
+            </group>
+            <group>
+                <!-- Callisto -->
+                <translate X="-1.2" Y="0" Z="0"/>
+                <scale axisX="0.05" axisY="0.05" axisZ="0.05" />
+                <models>
+                    <model file="sphere.3d"/>
+                </models>
+            </group>
+            <group>
+                <!-- IO -->
+                <translate X="1.2" Y="0" Z="0"/>
+                <scale axisX="0.05" axisY="0.05" axisZ="0.05" />
+                <models>
+                    <model file="sphere.3d"/>
+                </models>
+            </group>
+            <group>
+                <!-- Ganymede -->
+                <translate X="0" Y="0" Z="1.2"/>
+                <scale axisX="0.1" axisY="0.1" axisZ="0.1" />
+                <models>
+                    <model file="sphere.3d"/>
+                </models>
+            </group>
+        </group>
+        <group>
+            <!-- Saturno -->
+            <translate X="79.95" Y="0" Z="0"/>
+            <scale axisX="3.31" axisY="3.31" axisZ="3.31"/>
+            <models>
+                <model file="sphere.3d"/>
+            </models>
+        </group>
+        <group>
+            <!-- Uranus -->
+            <translate X="99.44" Y="0" Z="0"/>
+            <scale axisX="2.61" axisY="2.61" axisZ="2.61"/>
+            <models>
+                <model file="sphere.3d"/>
+            </models>
+        </group>
+        <group>
+            <!-- Neptuno -->
+            <translate X="112.38" Y="0" Z="0"/>
+            <scale axisX="2.58" axisY="2.58" axisZ="2.58"/>
+            <models>
+                <model file="sphere.3d"/>
+            </models>
+        </group>
+    </group>
+</scene>
