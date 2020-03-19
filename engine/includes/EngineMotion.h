@@ -33,6 +33,10 @@ public:
      */
     virtual void handle_special(int key, int x, int y);
 
+    virtual void up_ascii(unsigned char key, int xn, int yn);
+
+    virtual void up_special(int key, int xn, int yn);
+
     /**
      * Responsavel pela colocação da camâra ao renderizar
      * a cena.
@@ -53,19 +57,9 @@ public:
      */
     virtual void projection_size(int w, int h);
 
-    void moveCenario();
+    virtual void build_key_mappers();
 
-    void updateAspect();
-
-    void updateAspectR();
-
-    void updateAspectL();
-
-    void rotateLeft();
-
-    void rotateRight();
-
-    void rotate();
+    virtual void build_special_mappers();
 };
 
 #endif //GENERATOR_ENGINEMOTION_H

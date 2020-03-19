@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 
         if(argc == 6) {
             Box box(X,Y,Z);
-            box.dump_old(file);
+            box.dump_new(file);
         } else if (argc == 7) {
             Box box2(X,Y,Z, atoi(argv[6]));
             box2.dump_new(file);
