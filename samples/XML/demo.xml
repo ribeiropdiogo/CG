@@ -45,6 +45,22 @@
             <models>
                 <model file="sphere.3d"/>
             </models>
+            <group>
+                <!-- Phobos -->
+                <translate X="0" Y="0" Z="1.022"/>
+                <scale axisX="0.002" axisY="0.002" axisZ="0.002" />
+                <models>
+                    <model file="sphere.3d"/>
+                </models>
+            </group>
+            <group>
+                <!-- Deimos -->
+                <translate X="0" Y="0" Z="-1.034"/>
+                <scale axisX="0.003" axisY="0.003" axisZ="0.003" />
+                <models>
+                    <model file="sphere.3d"/>
+                </models>
+            </group>
         </group>
         <group>
             <!-- Jupiter -->
@@ -217,6 +233,22 @@
                 <!-- Triton -->
                 <translate X="1.14" Y="0" Z="0"/>
                 <scale axisX="0.078" axisY="0.078" axisZ="0.078" />
+                <models>
+                    <model file="sphere.3d"/>
+                </models>
+            </group>
+        </group>
+        <group>
+            <!-- Plutao -->
+            <translate X="120.71" Y="0" Z="0"/>
+            <scale axisX="0.17" axisY="0.17" axisZ="0.17"/>
+            <models>
+                <model file="sphere.3d"/>
+            </models>
+            <group>
+                <!-- Charon -->
+                <translate X="0" Y="0" Z="2.11"/>
+                <scale axisX="0.53" axisY="0.53" axisZ="0.53" />
                 <models>
                     <model file="sphere.3d"/>
                 </models>
