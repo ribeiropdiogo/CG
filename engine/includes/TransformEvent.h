@@ -10,13 +10,17 @@
 
 class TransformEvent {
 private:
-    int m_type;
-    float m_x, m_y, m_z, m_angle;
+    bool m_timeDep;
+    int m_type, m_oldtime, m_laptime;
+    float m_x, m_y, m_z, m_angle, m_totaltime;
+    TransformEvent(int type, float x, float y, float z,
+                    float angle, int laptime);
 public:
     TransformEvent(int type, float x, float y, float z);
-    TransformEvent(int type, float x, float y, float z, float angle);
-    void process();
-public:
+    TransformEvent(int type, float x, float y, float z, int laptime);
+    TransformEvent(float x, float y, float z, float angle);
+    TransformEvent(float x, float y, float z, int laptime);
+    void process(int milis);
 };
 
 #endif //GENERATOR_TRANSFORMEVENT_H

@@ -31,9 +31,9 @@ void Group::pushDraw(DrawEvent de) {
     drawings.push_back(de);
 }
 
-int Group::publish(GLuint * buffers, GLuint * indexes) {
+int Group::publish(GLuint * buffers, GLuint * indexes, int milis) {
     for (auto & transformation : transformations) {
-        transformation.process();
+        transformation.process(milis);
     }
 
     for (int j = 0; j < drawings.size(); ++j) {

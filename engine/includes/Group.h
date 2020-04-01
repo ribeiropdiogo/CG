@@ -21,7 +21,7 @@ public:
     Group();
     void pushTransformation(TransformEvent te);
     void pushDraw(DrawEvent de);
-    int publish(GLuint * buffers, GLuint * indexes);
+    int publish(GLuint * buffers, GLuint * indexes, int milis);
     int addSubgroup();
 };
 

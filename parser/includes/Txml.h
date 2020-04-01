@@ -33,7 +33,7 @@ public:
             printf("idPai: %d idAtual: %d\n",*parentGroup,*currentGroup);
         }
         TiXmlElement * aux;
-        float x,y,z,angle;
+        float x,y,z,angle, time;
         int hCurrent;
         x=y=z=angle=0;
         for (aux=elem->FirstChildElement();aux;aux=aux->NextSiblingElement())
@@ -48,9 +48,14 @@ public:
                     y = (float) atof(aux->Attribute("axisY"));
                 if (aux->Attribute("axisZ"))
                     z = (float) atof(aux->Attribute("axisZ"));
-                if (aux->Attribute("angle"))
+                if (aux->Attribute("time")) {
+                    time = (float) atof(aux->Attribute("time"));
+                    e->newTransform( * (new TransformEvent(x,y,z,(int)(time*1000))));
+                }
+                else if (aux->Attribute("angle")) {
                     angle = (float) atof(aux->Attribute("angle"));
-                e->newTransform( * (new TransformEvent(1,x,y,z,angle)));
+                    e->newTransform( * (new TransformEvent(x,y,z,angle)));
+                }
             }
             else if (strcmp(s,"translate")==0){
                 if (aux->Attribute("X"))
@@ -59,7 +64,12 @@ public:
                     y = (float) atof(aux->Attribute("Y"));
                 if (aux->Attribute("Z"))
                     z = (float) atof(aux->Attribute("Z"));
-                e->newTransform( * (new TransformEvent(2,x,y,z)));
+                if (aux->Attribute("time")) {
+                    time = (float) atof(aux->Attribute("time"));
+                    e->newTransform( * (new TransformEvent(2,x,y,z,(int)(time*1000))));
+                }
+                else
+                    e->newTransform( * (new TransformEvent(2,x,y,z)));
             }
             else if (strcmp(s,"scale")==0)
             {
@@ -69,7 +79,12 @@ public:
                     y = (float) atof(aux->Attribute("axisY"));
                 if (aux->Attribute("axisZ"))
                     z = (float) atof(aux->Attribute("axisZ"));
-                e->newTransform( * (new TransformEvent(0,x,y,z)));
+                if (aux->Attribute("time")) {
+                    time = (float) atof(aux->Attribute("time"));
+                    e->newTransform( * (new TransformEvent(0,x,y,z,(int)(time*1000))));
+                }
+                else
+                    e->newTransform( * (new TransformEvent(0,x,y,z)));
             }
             else if (strcmp(s,"group")==0)
             {

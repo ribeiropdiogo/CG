@@ -93,7 +93,7 @@ private:
      *
      * @param idx Ponto de partida.
      */
-    static int runGroups(int idx);
+    static int runGroups(int idx, int milis);
 
     /**
      * Desenha um eixo xyz, de forma a conseguir tornar o

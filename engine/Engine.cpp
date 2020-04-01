@@ -57,8 +57,6 @@ DrawEvent Engine::newDrawing(const string& file){
 void Engine::bindAllObjects() {
     unsigned int idx, N = loadedEvents.size();
 
-    cout << N << endl;
-
     buffers = (GLuint *) malloc(sizeof(GLuint) * N);
     indexes = (GLuint *) malloc(sizeof(GLuint) * N);
 
@@ -78,7 +76,7 @@ void Engine::bindAllObjects() {
     }
 }
 
-int Engine::runGroups(int idx) {
+int Engine::runGroups(int idx, int milis) {
     int tmp, nprocd = 0;
 
     if(idx < groups.size()) {
@@ -88,12 +86,10 @@ int Engine::runGroups(int idx) {
 
         glPushMatrix();
 
-        tmp = group->publish(buffers, indexes);
-
-        cout << "idx: " << idx << ", subgroups: " << tmp << endl;
+        tmp = group->publish(buffers, indexes, milis);
 
         for(int j = 0; j < tmp; j++) {
-            nprocd += runGroups(idx + nprocd);
+            nprocd += runGroups(idx + nprocd, milis);
         }
 
         glPopMatrix();
@@ -129,7 +125,7 @@ void Engine::renderScene(){
     drawAxes();
 
     // Por aqui funcao de renderizacao.
-    runGroups(0);
+    runGroups(0, glutGet(GLUT_ELAPSED_TIME));
 
     glutSwapBuffers();
 }
