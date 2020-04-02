@@ -4,11 +4,15 @@
 
 #ifdef __APPLE__
 #include <GLUT/glut.h>
+#include <EngineMotion.h>
+
 #else
 #include <GL/glew.h>
 #include <GL/glut.h>
 #endif
 #include "Group.h"
+
+EngineMotion Group::motion;
 
 Group::Group() {
     n_subgroups = 0;
@@ -16,11 +20,14 @@ Group::Group() {
 
 void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
     Object3d obj = drawings[idx].getObj();
-    unsigned int i = drawings[idx].getBufferId();
-    glBindBuffer(GL_ARRAY_BUFFER,buffers[i]);
-    glVertexPointer(3,GL_FLOAT,0,0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indexes[i]);
-    glDrawElements(GL_TRIANGLES,obj.getIndices().size(),GL_UNSIGNED_INT,nullptr);
+    Vec3 a(obj.getPontos().at(0),obj.getPontos().at(1),obj.getPontos().at(2));
+    if (!motion.getFrustumState() || (motion.getGeometricFrustum().pointInFrustum(a)) != GeometricFrustum::OUTSIDE) {
+        unsigned int i = drawings[idx].getBufferId();
+        glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
+        glVertexPointer(3, GL_FLOAT, 0, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[i]);
+        glDrawElements(GL_TRIANGLES, obj.getIndices().size(), GL_UNSIGNED_INT, nullptr);
+    } else cout << "Figura fora da view!" << endl;
 }
 
 void Group::pushTransformation(TransformEvent te) {

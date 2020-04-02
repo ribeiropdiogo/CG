@@ -9,6 +9,7 @@
 #include "EngineMotion.h"
 #include <unordered_map>
 #include <unordered_set>
+#include <GeometricFrustum.h>
 
 using namespace std;
 
@@ -16,6 +17,12 @@ typedef void (*EMKeyProc)();
 
 GLfloat mode = GL_FILL; // GL_FILL, GL_LINE; GL_POINT
 GLfloat speed = 0.1f;
+float angle = 45, ratio=1;
+
+float nearP = 1.0f, farP = 100.0f;
+int frustumOn = 1;
+
+GeometricFrustum frustum;
 
 // angle of rotation for the camera direction
 float alpha=0.0, beta=0.0f;
@@ -24,6 +31,7 @@ Vec3 l(0.0f, 0.0f, -1.0f);
 //float lx=0.0f,lz=-1.0f, ly=0.0f;
 // XZ position of the camera
 Vec3 p(0.0, 1.0f,5.0f);
+Vec3 up(0.0f,1.0f,0.0f);
 //float x=0.0f,z=5.0f,y=1.0f;
 
 unordered_map<unsigned char, EMKeyProc> keyboardMappers;
@@ -55,6 +63,7 @@ void look_up();
 void look_down();
 void look_left();
 void look_right();
+void frustummode();
 
 /*
 ###################################################################
@@ -107,7 +116,9 @@ void EngineMotion::place_camera() {
 
     gluLookAt(	p.getX(), p.getY(), p.getZ(),
                   fut.getX(), fut.getY(),  fut.getZ(),
-                  0.0f, 1.0f,  0.0f);
+                  up.getX(),up.getY(),up.getZ());
+
+    frustum.setCamDef(p,fut,up);
 
     glPolygonMode(GL_FRONT_AND_BACK, mode);
 }
@@ -130,10 +141,12 @@ void EngineMotion::projection_size(int w, int h) {
     glViewport(0, 0, w, h);
 
     // Set perspective
-    gluPerspective(45.0f ,ratio, 1.0f ,1000.0f);
+    gluPerspective(angle,ratio,nearP,farP);
 
     // return to the model view matrix mode
     glMatrixMode(GL_MODELVIEW);
+
+    frustum.setCamInternals(angle,ratio,nearP,farP);
 }
 
 void EngineMotion::build_key_mappers() {
@@ -149,6 +162,7 @@ void EngineMotion::build_key_mappers() {
     keyboardMappers['z'] = inc_speed;
     keyboardMappers['x'] = dec_speed;
     keyboardMappers['r'] = reset_world;
+    keyboardMappers['f'] = frustummode;
 }
 
 void EngineMotion::build_special_mappers() {
@@ -156,6 +170,14 @@ void EngineMotion::build_special_mappers() {
     specialMappers[GLUT_KEY_LEFT] = look_left;
     specialMappers[GLUT_KEY_DOWN] = look_down;
     specialMappers[GLUT_KEY_RIGHT] = look_right;
+}
+
+int EngineMotion::getFrustumState() {
+    return frustumOn;
+}
+
+GeometricFrustum EngineMotion::getGeometricFrustum(){
+    return frustum;
 }
 
 void apply_active_keys() {
@@ -243,4 +265,8 @@ void look_left() {
 void look_right() {
     alpha += speed / 10;
     l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
+}
+
+void frustummode(){
+    frustumOn = !frustumOn;
 }

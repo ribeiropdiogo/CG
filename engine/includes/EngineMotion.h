@@ -5,6 +5,8 @@
 #ifndef GENERATOR_ENGINEMOTION_H
 #define GENERATOR_ENGINEMOTION_H
 
+#include "GeometricFrustum.h"
+
 class EngineMotion {
 public:
     /**
@@ -60,6 +62,9 @@ public:
     virtual void build_key_mappers();
 
     virtual void build_special_mappers();
+
+    int getFrustumState();
+    GeometricFrustum getGeometricFrustum();
 };
 
 #endif //GENERATOR_ENGINEMOTION_H
