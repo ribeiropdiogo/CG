@@ -66,10 +66,10 @@ public:
                     z = (float) atof(aux->Attribute("Z"));
                 if (aux->Attribute("time")) {
                     time = (float) atof(aux->Attribute("time"));
-                    e->newTransform( * (new TransformEvent(2,x,y,z,(int)(time*1000))));
+                    e->newTransform( * (new TransformEvent(TRANSLATE,x,y,z,(int)(time*1000))));
                 }
                 else
-                    e->newTransform( * (new TransformEvent(2,x,y,z)));
+                    e->newTransform( * (new TransformEvent(TRANSLATE,x,y,z)));
             }
             else if (strcmp(s,"scale")==0)
             {
@@ -81,10 +81,10 @@ public:
                     z = (float) atof(aux->Attribute("axisZ"));
                 if (aux->Attribute("time")) {
                     time = (float) atof(aux->Attribute("time"));
-                    e->newTransform( * (new TransformEvent(0,x,y,z,(int)(time*1000))));
+                    e->newTransform( * (new TransformEvent(SCALE,x,y,z,(int)(time*1000))));
                 }
                 else
-                    e->newTransform( * (new TransformEvent(0,x,y,z)));
+                    e->newTransform( * (new TransformEvent(SCALE,x,y,z)));
             }
             else if (strcmp(s,"group")==0)
             {

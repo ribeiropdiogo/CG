@@ -1,4 +1,5 @@
 #include "Vec3.h"
+#include <math.h>
 
 Vec3::Vec3() : Vec3(0.0f, 0.0f, 0.0f) {}
 
@@ -40,4 +41,18 @@ float Vec3::getY() {
 
 float Vec3::getZ() {
     return m_z;
+}
+
+Vec3 Vec3::normalize() {
+    float c = length();
+
+    m_x = m_x / c;
+    m_y = m_y / c;
+    m_z = m_z / c;
+
+    return *this;
+}
+
+float Vec3::length() {
+    return sqrtf(powf(m_x, 2) + powf(m_y, 2) + powf(m_z, 2));
 }

@@ -19,6 +19,8 @@ public:
     float getX();
     float getY();
     float getZ();
+    Vec3 normalize();
+    float length();
 };
 
 #endif //GENERATOR_VEC3_H

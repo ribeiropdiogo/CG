@@ -23,6 +23,7 @@ private:
 public:
     CRSpline(vector<Vec3> points, bool loop);
     int getNSegments();
+    bool isLooping();
     Vec3 getValueAt(float t);
     Vec3 getGradientAt(float t);
 };

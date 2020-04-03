@@ -27,6 +27,10 @@ int CRSpline::getNSegments() {
     return m_segments;
 }
 
+bool CRSpline::isLooping() {
+    return isLoop;
+}
+
 Vec3 CRSpline::getValueAt(float t) {
     int inds[4];
     float q0, q1, q2, q3,
