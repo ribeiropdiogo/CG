@@ -48,11 +48,12 @@ TransformEvent::TransformEvent(float x, float y, float z, int laptime)
     : TransformEvent(ROTATE, x, y, z, 360.0, laptime){}
 
 void TransformEvent::process(int milis) {
-    float factor, k, N = 1.0f;
+    float factor, k;
+    int N = 1;
 
     if(m_timeDep) {
         if(m_type == CATMULLROM)
-            N = (float)spline->getNSegments();
+            N = spline->getNSegments();
 
         factor = (float) (milis*N - m_oldtime) / (float) m_laptime;
 
