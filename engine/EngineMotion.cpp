@@ -64,7 +64,6 @@ void look_right();
 
 void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
     if(keyboardMappers.find(key) != keyboardMappers.end()) {
-        cout << "down key" << endl;
         keyboardActive.insert(key);
 
         glutPostRedisplay();
@@ -73,7 +72,6 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
 
 void EngineMotion::handle_special(int key, int xn, int yn) {
     if(specialMappers.find(key) != specialMappers.end()) {
-        cout << "down key" << endl;
         specialActive.insert(key);
 
         glutPostRedisplay();
@@ -82,7 +80,6 @@ void EngineMotion::handle_special(int key, int xn, int yn) {
 
 void EngineMotion::up_ascii(unsigned char key, int xn, int yn) {
     if(keyboardMappers.find(key) != keyboardMappers.end()) {
-        cout << "Up key" << endl;
         keyboardActive.erase(key);
 
         glutPostRedisplay();
@@ -91,7 +88,6 @@ void EngineMotion::up_ascii(unsigned char key, int xn, int yn) {
 
 void EngineMotion::up_special(int key, int xn, int yn) {
     if(specialMappers.find(key) != specialMappers.end()) {
-        cout << "Up key" << endl;
         specialActive.erase(key);
 
         glutPostRedisplay();

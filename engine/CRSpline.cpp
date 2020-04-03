@@ -1,6 +1,7 @@
 //
 // Created by syrayse on 02/04/20.
 //
+#include <iostream>
 #include "CRSpline.h"
 
 //int m_segments;
@@ -13,7 +14,9 @@ CRSpline::CRSpline(vector<Vec3> points, bool loop) {
     m_points = *(new vector<Vec3>(sz));
 
     for(int i = 0; i < sz; i++) {
-        m_points.push_back(points[i]);
+        m_points[i] = points[i];
+        Vec3 P = points[i];
+        //cout << "x: " << P.getX() << " y:" << P.getY() << " z:" << P.getZ() << endl;
     }
 
     if(loop) {
@@ -21,6 +24,8 @@ CRSpline::CRSpline(vector<Vec3> points, bool loop) {
     } else {
         m_segments = sz - 3;
     }
+
+    cout << "segments: " << m_segments << endl;
 }
 
 int CRSpline::getNSegments() {
@@ -33,9 +38,12 @@ bool CRSpline::isLooping() {
 
 Vec3 CRSpline::getValueAt(float t) {
     int inds[4];
-    float q0, q1, q2, q3,
-          tt = t * t, ttt = tt * t;
     getPointIndexes(t, inds);
+    // t *= (float)m_segments;
+    t = t - (float)(int)t;
+    // t /= (float)m_segments;
+    float q0, q1, q2, q3,
+            tt = t * t, ttt = tt * t;
 
     q0 = -0.5f*ttt + tt - 0.5f*t;
     q1 = 1.5f*ttt - 2.5f*tt + 1;
@@ -48,10 +56,10 @@ Vec3 CRSpline::getValueAt(float t) {
 
 Vec3 CRSpline::getGradientAt(float t) {
     int inds[4];
+    getPointIndexes(t, inds);
+    t = t - (float)(int)t;
     float q0, q1, q2, q3,
             tt = t * t, ttt = tt * t;
-    getPointIndexes(t, inds);
-
     q0 = -0.5f*(3*tt) + 2*t - 0.5f;
     q1 = 1.5f*(3*tt) - 2.5f*2*t;
     q2 = -1.5f*(3*tt) + 2.0f*2*t + 0.5f;
@@ -64,16 +72,19 @@ Vec3 CRSpline::getGradientAt(float t) {
 void CRSpline::getPointIndexes(float t, int *ind) {
     int p0,p1,p2,p3, N = m_segments;
 
-    if(isLoop) {
+    if(!isLoop) {
         p1 = (int)t + 1;
         p2 = p1 + 1;
         p3 = p2 + 1;
         p0 = p1 - 1;
     } else {
-        p1 = (int)t;
+        p1 = ((int)t) % N;
         p2 = (p1 + 1) % N;
         p3 = (p2 + 1) % N;
         p0 = (p1 - 1) % N;
+
+        if(p0 < 0)
+            p0 = N - 1;
     }
 
     ind[0] = p0;

@@ -34,6 +34,7 @@ public:
         }
         TiXmlElement * aux;
         float x,y,z,angle, time;
+        bool timeDep = false;
         int hCurrent;
         x=y=z=angle=0;
         for (aux=elem->FirstChildElement();aux;aux=aux->NextSiblingElement())
@@ -58,14 +59,35 @@ public:
                 }
             }
             else if (strcmp(s,"translate")==0){
+                time = 0.0f;
+                timeDep = false;
+                vector<Vec3> points;
+
+                if (aux->Attribute("time")) {
+                    time = (float) atof(aux->Attribute("time"));
+                    timeDep = true;
+                }
+
+                for (TiXmlElement * models = aux->FirstChildElement();models;models=models->NextSiblingElement()) {
+                    x = (float) atof(models->Attribute("X"));
+                    y = (float) atof(models->Attribute("Y"));
+                    z = (float) atof(models->Attribute("Z"));
+                    points.push_back(*new Vec3(x, y, z));
+                }
+
+                if(points.size() >= 4) {
+                    e->newTransform(*new TransformEvent(points, (int)(time*1000), true));
+                    continue;
+                }
+
                 if (aux->Attribute("X"))
                     x = (float) atof(aux->Attribute("X"));
                 if (aux->Attribute("Y"))
                     y = (float) atof(aux->Attribute("Y"));
                 if (aux->Attribute("Z"))
                     z = (float) atof(aux->Attribute("Z"));
-                if (aux->Attribute("time")) {
-                    time = (float) atof(aux->Attribute("time"));
+
+                if (timeDep) {
                     e->newTransform( * (new TransformEvent(TRANSLATE,x,y,z,(int)(time*1000))));
                 }
                 else
