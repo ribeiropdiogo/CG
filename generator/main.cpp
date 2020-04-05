@@ -66,9 +66,8 @@ int main(int argc, char *argv[]) {
         if(argc != 5) {
             cout << "Wrong number of arguments!" << endl;
         } else {
-            cout << "before maker" << endl;
             PatchFig pfig(argv[2], atoi(argv[3]));
-            cout << "after maker" << endl;
+
             pfig.dump_new(redir(argv[4]));
         }
     }else {
