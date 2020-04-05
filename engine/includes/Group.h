@@ -8,11 +8,13 @@
 #include <vector>
 #include "TransformEvent.h"
 #include "DrawEvent.h"
+#include "EngineMotion.h"
 
 using namespace std;
 
 class Group {
 private:
+    static EngineMotion motion;
     vector<TransformEvent> transformations;
     vector<DrawEvent> drawings;
     int n_subgroups;

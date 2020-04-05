@@ -11,6 +11,8 @@ vector<Group*> Engine::groups;
 GLuint * Engine::buffers;
 GLuint * Engine::indexes;
 
+int frame = 0, timebase = 0;
+
 void Engine::wrap_proj(int w, int h) {
     motion.projection_size(w, h);
 }
@@ -86,12 +88,13 @@ int Engine::runGroups(int idx, int milis) {
 
         glPushMatrix();
 
+        //if (!motion.getFrustumState() || (motion.getGeometricFrustum().sphereInFrustum(a,0.5) != GeometricFrustum::OUTSIDE)) {
         tmp = group->publish(buffers, indexes, milis);
 
         for(int j = 0; j < tmp; j++) {
             nprocd += runGroups(idx + nprocd, milis);
         }
-
+        //}
         glPopMatrix();
     }
 
@@ -116,6 +119,10 @@ void Engine::drawAxes(){
 }
 
 void Engine::renderScene(){
+
+    char title[100];
+    float fps,time;
+
     glClearColor(1,1,1,1);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -123,9 +130,21 @@ void Engine::renderScene(){
     motion.place_camera();
 
     drawAxes();
+    frame++;
+    time = glutGet(GLUT_ELAPSED_TIME);
+    if (time - timebase > 1000){
+        fps = frame*1000.0/(time-timebase);
+        timebase = time;
+        frame = 0;
+        sprintf(title,"Frustum: %d | FPS: %8.2f",motion.getFrustumState(),fps);
+        glutSetWindowTitle(title);
+    }
+
 
     // Por aqui funcao de renderizacao.
     runGroups(0, glutGet(GLUT_ELAPSED_TIME));
+
+
 
     glutSwapBuffers();
 }
@@ -137,7 +156,7 @@ void Engine::start(int *eargc, char **argv){
     glutInitWindowSize(800,800);
     glutCreateWindow(WIN_NAME.c_str());
 
-    glutFullScreen();
+    //glutFullScreen();
 
     motion.build_key_mappers();
     motion.build_special_mappers();
