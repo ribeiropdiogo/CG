@@ -40,7 +40,7 @@ private:
 
 public:
 
-    static enum {OUTSIDE, INTERSECT, INSIDE};
+    enum {OUTSIDE, INTERSECT, INSIDE};
 
     FrustumPlane pl[6];
 

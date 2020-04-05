@@ -15,7 +15,7 @@ AxisAlignBoxes::AxisAlignBoxes( Vec3 &corner,  float x, float y, float z) {
 AxisAlignBoxes::AxisAlignBoxes(void) {
 
 
-    corner.m_x = 0; corner.m_y = 0; corner.m_z = 0;
+    corner = *new Vec3();
 
     x = 1.0f;
     y = 1.0f;
@@ -31,8 +31,9 @@ AxisAlignBoxes::~AxisAlignBoxes() {}
 void AxisAlignBoxes::setBox( Vec3 &corner,  float x, float y, float z) {
 
 
-    this->corner.copy(corner);
+    this->corner = (corner);
 
+    /*
     if (x < 0.0) {
         x = -x;
         this->corner.m_x -= x;
@@ -44,7 +45,7 @@ void AxisAlignBoxes::setBox( Vec3 &corner,  float x, float y, float z) {
     if (z < 0.0) {
         z = -z;
         this->corner.m_z -= z;
-    }
+    }*/
     this->x = x;
     this->y = y;
     this->z = z;
@@ -58,6 +59,7 @@ Vec3 AxisAlignBoxes::getVertexP(Vec3 &normal) {
 
     Vec3 res = corner;
 
+    /*
     if (normal.m_x > 0)
         res.m_x += x;
 
@@ -65,7 +67,7 @@ Vec3 AxisAlignBoxes::getVertexP(Vec3 &normal) {
         res.m_y += y;
 
     if (normal.m_z > 0)
-        res.m_z += z;
+        res.m_z += z;*/
 
     return(res);
 }
@@ -76,6 +78,7 @@ Vec3 AxisAlignBoxes::getVertexN(Vec3 &normal) {
 
     Vec3 res = corner;
 
+    /*
     if (normal.m_x < 0)
         res.m_x += x;
 
@@ -83,7 +86,7 @@ Vec3 AxisAlignBoxes::getVertexN(Vec3 &normal) {
         res.m_y += y;
 
     if (normal.m_z < 0)
-        res.m_z += z;
+        res.m_z += z;*/
 
     return(res);
 }
