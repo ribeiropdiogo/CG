@@ -7,16 +7,16 @@
 
 #include "Figure.h"
 #include "Vec3.h"
+#include "BezierSuf.h"
 
 class PatchFig : public Figure {
 private:
-    int n_patches{},                          // No of Patches
-        n_controlps{};                        // No of control points
-    vector<vector<int>> idx_patches;        // Indices of each Patch
-    vector<Vec3> controlps;                 // Control Points
+    int n_patches{};
+    BezierSuf * bs = nullptr;
     void loadFile(char *file);
+    void buildPatches(int tessellation);
 public:
-    PatchFig(char *file);
+    PatchFig(char *file, int tessellation);
 };
 
 #endif //GENERATOR_PATCHFIG_H

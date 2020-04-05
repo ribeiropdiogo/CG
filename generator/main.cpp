@@ -2,6 +2,7 @@
 #include <memory.h>
 #include <vector>
 #include <fstream>
+#include "PatchFig.h"
 #include "Sphere.h"
 #include "Plane.h"
 #include "Box.h"
@@ -16,7 +17,7 @@ int main(int argc, char *argv[]) {
 
     string figure = argv[1];
 
-    if (figure == "plane"){
+    if (figure == "plane") {
         //plane -> size & file
         float size = atof(argv[2]);
         char *file = redir(argv[3]);
@@ -26,9 +27,9 @@ int main(int argc, char *argv[]) {
         if (argc == 4)
             p.dump_new(file);
         else
-            cout<<"Wrong number of arguments!"<<endl;
+            cout << "Wrong number of arguments!" << endl;
 
-    } else if (figure == "box"){
+    } else if (figure == "box") {
 
         //box -> X,Y,Z dimensions & file
         float X = atof(argv[2]);
@@ -36,32 +37,41 @@ int main(int argc, char *argv[]) {
         float Z = atof(argv[4]);
         char *file = redir(argv[5]);
 
-        if(argc == 6) {
-            Box box(X,Y,Z);
+        if (argc == 6) {
+            Box box(X, Y, Z);
             box.dump_new(file);
         } else if (argc == 7) {
-            Box box2(X,Y,Z, atoi(argv[6]));
+            Box box2(X, Y, Z, atoi(argv[6]));
             box2.dump_new(file);
         } else {
-            cout<<"Wrong number of arguments!"<<endl;
+            cout << "Wrong number of arguments!" << endl;
         }
 
-    } else if (figure == "sphere"){
-        if(argc != 6) {
-            cout<<"Wrong number of arguments!"<<endl;
+    } else if (figure == "sphere") {
+        if (argc != 6) {
+            cout << "Wrong number of arguments!" << endl;
         } else {
             Sphere sp(atof(argv[2]), atoi(argv[3]), atoi(argv[4]));
             sp.dump_new(redir(argv[5]));
         }
 
-    } else if (figure == "cone"){
-        if(argc != 7) {
-            cout<<"Wrong number of arguments!"<<endl;
+    } else if (figure == "cone") {
+        if (argc != 7) {
+            cout << "Wrong number of arguments!" << endl;
         } else {
             Cone cone(atof(argv[2]), atof(argv[3]), atoi(argv[4]), atoi(argv[5]));
             cone.dump_new(redir(argv[6]));
         }
-    } else {
+    } else if (figure == "patch") {
+        if(argc != 5) {
+            cout << "Wrong number of arguments!" << endl;
+        } else {
+            cout << "before maker" << endl;
+            PatchFig pfig(argv[2], atoi(argv[3]));
+            cout << "after maker" << endl;
+            pfig.dump_new(redir(argv[4]));
+        }
+    }else {
         cout<<"Invalid figure!"<<endl;
     }
 
