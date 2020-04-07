@@ -55,6 +55,7 @@ public:
     void setCamInternals(float angle, float ratio, float nearD, float farD);
     void setCamDef(Vec3 &p, Vec3 &l, Vec3 &u);
     int pointInFrustum(Vec3 &p);
+    int triangleInFrustum(Vec3 &p1,Vec3 &p2,Vec3 &p3);
     int sphereInFrustum(Vec3 &p, float raio);
     int boxInFrustum(AxisAlignBoxes &b);
 

@@ -71,6 +71,7 @@ public:
 
     vector<GLfloat> getPontos()
     {
+        //cout << "Points size:" << points.size() << endl;
         return points;
     }
     vector<GLuint> getIndices()

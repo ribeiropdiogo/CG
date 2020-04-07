@@ -8,6 +8,8 @@
 #include "TransformEvent.h"
 #ifdef __APPLE__
 #include <GLUT/glut.h>
+#include <iostream>
+
 #else
 #include <GL/glut.h>
 
@@ -60,11 +62,11 @@ void TransformEvent::process(int milis) {
         if(m_type == CATMULLROM && !spline->isLooping()
             && m_totaltime + factor >= (float)spline->getNSegments()) {
             m_totaltime = (float) spline->getNSegments() - 0.01f;
-            cout << "###############" << endl;
+            //cout << "###############" << endl;
         } else if( !(m_type == CATMULLROM && spline->isLooping())
             && m_totaltime + factor > 1.0 && m_type != ROTATE) {
             m_totaltime = 1.0;
-            cout << "$$$$$$$$$$$" << endl;
+            //cout << "$$$$$$$$$$$" << endl;
         } else
             m_totaltime += factor;
 

@@ -56,3 +56,9 @@ Vec3 Vec3::normalize() {
 float Vec3::length() {
     return sqrtf(powf(m_x, 2) + powf(m_y, 2) + powf(m_z, 2));
 }
+
+void Vec3::set(int x, int y, int z){
+    m_x = x;
+    m_y = y;
+    m_z = z;
+}

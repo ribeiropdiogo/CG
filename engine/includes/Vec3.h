@@ -19,6 +19,7 @@ public:
     float getX();
     float getY();
     float getZ();
+    void set(int x, int y, int z);
     Vec3 normalize();
     float length();
 };

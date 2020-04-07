@@ -83,6 +83,18 @@ int GeometricFrustum::pointInFrustum(Vec3 &p) {
 
 }
 
+int GeometricFrustum::triangleInFrustum(Vec3 &p1,Vec3 &p2,Vec3 &p3) {
+
+    int result = INSIDE;
+    if (pointInFrustum(p1) == OUTSIDE &&
+        pointInFrustum(p2) == OUTSIDE &&
+        pointInFrustum(p3) == OUTSIDE){
+        result = OUTSIDE;
+    }
+    return(result);
+
+}
+
 
 int GeometricFrustum::sphereInFrustum(Vec3 &p, float raio) {
 

@@ -18,6 +18,9 @@ private:
     vector<TransformEvent> transformations;
     vector<DrawEvent> drawings;
     int n_subgroups;
+    Vec3 a;
+    Vec3 b;
+    Vec3 c;
     void popDraw(int idx, GLuint * buffers, GLuint * indexes);
 public:
     Group();
