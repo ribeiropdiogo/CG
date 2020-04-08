@@ -11,7 +11,9 @@ vector<Group*> Engine::groups;
 GLuint * Engine::buffers;
 GLuint * Engine::indexes;
 
+
 int frame = 0, timebase = 0;
+int mudaCor=-123;
 
 void Engine::wrap_proj(int w, int h) {
     motion.projection_size(w, h);
@@ -58,7 +60,6 @@ DrawEvent Engine::newDrawing(const string& file){
 
 void Engine::bindAllObjects() {
     unsigned int idx, N = loadedEvents.size();
-
     buffers = (GLuint *) malloc(sizeof(GLuint) * N);
     indexes = (GLuint *) malloc(sizeof(GLuint) * N);
 
@@ -81,14 +82,25 @@ void Engine::bindAllObjects() {
 int Engine::runGroups(int idx, int milis) {
     int tmp, nprocd = 0;
 
+    int r=0,g=0,b=255;
     if(idx < groups.size()) {
         nprocd = 1;
+        if (idx==mudaCor)
+        {
+            r=255;
+            g=0;
+            b=0;
+        }
+        glColor3ub(r,g,b);
 
         Group * group = groups[idx];
-
         glPushMatrix();
 
+
+
         //if (!motion.getFrustumState() || (motion.getGeometricFrustum().sphereInFrustum(a,0.5) != GeometricFrustum::OUTSIDE)) {
+
+        glStencilFunc(GL_ALWAYS,idx+1,-1);
         tmp = group->publish(buffers, indexes, milis);
 
         for(int j = 0; j < tmp; j++) {
@@ -125,10 +137,11 @@ void Engine::renderScene(){
 
     glClearColor(1,1,1,1);
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
     motion.place_camera();
-
+    glEnable(GL_STENCIL_TEST);
+    glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
     drawAxes();
     frame++;
     time = glutGet(GLUT_ELAPSED_TIME);
@@ -149,9 +162,30 @@ void Engine::renderScene(){
     glutSwapBuffers();
 }
 
+void Engine::processMouseButtons(int button, int state, int xx, int yy) {
+    if (state == GLUT_DOWN) {
+        if (button == GLUT_MIDDLE_BUTTON) {
+            int window_width = glutGet(GLUT_WINDOW_WIDTH);
+            int window_height = glutGet(GLUT_WINDOW_HEIGHT);
+
+            GLbyte color[4];
+            GLfloat depth;
+            GLuint index;
+
+            glReadPixels(xx, window_height - yy - 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+            glReadPixels(xx, window_height - yy - 1, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+            glReadPixels(xx, window_height - yy - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+
+            printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u\n",
+                   xx, yy, color[0], color[1], color[2], color[3], depth, index);
+            mudaCor = index - 1;
+        }
+    }
+}
+
 void Engine::start(int *eargc, char **argv){
     glutInit(eargc, argv);
-    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_STENCIL);
     glutInitWindowPosition(100,100);
     glutInitWindowSize(800,800);
     glutCreateWindow(WIN_NAME.c_str());
@@ -167,6 +201,7 @@ void Engine::start(int *eargc, char **argv){
     glutIgnoreKeyRepeat(1);
     glutKeyboardFunc(wrap_ascii);
     glutSpecialFunc(wrap_special);
+    glutMouseFunc(processMouseButtons);
     glutKeyboardUpFunc(wrap_up_ascii);
     glutSpecialUpFunc(wrap_up_special);
 

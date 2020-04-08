@@ -120,6 +120,7 @@ private:
     static void wrap_special(int key, int x, int y);
     static void wrap_up_ascii(unsigned char key, int x, int y);
     static void wrap_up_special(int key, int x, int y);
+    static void processMouseButtons(int button, int state, int xx, int yy);
 
 public:
     /**
