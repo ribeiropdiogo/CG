@@ -9,7 +9,6 @@
 #include "EngineMotion.h"
 #include <unordered_map>
 #include <unordered_set>
-#include <GeometricFrustum.h>
 
 using namespace std;
 
@@ -21,8 +20,6 @@ float angle = 45, ratio=1;
 
 float nearP = 1.0f, farP = 100.0f;
 int frustumOn = 1;
-
-GeometricFrustum frustum;
 
 // angle of rotation for the camera direction
 float alpha=0.0, beta=0.0f;
@@ -114,8 +111,6 @@ void EngineMotion::place_camera() {
                   fut.getX(), fut.getY(),  fut.getZ(),
                   up.getX(),up.getY(),up.getZ());
 
-    frustum.setCamDef(p,fut,up);
-
     glPolygonMode(GL_FRONT_AND_BACK, mode);
 }
 
@@ -141,8 +136,6 @@ void EngineMotion::projection_size(int w, int h) {
 
     // return to the model view matrix mode
     glMatrixMode(GL_MODELVIEW);
-
-    frustum.setCamInternals(angle,ratio,nearP,farP);
 }
 
 void EngineMotion::build_key_mappers() {
@@ -170,10 +163,6 @@ void EngineMotion::build_special_mappers() {
 
 int EngineMotion::getFrustumState() {
     return frustumOn;
-}
-
-GeometricFrustum EngineMotion::getGeometricFrustum(){
-    return frustum;
 }
 
 void apply_active_keys() {

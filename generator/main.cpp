@@ -2,11 +2,13 @@
 #include <memory.h>
 #include <vector>
 #include <fstream>
+#include <Torus.h>
 #include "PatchFig.h"
 #include "Sphere.h"
 #include "Plane.h"
 #include "Box.h"
 #include "Cone.h"
+#include "Torus.h"
 
 using namespace std;
 
@@ -70,7 +72,14 @@ int main(int argc, char *argv[]) {
 
             pfig.dump_new(redir(argv[4]));
         }
-    }else {
+    } else if (figure == "torus") {
+        if(argc != 8) {
+            cout << "Wrong number of arguments!" << endl;
+        } else {
+            Torus tor(atof(argv[2]), atoi(argv[3]), atoi(argv[4]), atoi(argv[5]), atoi(argv[6]));
+            tor.dump_new(redir(argv[7]));
+        }
+    } else {
         cout<<"Invalid figure!"<<endl;
     }
 
