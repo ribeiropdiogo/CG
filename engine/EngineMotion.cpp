@@ -17,7 +17,6 @@ typedef void (*EMKeyProc)();
 GLfloat mode = GL_FILL; // GL_FILL, GL_LINE; GL_POINT
 GLfloat speed = 0.1f;
 float angle = 45, ratio=1;
-
 float nearP = 1.0f, farP = 100.0f;
 int frustumOn = 1;
 
@@ -30,7 +29,7 @@ Vec3 l(0.0f, 0.0f, -1.0f);
 Vec3 p(0.0, 1.0f,5.0f);
 Vec3 up(0.0f,1.0f,0.0f);
 //float x=0.0f,z=5.0f,y=1.0f;
-
+Vec3 focusV(0.0,0.0,0.0);
 unordered_map<unsigned char, EMKeyProc> keyboardMappers;
 unordered_map<int, EMKeyProc> specialMappers;
 
@@ -43,7 +42,7 @@ unordered_set<int> specialActive;
 ###################################################################
 */
 void apply_active_keys();
-
+void apply_active_keys_focused();
 void go_fill();
 void go_line();
 void go_point();
@@ -100,16 +99,25 @@ void EngineMotion::up_special(int key, int xn, int yn) {
     }
 }
 
-void EngineMotion::place_camera() {
+void EngineMotion::place_camera(bool focused,float lookX,float lookY,float lookZ) {
     glLoadIdentity();
-
-    apply_active_keys();
-
+    if (focused)
+    {
+        focusV = *(new Vec3(lookX,lookY,lookZ));
+        gluLookAt(	focusV.getX(), focusV.getY(), focusV.getZ(),
+                      0, 0,  0,
+                      up.getX(),up.getY(),up.getZ());
+        apply_active_keys_focused();
+    }
+    else {
+        apply_active_keys();
     Vec3 fut = p + l;
 
     gluLookAt(	p.getX(), p.getY(), p.getZ(),
                   fut.getX(), fut.getY(),  fut.getZ(),
                   up.getX(),up.getY(),up.getZ());
+
+    }
 
     glPolygonMode(GL_FRONT_AND_BACK, mode);
 }
@@ -177,6 +185,21 @@ void apply_active_keys() {
     }
 }
 
+void apply_active_keys_focused() {
+    /*lookV = (focusV * -1).normalize();
+    for(unsigned char key : keyboardActive) {
+        switch (key) {
+            case 's':
+                step -= speed;        lookV = lookV*step;
+                break;
+            case 'w':
+                step +=speed;        lookV = lookV*step;
+                break;
+
+        }
+    }*/
+}
+
 void go_fill() {
     mode = GL_FILL;
 }
@@ -190,7 +213,7 @@ void go_point() {
 }
 
 void move_front() {
-    p = p + (l * speed);
+        p = p + (l * speed);
 }
 
 void move_back() {
