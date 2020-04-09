@@ -16,6 +16,8 @@ EngineMotion Group::motion;
 
 Group::Group() {
     n_subgroups = 0;
+    center[0]=center[1]=center[2]=0.0;
+    center[3]=1.0;
     a.set(0,0,0);
     b.set(0,0,0);
     c.set(0,0,0);
@@ -73,4 +75,36 @@ int Group::publish(GLuint * buffers, GLuint * indexes, int milis) {
 
 int Group::addSubgroup() {
     return ++n_subgroups;
+}
+
+void Group::adjustCenter(int milis) {
+    float matrixf [16];
+    glPushMatrix();
+    glLoadIdentity();
+    for (auto & transformation : transformations) {
+        transformation.process(milis);
+    }
+    glGetFloatv(GL_MODELVIEW_MATRIX,matrixf);
+    glPopMatrix();
+    center[0] = matrixf[12]*center[3];
+    center[1] = matrixf[13]*center[3];
+    center[2] = matrixf[14]*center[3];
+    center[3] = matrixf[15]*center[3];
+    if (center[3]>1.0)
+    {
+        center[0]/=center[3];
+        center[1]/=center[3];
+        center[2]/=center[3];
+        center[3]/=center[3];
+    }
+}
+
+float Group::getCenterX() {
+    return center[0];
+}
+float Group::getCenterY() {
+    return center[1];
+}
+float Group::getCenterZ() {
+    return center[2];
 }

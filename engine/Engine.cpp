@@ -11,15 +11,19 @@ vector<Group*> Engine::groups;
 GLuint * Engine::buffers;
 GLuint * Engine::indexes;
 
-
+bool focus = false;
+float lookX=0.0,lookY=0.0,lookZ=0.0;
 int frame = 0, timebase = 0;
-int mudaCor=-123;
+int idxFocus=-1;
 
 void Engine::wrap_proj(int w, int h) {
     motion.projection_size(w, h);
 }
 
 void Engine::wrap_ascii(unsigned char key, int x, int y) {
+    if (key == '.')
+        focus=false;
+    else
     motion.handle_ascii(key, x, y);
 }
 
@@ -81,16 +85,10 @@ void Engine::bindAllObjects() {
 
 int Engine::runGroups(int idx, int milis) {
     int tmp, nprocd = 0;
-
+    GLfloat matrixf [16];
     int r=0,g=0,b=255;
     if(idx < groups.size()) {
         nprocd = 1;
-        if (idx==mudaCor)
-        {
-            r=255;
-            g=0;
-            b=0;
-        }
         glColor3ub(r,g,b);
 
         Group * group = groups[idx];
@@ -102,7 +100,13 @@ int Engine::runGroups(int idx, int milis) {
 
         glStencilFunc(GL_ALWAYS,idx+1,-1);
         tmp = group->publish(buffers, indexes, milis);
-
+        glGetFloatv(GL_MODELVIEW_MATRIX,matrixf);
+        if (idx==idxFocus && focus){
+            group->adjustCenter(milis);
+            lookX=group->getCenterX();
+            lookY=group->getCenterY();
+            lookZ=group->getCenterZ();
+        }
         for(int j = 0; j < tmp; j++) {
             nprocd += runGroups(idx + nprocd, milis);
         }
@@ -138,8 +142,7 @@ void Engine::renderScene(){
     glClearColor(1,1,1,1);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-    motion.place_camera();
+    motion.place_camera(focus,lookX,lookY,lookZ);
     glEnable(GL_STENCIL_TEST);
     glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
     drawAxes();
@@ -175,10 +178,16 @@ void Engine::processMouseButtons(int button, int state, int xx, int yy) {
             glReadPixels(xx, window_height - yy - 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
             glReadPixels(xx, window_height - yy - 1, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
             glReadPixels(xx, window_height - yy - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
-
-            printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u\n",
-                   xx, yy, color[0], color[1], color[2], color[3], depth, index);
-            mudaCor = index - 1;
+            if (index > 0)
+            {
+                printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u,center x %f,center y %f,center z %f\n",
+                       xx, yy, color[0], color[1], color[2], color[3], depth, index,groups[index-1]->getCenterX(),groups[index-1]->getCenterY(),groups[index-1]->getCenterZ());
+                focus= true;
+                lookX=groups[index]->getCenterX();
+                lookY=groups[index]->getCenterY();
+                lookZ=groups[index]->getCenterZ();
+                idxFocus=index-1;
+            }
         }
     }
 }

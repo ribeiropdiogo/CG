@@ -48,7 +48,7 @@ public:
      *      2) Posicionamento da camâra relativo à origem.
      *      3) Polygon Mode considerado atualmente.
      */
-    virtual void place_camera();
+    virtual void place_camera(bool focused,float lookX,float lookY,float lookZ);
 
     /**
      * Permite definr a tela de projeção, acedendo à

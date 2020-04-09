@@ -17,6 +17,7 @@ private:
     static EngineMotion motion;
     vector<TransformEvent> transformations;
     vector<DrawEvent> drawings;
+    GLfloat center [4];
     int n_subgroups;
     Vec3 a;
     Vec3 b;
@@ -26,8 +27,13 @@ public:
     Group();
     void pushTransformation(TransformEvent te);
     void pushDraw(DrawEvent de);
+
     int publish(GLuint * buffers, GLuint * indexes, int milis);
     int addSubgroup();
+    void adjustCenter(int milis);
+    float getCenterX();
+    float getCenterY();
+    float getCenterZ();
 };
 
 #endif //GENERATOR_GROUP_H
