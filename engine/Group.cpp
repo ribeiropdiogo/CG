@@ -18,37 +18,13 @@ Group::Group() {
     n_subgroups = 0;
     center[0]=center[1]=center[2]=0.0;
     center[3]=1.0;
-    a.set(0,0,0);
-    b.set(0,0,0);
-    c.set(0,0,0);
 }
 
 void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
-
     Object3d obj = drawings[idx].getObj();
-    //vector<GLuint> is = obj.getIndices();
-    //vector<float> ps = obj.getPontos();
-
-    //cout << "Indice size:" << is.size() << endl;
-    //cout << "Pontos size:" << ps.size() << endl;
-
-
     unsigned int i = drawings[idx].getBufferId();
     glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
     glVertexPointer(3, GL_FLOAT, 0, 0);
-
-    /*
-    int l = is.size() - is.size()%3;
-    for (int j = 0; j < l; j+=3) {
-        a.set(ps.at(is.at(j)),ps.at(is.at(j)+1),ps.at(is.at(j)+2));
-        b.set(ps.at(is.at(j+1)),ps.at(is.at(j+1)+1),ps.at(is.at(j+1)+2));
-        c.set(ps.at(is.at(j+2)),ps.at(is.at(j+2)+1),ps.at(is.at(j+2)+2));
-        if(!motion.getFrustumState() || (motion.getGeometricFrustum().triangleInFrustum(a,b,c)) != GeometricFrustum::OUTSIDE){
-            //incompleto
-        }
-    }
-    */
-
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[i]);
     glDrawElements(GL_TRIANGLES, obj.getIndices().size(), GL_UNSIGNED_INT, nullptr);
 }

@@ -13,7 +13,7 @@ include_directories(includes)
 include_directories(../engine/includes)
 link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
-add_executable(${PROJECT_NAME} main.cpp ../engine/includes/Vec3.h ../engine/Vec3.cpp Plane.cpp includes/Plane.h Box.cpp includes/Box.h includes/Cone.h Cone.cpp Figure.cpp includes/Figure.h includes/Sphere.h Sphere.cpp includes/PatchFig.h PatchFig.cpp includes/BezierSuf.h BezierSuf.cpp)
+add_executable(${PROJECT_NAME} main.cpp ../engine/includes/Vec3.h ../engine/Vec3.cpp Plane.cpp includes/Plane.h Box.cpp includes/Box.h includes/Cone.h Cone.cpp Figure.cpp includes/Figure.h includes/Sphere.h Sphere.cpp includes/PatchFig.h PatchFig.cpp includes/BezierSuf.h BezierSuf.cpp Torus.cpp includes/Torus.h)
 
 if(NOT OPENGL_FOUND)
     message(ERROR " OPENGL not found!")

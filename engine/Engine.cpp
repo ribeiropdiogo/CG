@@ -152,7 +152,7 @@ void Engine::renderScene(){
         fps = frame*1000.0/(time-timebase);
         timebase = time;
         frame = 0;
-        sprintf(title,"Frustum: %d | FPS: %8.2f",motion.getFrustumState(),fps);
+        sprintf(title,"FPS: %8.2f",motion.getFrustumState(),fps);
         glutSetWindowTitle(title);
     }
 
