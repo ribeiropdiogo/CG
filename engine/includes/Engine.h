@@ -115,6 +115,8 @@ private:
      */
     static void renderScene();
 
+    static void idleFunc();
+
     static void wrap_proj(int w, int h);
     static void wrap_ascii(unsigned char key, int x, int y);
     static void wrap_special(int key, int x, int y);

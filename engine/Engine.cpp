@@ -15,6 +15,8 @@ bool focus = false;
 float lookX=0.0,lookY=0.0,lookZ=0.0;
 int frame = 0, timebase = 0;
 int idxFocus=-1;
+int mudaCor=-1;
+int timeT=0;
 
 void Engine::wrap_proj(int w, int h) {
     motion.projection_size(w, h);
@@ -85,10 +87,14 @@ void Engine::bindAllObjects() {
 
 int Engine::runGroups(int idx, int milis) {
     int tmp, nprocd = 0;
-    GLfloat matrixf [16];
     int r=0,g=0,b=255;
     if(idx < groups.size()) {
         nprocd = 1;
+        if (idxFocus==idx && focus)
+        {
+            r=255;
+            b=0;
+        }
         glColor3ub(r,g,b);
 
         Group * group = groups[idx];
@@ -100,13 +106,6 @@ int Engine::runGroups(int idx, int milis) {
 
         glStencilFunc(GL_ALWAYS,idx+1,-1);
         tmp = group->publish(buffers, indexes, milis);
-        glGetFloatv(GL_MODELVIEW_MATRIX,matrixf);
-        if (idx==idxFocus && focus){
-            group->adjustCenter(milis);
-            lookX=group->getCenterX();
-            lookY=group->getCenterY();
-            lookZ=group->getCenterZ();
-        }
         for(int j = 0; j < tmp; j++) {
             nprocd += runGroups(idx + nprocd, milis);
         }
@@ -136,9 +135,6 @@ void Engine::drawAxes(){
 
 void Engine::renderScene(){
 
-    char title[100];
-    float fps,time;
-
     glClearColor(1,1,1,1);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -146,28 +142,34 @@ void Engine::renderScene(){
     glEnable(GL_STENCIL_TEST);
     glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
     drawAxes();
+        runGroups(0, timeT);
+    glutSwapBuffers();
+}
+
+void Engine::idleFunc()
+{
+    char title[100];
+    float fps;
     frame++;
-    time = glutGet(GLUT_ELAPSED_TIME);
-    if (time - timebase > 1000){
-        fps = frame*1000.0/(time-timebase);
-        timebase = time;
+    timeT = glutGet(GLUT_ELAPSED_TIME);
+    if (timeT - timebase > 1000){
+        fps = frame*1000.0/(timeT-timebase);
+        timebase = timeT;
         frame = 0;
         sprintf(title,"FPS: %8.2f",motion.getFrustumState(),fps);
         glutSetWindowTitle(title);
     }
-
-
-    // Por aqui funcao de renderizacao.
-    runGroups(0, glutGet(GLUT_ELAPSED_TIME));
-
-
-
-    glutSwapBuffers();
+    if (focus){
+        groups[idxFocus]->adjustCenter(timeT);
+        lookX=groups[idxFocus]->getCenterX();
+        lookY=groups[idxFocus]->getCenterY();
+        lookZ=groups[idxFocus]->getCenterZ();}
+    glutPostRedisplay();
 }
 
 void Engine::processMouseButtons(int button, int state, int xx, int yy) {
     if (state == GLUT_DOWN) {
-        if (button == GLUT_MIDDLE_BUTTON) {
+        if (button == GLUT_LEFT_BUTTON) {
             int window_width = glutGet(GLUT_WINDOW_WIDTH);
             int window_height = glutGet(GLUT_WINDOW_HEIGHT);
 
@@ -205,7 +207,7 @@ void Engine::start(int *eargc, char **argv){
     motion.build_special_mappers();
 
     glutDisplayFunc(renderScene);
-    glutIdleFunc(renderScene);
+    glutIdleFunc(idleFunc);
     glutReshapeFunc(wrap_proj);
     glutIgnoreKeyRepeat(1);
     glutKeyboardFunc(wrap_ascii);

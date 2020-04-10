@@ -19,7 +19,7 @@ GLfloat speed = 0.1f;
 float angle = 45, ratio=1;
 float nearP = 1.0f, farP = 100.0f;
 int frustumOn = 1;
-
+bool inFocus=false;
 // angle of rotation for the camera direction
 float alpha=0.0, beta=0.0f;
 // actual vector representing the camera's direction
@@ -29,7 +29,10 @@ Vec3 l(0.0f, 0.0f, -1.0f);
 Vec3 p(0.0, 1.0f,5.0f);
 Vec3 up(0.0f,1.0f,0.0f);
 //float x=0.0f,z=5.0f,y=1.0f;
-Vec3 focusV(0.0,0.0,0.0);
+Vec3 focusV(1.0,0.0,0.0);
+Vec3 holdL(1.0,0.0,0.0);
+float range=1;
+
 unordered_map<unsigned char, EMKeyProc> keyboardMappers;
 unordered_map<int, EMKeyProc> specialMappers;
 
@@ -103,21 +106,31 @@ void EngineMotion::place_camera(bool focused,float lookX,float lookY,float lookZ
     glLoadIdentity();
     if (focused)
     {
+        if (!inFocus)
+        {
+            range=1;
+            inFocus=true;
+        }
         focusV = *(new Vec3(lookX,lookY,lookZ));
-        gluLookAt(	focusV.getX(), focusV.getY(), focusV.getZ(),
-                      0, 0,  0,
-                      up.getX(),up.getY(),up.getZ());
+        l = (focusV*-1).normalize();
+        p = focusV * range;
         apply_active_keys_focused();
     }
-    else {
+    else
+    {
+        if (inFocus)
+        {
+            reset_world();
+            inFocus=false;
+        }
         apply_active_keys();
+    }
     Vec3 fut = p + l;
 
     gluLookAt(	p.getX(), p.getY(), p.getZ(),
                   fut.getX(), fut.getY(),  fut.getZ(),
                   up.getX(),up.getY(),up.getZ());
 
-    }
 
     glPolygonMode(GL_FRONT_AND_BACK, mode);
 }
@@ -186,18 +199,17 @@ void apply_active_keys() {
 }
 
 void apply_active_keys_focused() {
-    /*lookV = (focusV * -1).normalize();
     for(unsigned char key : keyboardActive) {
         switch (key) {
-            case 's':
-                step -= speed;        lookV = lookV*step;
-                break;
             case 'w':
-                step +=speed;        lookV = lookV*step;
+                range -= speed/1000.0;
+                break;
+            case 's':
+                range += speed/1000.0;
                 break;
 
         }
-    }*/
+    }
 }
 
 void go_fill() {
