@@ -156,7 +156,7 @@ void Engine::idleFunc()
         fps = frame*1000.0/(timeT-timebase);
         timebase = timeT;
         frame = 0;
-        sprintf(title,"FPS: %8.2f",motion.getFrustumState(),fps);
+        sprintf(title,"FPS: %8.2f",fps);//motion.getFrustumState(),fps);
         glutSetWindowTitle(title);
     }
     if (focus){
