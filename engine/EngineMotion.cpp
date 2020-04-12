@@ -19,7 +19,8 @@ GLfloat speed = 0.1f;
 float angle = 45, ratio=1;
 float nearP = 1.0f, farP = 100.0f;
 int frustumOn = 1;
-bool inFocus=false;
+bool inFocus=false, paused=false;
+
 // angle of rotation for the camera direction
 float alpha=0.0, beta=0.0f;
 // actual vector representing the camera's direction
@@ -63,6 +64,7 @@ void look_down();
 void look_left();
 void look_right();
 void frustummode();
+void pauseplay();
 
 /*
 ###################################################################
@@ -153,7 +155,7 @@ void EngineMotion::projection_size(int w, int h) {
     glViewport(0, 0, w, h);
 
     // Set perspective
-    gluPerspective(angle,ratio,nearP,farP);
+    gluPerspective(angle,ratio,1.0f,1000.0f);
 
     // return to the model view matrix mode
     glMatrixMode(GL_MODELVIEW);
@@ -173,6 +175,7 @@ void EngineMotion::build_key_mappers() {
     keyboardMappers['x'] = dec_speed;
     keyboardMappers['r'] = reset_world;
     keyboardMappers['f'] = frustummode;
+    keyboardMappers[' '] = pauseplay;
 }
 
 void EngineMotion::build_special_mappers() {
@@ -184,6 +187,10 @@ void EngineMotion::build_special_mappers() {
 
 int EngineMotion::getFrustumState() {
     return frustumOn;
+}
+
+int EngineMotion::checkSysTime(int milis) {
+    return milis;
 }
 
 void apply_active_keys() {
@@ -289,4 +296,8 @@ void look_right() {
 
 void frustummode(){
     frustumOn = !frustumOn;
+}
+
+void pauseplay() {
+    paused = !paused;
 }

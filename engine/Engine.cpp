@@ -142,7 +142,7 @@ void Engine::renderScene(){
     glEnable(GL_STENCIL_TEST);
     glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
     drawAxes();
-        runGroups(0, timeT);
+    runGroups(0, timeT);
     glutSwapBuffers();
 }
 
@@ -151,7 +151,7 @@ void Engine::idleFunc()
     char title[100];
     float fps;
     frame++;
-    timeT = glutGet(GLUT_ELAPSED_TIME);
+    timeT = motion.checkSysTime(glutGet(GLUT_ELAPSED_TIME));
     if (timeT - timebase > 1000){
         fps = frame*1000.0/(timeT-timebase);
         timebase = timeT;
@@ -201,7 +201,7 @@ void Engine::start(int *eargc, char **argv){
     glutInitWindowSize(800,800);
     glutCreateWindow(WIN_NAME.c_str());
 
-    //glutFullScreen();
+    glutFullScreen();
 
     motion.build_key_mappers();
     motion.build_special_mappers();

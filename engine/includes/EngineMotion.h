@@ -62,6 +62,8 @@ public:
     virtual void build_special_mappers();
 
     int getFrustumState();
+
+    int checkSysTime(int milis);
 };
 
 #endif //GENERATOR_ENGINEMOTION_H
