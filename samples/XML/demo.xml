@@ -1,6 +1,28 @@
 <scene>
     <group>
         <group>
+            <scale axisX="50" axisY="50" axisZ="50"/>
+            <group>
+                <translate time="10">
+                    <point X="3" Y="1" Z="3"/>
+                    <point X="2.6" Y="0.8" Z="2.8"/>
+                    <point X="2.3" Y="0.6" Z="2.4"/>
+                    <point X="2" Y="0.4" Z="2"/>
+                    <point X="1.6" Y="0.2" Z="1.7"/>
+                    <point X="1.3" Y="0.0" Z="1.3"/>
+                    <point X="1" Y="-0.2" Z="0.6"/>
+                    <point X="0.7" Y="-0.4" Z="0.0"/>
+                    <point X="0.5" Y="-0.6" Z="-1"/>
+                    <point X="0.2" Y="-0.8" Z="-2"/>
+                    <point X="0.0" Y="-1" Z="-3"/>
+                </translate>
+                <scale axisX="0.01" axisY="0.01" axisZ="0.01"/>
+                <models>
+                    <model file="cometa.3d"/>
+                </models>
+            </group>
+        </group>
+        <group>
             <!-- Sol -->
             <scale axisX="9.3" axisY="9.3" axisZ="9.3"/>
             <group>
