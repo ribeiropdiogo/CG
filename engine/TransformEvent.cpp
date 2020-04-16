@@ -62,11 +62,11 @@ void TransformEvent::process(int milis) {
         if(m_type == CATMULLROM && !spline->isLooping()
             && m_totaltime + factor >= (float)spline->getNSegments()) {
             m_totaltime = (float) spline->getNSegments() - 0.01f;
-            //cout << "###############" << endl;
+
         } else if( !(m_type == CATMULLROM && spline->isLooping())
             && m_totaltime + factor > 1.0 && m_type != ROTATE) {
             m_totaltime = 1.0;
-            //cout << "$$$$$$$$$$$" << endl;
+
         } else
             m_totaltime += factor;
 
@@ -95,15 +95,14 @@ void TransformEvent::process(int milis) {
 void TransformEvent::dealWithCatmullR(float milis) {
     // Mover ponto
     Vec3 P = spline->getValueAt(milis);
-    //glTranslatef(P.getX(), P.getY(), P.getZ());
-    //cout << "x:" << P.getX() << " y:" << P.getY() << " z:" << P.getZ() << endl;
-
 
     // Rotação
     Vec3 Xi = (spline->getGradientAt(milis)).normalize();
     Vec3 Zi = (Xi.crossprod(*Yii)).normalize();
     Vec3 Yi = (Zi.crossprod(Xi)).normalize();
-    //Yii = &Yi;
+
+    Yii->set(Yi.getX(), Yi.getY(), Yi.getZ());
+
     float M[16] = {
             Xi.getX(),  Xi.getY(),  Xi.getZ(),  0.0f,
             Yi.getX(),  Yi.getY(),  Yi.getZ(),  0.0f,

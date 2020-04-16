@@ -1,12 +1,7 @@
 //
 // Created by syrayse on 02/04/20.
 //
-#include <iostream>
 #include "CRSpline.h"
-
-//int m_segments;
-//bool isLoop;
-//vector<Vec3> m_points;
 
 CRSpline::CRSpline(vector<Vec3> points, bool loop) {
     int sz = points.size();
@@ -16,7 +11,6 @@ CRSpline::CRSpline(vector<Vec3> points, bool loop) {
     for(int i = 0; i < sz; i++) {
         m_points[i] = points[i];
         Vec3 P = points[i];
-        //cout << "x: " << P.getX() << " y:" << P.getY() << " z:" << P.getZ() << endl;
     }
 
     if(loop) {
@@ -25,7 +19,6 @@ CRSpline::CRSpline(vector<Vec3> points, bool loop) {
         m_segments = sz - 3;
     }
 
-    cout << "segments: " << m_segments << endl;
 }
 
 int CRSpline::getNSegments() {
@@ -39,9 +32,9 @@ bool CRSpline::isLooping() {
 Vec3 CRSpline::getValueAt(float t) {
     int inds[4];
     getPointIndexes(t, inds);
-    // t *= (float)m_segments;
+
     t = t - (float)(int)t;
-    // t /= (float)m_segments;
+
     float q0, q1, q2, q3,
             tt = t * t, ttt = tt * t;
 
