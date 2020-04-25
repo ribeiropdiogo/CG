@@ -37,6 +37,7 @@ public:
         bool timeDep = false;
         int hCurrent;
         x=y=z=angle=0;
+        int count = 0;
         for (aux=elem->FirstChildElement();aux;aux=aux->NextSiblingElement())
         {
             const char * s = aux->Value();
@@ -117,9 +118,35 @@ public:
                 loadGroup(e,aux,true,parentGroup,currentGroup,latestGroup);
                 *currentGroup=hCurrent;
             }
-            else if (strcmp(s,"models")==0)
-                for (TiXmlElement * models = aux->FirstChildElement();models;models=models->NextSiblingElement())
-                    e->newObj(models->Attribute("file"));
+            else if (strcmp(s,"models")==0){
+
+                for (TiXmlElement * models = aux->FirstChildElement();models;models = models -> NextSiblingElement()){
+                    int r = 0, g = 0 ,b = 255;
+
+                    if(models->Attribute("r"))
+                        r = (int) atoi(models->Attribute("r"));
+
+                    if(models->Attribute("g"))
+                        g = (int) atoi(models->Attribute("g"));
+
+                    if(models->Attribute("b"))
+                        b = (int) atoi(models->Attribute("b"));
+                    if(models->Attribute("file"))
+                        e->newObj(models->Attribute("file"), r, g, b);
+
+                    /*
+                    if(models->Attribute("bezier")) {
+                        int tessalation = 4;
+                        //./generator patch nomeFicheiro Tessalation outfile
+                        if (models->Attribute("tessalation"))
+                            tessalation = atoi(models->Attribute("tessalation"));
+                        e->newObj("../../samples/3D/bezier.3d",r,g,b);
+
+                    }*/
+
+                }
+            }
+
         }
     }
 
@@ -137,11 +164,23 @@ public:
         int currentGroup=0;
         int parentGroup=0;
         int latestGroup=0;
+
         if (strcmp(line, "scene") == 0) {
             pElem = hRoot.FirstChildElement().Element();
             for (pElem; pElem; pElem = pElem->NextSiblingElement()) {
+
                 if (strcmp(pElem->Value(),"group")==0)
                     loadGroup(e,pElem,false,&parentGroup,&currentGroup,&latestGroup);
+                else if(strcmp(pElem->Value(),"camera") == 0){
+                    float posX = 0, posY = 0, posZ = 0;
+                    if(pElem->Attribute("posX"))
+                        posX = (float) atof(pElem->Attribute("posX"));
+                    if(pElem->Attribute("posY"))
+                        posY = (float) atof(pElem->Attribute("posY"));
+                    if(pElem->Attribute("posZ"))
+                        posZ = (float) atof(pElem->Attribute("posZ"));
+                    e->initialCamera(posX,posY,posZ);
+                }
             }
         }
     }

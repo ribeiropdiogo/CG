@@ -64,6 +64,8 @@ public:
     int getFrustumState();
 
     int checkSysTime(int milis);
+
+    void setCamera(float x, float y, float z);
 };
 
 #endif //GENERATOR_ENGINEMOTION_H

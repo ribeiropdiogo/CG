@@ -1,4 +1,5 @@
 <scene>
+    <camera posX="100" posY="100" posZ="100"/>
     <group>
         <group>
             <scale axisX="50" axisY="50" axisZ="50"/>
@@ -28,7 +29,7 @@
             <group>
                 <rotate time="5" axisY="1"/>
                 <models>
-                    <model file="sphere.3d"/>
+                    <model file="sphere.3d" r="255" g="0" b="0"/>
                 </models>
             </group>
         </group>
@@ -89,7 +90,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" r="0" g="255" b="0"/>
                     </models>
                 </group>
                 <group>

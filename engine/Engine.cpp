@@ -64,6 +64,26 @@ DrawEvent Engine::newDrawing(const string& file){
     return *event;
 }
 
+DrawEvent Engine::newDrawing(const string& file, int r, int g, int b){
+    DrawEvent * event = nullptr;
+    auto iter = loadedEvents.find(file);
+
+    if(iter != loadedEvents.end()) {
+        // Existe já armazenado em memoria
+        event = &(iter->second);
+    }
+    else {
+        // Não existe em memoria;
+        Object3d newObj;
+        newObj.loadObject(file);
+        event = new DrawEvent(numObjs++, newObj);
+        loadedEvents.insert({file, *event});
+    }
+    printf("\n\n\n\n%d, %d, %d\n\n\n",r,g,b);
+    event->addColor(r,g,b);
+    return *event;
+}
+
 void Engine::bindAllObjects() {
     unsigned int idx, N = loadedEvents.size();
     buffers = (GLuint *) malloc(sizeof(GLuint) * N);
@@ -248,6 +268,15 @@ void Engine::newObj(const string& file){
     }
 }
 
+void Engine::newObj(const string& file, int r, int g, int b){
+    DrawEvent event = newDrawing(file,r,g,b);
+
+    if(!groups.empty()) {
+        Group * last = groups.back();
+        last->pushDraw(event);
+    }
+}
+
 void Engine::newTransform(TransformEvent te){
     if(!groups.empty()) {
         Group * last = groups.back();
@@ -257,4 +286,8 @@ void Engine::newTransform(TransformEvent te){
 
 void Engine::addSubgroup(int group) {
     groups[group]->addSubgroup();
+}
+
+void Engine::initialCamera(float x, float y, float z){
+    motion.setCamera(x,y,z);
 }

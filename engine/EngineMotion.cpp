@@ -301,3 +301,7 @@ void frustummode(){
 void pauseplay() {
     paused = !paused;
 }
+
+void EngineMotion::setCamera(float x, float y, float z){
+    p.set(x,y,z);
+}
