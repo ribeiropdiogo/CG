@@ -15,10 +15,20 @@ class DrawEvent  {
 private:
     unsigned int m_id;
     Object3d m_obj;
+    int r;
+    int g;
+    int b;
 public:
     DrawEvent(unsigned int id, Object3d obj);
     Object3d getObj();
     unsigned int getBufferId();
+    void addColor(int red, int green, int blue);
+
+    int getGreen();
+
+    int getRed();
+
+    int getBlue();
 };
 
 #endif //GENERATOR_DRAWEVENT_H

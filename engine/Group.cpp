@@ -21,7 +21,9 @@ Group::Group() {
 }
 
 void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
+
     Object3d obj = drawings[idx].getObj();
+    glColor3f(drawings[idx].getRed(),drawings[idx].getGreen(),drawings[idx].getBlue());
     unsigned int i = drawings[idx].getBufferId();
     glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
     glVertexPointer(3, GL_FLOAT, 0, 0);

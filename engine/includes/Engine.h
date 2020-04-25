@@ -167,6 +167,11 @@ public:
 
     void addSubgroup(int group);
 
+    void initialCamera(float x, float y, float z);
+
+    void newObj(const string &file, int r, int g, int b);
+
+    DrawEvent newDrawing(const string &file, int r, int g, int b);
 };
 
 #endif //GENERATOR_ENGINE_H
