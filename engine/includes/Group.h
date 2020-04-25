@@ -19,6 +19,7 @@ private:
     vector<DrawEvent> drawings;
     GLfloat center [4];
     int n_subgroups;
+    vector<int> n_upGroups;
     void popDraw(int idx, GLuint * buffers, GLuint * indexes);
 public:
     Group();
@@ -27,7 +28,9 @@ public:
 
     int publish(GLuint * buffers, GLuint * indexes, int milis);
     int addSubgroup();
-    void adjustCenter(int milis);
+    vector<int> getUpgroup();
+    void setUpgroup(int upGroupIndex,vector<int> upGroupParents);
+    void adjustCenter(vector<Group*> groups,int milis);
     float getCenterX();
     float getCenterY();
     float getCenterZ();

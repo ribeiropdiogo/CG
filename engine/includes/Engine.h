@@ -167,6 +167,8 @@ public:
 
     void addSubgroup(int group);
 
+    vector<int> addUpgroup(int upGroup,int group);
+
     void initialCamera(float x, float y, float z);
 
     void newObj(const string &file, int r, int g, int b);

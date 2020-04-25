@@ -55,11 +55,26 @@ int Group::addSubgroup() {
     return ++n_subgroups;
 }
 
-void Group::adjustCenter(int milis) {
+vector<int> Group::getUpgroup()
+{
+    return n_upGroups;
+}
+void Group::setUpgroup(int upGroupIndex, vector<int> upGroupParents) {
+    this->n_upGroups = upGroupParents;
+    this->n_upGroups.push_back(upGroupIndex);
+}
+
+void Group::adjustCenter(vector<Group*> groups,int milis) {
     float matrixf [16];
     glPushMatrix();
     glLoadIdentity();
-    for (auto & transformation : transformations) {
+    for (int ui : this->getUpgroup())
+    {
+        for (auto & transformation : groups[ui]->transformations) {
+            transformation.process(milis);
+        }
+    }
+    for (auto & transformation : this->transformations) {
         transformation.process(milis);
     }
     glGetFloatv(GL_MODELVIEW_MATRIX,matrixf);
@@ -86,3 +101,4 @@ float Group::getCenterY() {
 float Group::getCenterZ() {
     return center[2];
 }
+

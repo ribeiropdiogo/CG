@@ -30,7 +30,13 @@ public:
         if (isSub)
         {
             e->addSubgroup(*parentGroup);
-            printf("idPai: %d idAtual: %d\n",*parentGroup,*currentGroup);
+            vector<int> x=e->addUpgroup(*parentGroup,*currentGroup);
+            printf("idPai: %d idAtual: %d\nGrupos Ascendentes:\n",*parentGroup,*currentGroup);
+            for(int a:x)
+            {
+                printf("%d, ",a);
+            }
+            putchar('\n');
         }
         TiXmlElement * aux;
         float x,y,z,angle, time;

@@ -180,7 +180,7 @@ void Engine::idleFunc()
         glutSetWindowTitle(title);
     }
     if (focus){
-        groups[idxFocus]->adjustCenter(timeT);
+        groups[idxFocus]->adjustCenter(groups,timeT);
         lookX=groups[idxFocus]->getCenterX();
         lookY=groups[idxFocus]->getCenterY();
         lookZ=groups[idxFocus]->getCenterZ();}
@@ -202,13 +202,14 @@ void Engine::processMouseButtons(int button, int state, int xx, int yy) {
             glReadPixels(xx, window_height - yy - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
             if (index > 0)
             {
-                printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u,center x %f,center y %f,center z %f\n",
-                       xx, yy, color[0], color[1], color[2], color[3], depth, index,groups[index-1]->getCenterX(),groups[index-1]->getCenterY(),groups[index-1]->getCenterZ());
-                focus= true;
-                lookX=groups[index]->getCenterX();
-                lookY=groups[index]->getCenterY();
-                lookZ=groups[index]->getCenterZ();
                 idxFocus=index-1;
+                groups[idxFocus]->adjustCenter(groups,motion.checkSysTime(glutGet(GLUT_ELAPSED_TIME)));
+                printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u,center x %f,center y %f,center z %f\n",
+                       xx, yy, color[0], color[1], color[2], color[3], depth, index,groups[idxFocus]->getCenterX(),groups[idxFocus]->getCenterY(),groups[idxFocus]->getCenterZ());
+                focus= true;
+                lookX=groups[idxFocus]->getCenterX();
+                lookY=groups[idxFocus]->getCenterY();
+                lookZ=groups[idxFocus]->getCenterZ();
             }
         }
     }
@@ -287,6 +288,12 @@ void Engine::newTransform(TransformEvent te){
 void Engine::addSubgroup(int group) {
     groups[group]->addSubgroup();
 }
+
+vector<int> Engine::addUpgroup(int upGroup,int group) {
+    groups[group]->setUpgroup(upGroup,groups[upGroup]->getUpgroup());
+    return groups[group]->getUpgroup();
+}
+
 
 void Engine::initialCamera(float x, float y, float z){
     motion.setCamera(x,y,z);
