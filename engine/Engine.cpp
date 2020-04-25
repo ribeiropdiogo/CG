@@ -105,7 +105,7 @@ void Engine::bindAllObjects() {
     }
 }
 
-int Engine::runGroups(int idx, int milis) {
+int Engine::runGroups(int idx, int milis, float *viewMatrix) {
     int tmp, nprocd = 0;
     int r=0,g=0,b=255;
     if(idx < groups.size()) {
@@ -120,16 +120,14 @@ int Engine::runGroups(int idx, int milis) {
         Group * group = groups[idx];
         glPushMatrix();
 
-
-
-        //if (!motion.getFrustumState() || (motion.getGeometricFrustum().sphereInFrustum(a,0.5) != GeometricFrustum::OUTSIDE)) {
-
         glStencilFunc(GL_ALWAYS,idx+1,-1);
-        tmp = group->publish(buffers, indexes, milis);
+
+        tmp = group->publish(buffers, indexes, milis, viewMatrix);
+
         for(int j = 0; j < tmp; j++) {
-            nprocd += runGroups(idx + nprocd, milis);
+            nprocd += runGroups(idx + nprocd, milis, viewMatrix);
         }
-        //}
+
         glPopMatrix();
     }
 
@@ -154,15 +152,26 @@ void Engine::drawAxes(){
 }
 
 void Engine::renderScene(){
-
+    float viewMatrix[16];
     glClearColor(1,1,1,1);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-    motion.place_camera(focus,lookX,lookY,lookZ);
     glEnable(GL_STENCIL_TEST);
     glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
-    drawAxes();
-    runGroups(0, timeT);
+
+    glLoadIdentity();
+    motion.place_camera(focus,lookX,lookY,lookZ);
+    glGetFloatv(GL_MODELVIEW_MATRIX, viewMatrix);
+    glLoadIdentity();
+    //drawAxes();
+
+    runGroups(0, timeT, viewMatrix);
+
+    glLoadMatrixf(viewMatrix);
+    for(int i = 0; i < groups.size(); i++) {
+        groups[i]->drawTracing();
+    }
+
     glutSwapBuffers();
 }
 

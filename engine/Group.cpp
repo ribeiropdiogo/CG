@@ -18,6 +18,7 @@ Group::Group() {
     n_subgroups = 0;
     center[0]=center[1]=center[2]=0.0;
     center[3]=1.0;
+    tracing.resize(MAX_TRACE);
 }
 
 void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
@@ -31,6 +32,28 @@ void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
     glDrawElements(GL_TRIANGLES, obj.getIndices().size(), GL_UNSIGNED_INT, nullptr);
 }
 
+void Group::pushTrace(float *mat) {
+    Vec3 vec = (*new Vec3(mat[12], mat[13], mat[14]));
+    if(N < MAX_TRACE) {
+        tracing[N++] = vec;
+    }
+    else {
+        tracing[init] = vec;
+        init = (init + 1) % MAX_TRACE;
+    }
+}
+
+void Group::drawTracing() {
+    glBegin(GL_LINES);
+
+    for(int i = 0; i < N; i++) {
+        Vec3 tmp = tracing[(init + i) % MAX_TRACE];
+        glVertex3f(tmp.getX(), tmp.getY(), tmp.getZ());
+    }
+
+    glEnd();
+}
+
 void Group::pushTransformation(TransformEvent te) {
     transformations.push_back(te);
 }
@@ -39,14 +62,25 @@ void Group::pushDraw(DrawEvent de) {
     drawings.push_back(de);
 }
 
-int Group::publish(GLuint * buffers, GLuint * indexes, int milis) {
+int Group::publish(GLuint * buffers, GLuint * indexes, int milis, float *viewMatrix) {
+    float tmp[16];
+
     for (auto & transformation : transformations) {
         transformation.process(milis);
     }
 
+    glGetFloatv(GL_MODELVIEW_MATRIX, tmp);
+    Group::pushTrace(tmp);
+
+    glPushMatrix();
+    glLoadMatrixf(viewMatrix);
+    glMultMatrixf(tmp);
+
     for (int j = 0; j < drawings.size(); ++j) {
         popDraw(j, buffers, indexes);
     }
+
+    glPopMatrix();
 
     return n_subgroups;
 }

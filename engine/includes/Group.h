@@ -20,13 +20,18 @@ private:
     GLfloat center [4];
     int n_subgroups;
     vector<int> n_upGroups;
+    vector<Vec3> tracing;
+    int init=0, N=0,MAX_TRACE=200;
+
     void popDraw(int idx, GLuint * buffers, GLuint * indexes);
 public:
     Group();
     void pushTransformation(TransformEvent te);
     void pushDraw(DrawEvent de);
+    void pushTrace(float *mat);
 
-    int publish(GLuint * buffers, GLuint * indexes, int milis);
+    int publish(GLuint * buffers, GLuint * indexes, int milis, float *viewMatrix);
+    void drawTracing();
     int addSubgroup();
     vector<int> getUpgroup();
     void setUpgroup(int upGroupIndex,vector<int> upGroupParents);
