@@ -11,9 +11,11 @@ private:
 public:
     Vec3();
     Vec3(float x, float y, float z);
+    explicit Vec3(float *v);
     Vec3 operator + (Vec3 const &vec);
     Vec3 operator - (Vec3 const &vec);
     Vec3 operator * (float num);
+    Vec3 operator * (Vec3 const &vec);
     float dotprod (Vec3 const &vec);
     Vec3 crossprod (Vec3 const &vec);
     float getX();
@@ -22,6 +24,7 @@ public:
     void set(float x, float y, float z);
     Vec3 normalize();
     float length();
+    float *getVec();
 };
 
 #endif //GENERATOR_VEC3_H

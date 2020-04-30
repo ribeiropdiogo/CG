@@ -9,6 +9,8 @@ Vec3::Vec3(float x, float y, float z) {
     m_z = z;
 }
 
+Vec3::Vec3(float *v) : Vec3(v[0], v[1], v[2]) {}
+
 Vec3 Vec3::operator + (Vec3 const &vec) {
     return {m_x + vec.m_x, m_y + vec.m_y, m_z + vec.m_z};
 }
@@ -19,6 +21,10 @@ Vec3 Vec3::operator - (Vec3 const &vec) {
 
 Vec3 Vec3::operator * (float num) {
     return {m_x*num, m_y*num, m_z*num};
+}
+
+Vec3 Vec3::operator * (Vec3 const &vec) {
+    return {m_x*vec.m_x, m_y*vec.m_y, m_z*vec.m_z};
 }
 
 float Vec3::dotprod(Vec3 const &vec) {
@@ -61,4 +67,8 @@ void Vec3::set(float x, float y, float z){
     m_x = x;
     m_y = y;
     m_z = z;
+}
+
+float *Vec3::getVec() {
+    return new float[3]{m_x, m_y, m_z};
 }

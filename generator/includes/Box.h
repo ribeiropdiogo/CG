@@ -14,14 +14,25 @@ public:
     Box(float wx, float wy, float wz,
             int divisions);
 private:
-    int genStripes(float * currVertex, int divisions, float incX, float incY, float incZ);
-    void indexStripes(int divisions, int count);
-    void genLateral(float* currVertex, int divisions, float wy, float incY, float incZ);
-    void indexLateralBack(int divisions);
-    void indexLateralFront(int divisions, int count);
-    void indexGap(int sp, int divisions, bool right);
-    void indexGapSpecial();
-    void bindBand(int* band1, int* band2, int sz);
+    Vec3 kv = * new Vec3({0.0f, 0.0f, 1.0f});
+    Vec3 iv = * new Vec3({1.0f, 0.0f, 0.0f});
+    /**
+     * Gera a lateral com o respectivo vetor normal indicado.
+     * @param normals Vetor normal a sup. da face.
+     * @param steps Espaçamento entre cada um dos vertices.
+     * @param divisions Numero de divisoes desejadas.
+     * @param nVertices Numero de vertices já definidos
+     * @return Número de vértices criados.
+     */
+    int genLateral(float *normals, float *steps,
+                    int divisions, int nVertices);
+
+    /**
+     * Indica em que indice se encontra a primeira casa não nula do array, ou 0 caso sejam todos nulos.
+     * @param v Array considerado.
+     * @return Indica da primeira casa nao nula.
+     */
+    int getIndex(float *v);
 };
 
 #endif //GENERATOR_BOX_H
