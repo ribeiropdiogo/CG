@@ -32,6 +32,7 @@ void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
     glDrawElements(GL_TRIANGLES, obj.getIndices().size(), GL_UNSIGNED_INT, nullptr);
 
     // Debug normals.
+
     glColor3f(0.0f, 0.0f, 0.0f);
     int t;
     vector<GLfloat> normals = obj.getNormals();

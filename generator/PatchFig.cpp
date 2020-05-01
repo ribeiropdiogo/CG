@@ -77,8 +77,11 @@ void PatchFig::buildPatches(int tessellation) {
         for (j = 0; j <= tessellation; j++) {
             for (i = 0; i <= tessellation; i++) {
                 Vec3 p = bs->getBezierSufPoint(du*(float)i, dv*(float)j, id);
+                Vec3 n = bs->getBezierSufNorm(du*(float)i, dv*(float)j, id);
 
                 Figure::addVertice(p.getX(), p.getY(), p.getZ());
+                Figure::addNormal(n.getX(), n.getY(), n.getZ());
+                Figure::addTexCoord(du * (float) i, dv * (float) j);
             }
         }
 

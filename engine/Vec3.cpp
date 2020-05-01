@@ -1,5 +1,6 @@
 #include "Vec3.h"
 #include <math.h>
+#include <iostream>
 
 Vec3::Vec3() : Vec3(0.0f, 0.0f, 0.0f) {}
 
@@ -52,9 +53,11 @@ float Vec3::getZ() {
 Vec3 Vec3::normalize() {
     float c = length();
 
-    m_x = m_x / c;
-    m_y = m_y / c;
-    m_z = m_z / c;
+    if(abs(c) > 0.000001f) {
+        m_x = m_x / c;
+        m_y = m_y / c;
+        m_z = m_z / c;
+    }
 
     return *this;
 }

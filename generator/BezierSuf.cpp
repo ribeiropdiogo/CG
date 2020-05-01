@@ -64,7 +64,7 @@ Vec3 BezierSuf::getBezierSufNorm(float u, float v, int idPatch) {
     Vec3 bu = getBezierU(u, v, idPatch);
     Vec3 bv = getBezierV(u, v, idPatch);
 
-    return (bu.crossprod(bv)).normalize();
+    return (bu.crossprod(bv)).normalize() ;
 }
 
 float* BezierSuf::getCubic(float n) {
@@ -76,7 +76,7 @@ float* BezierSuf::getCubic(float n) {
 }
 
 float* BezierSuf::getCubicDeriv(float n) {
-    auto *r = new float[4]{3.0f*pow(n,2.0f), 2*n, 1.0f, 0.0f};
+    auto *r = new float[4]{3.0f*pow(n,2.0f), 2.0f*n, 1.0f, 0.0f};
 
     multLineM(r);
 
