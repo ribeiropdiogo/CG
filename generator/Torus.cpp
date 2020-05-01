@@ -3,6 +3,7 @@
 //
 #include <cmath>
 #include <iostream>
+#include <Vec3.h>
 #include "Torus.h"
 
 Torus::Torus(float innerRadius, float outerRadius, float height,int stacks, int slices) : Figure(stacks, slices) {
@@ -11,10 +12,10 @@ Torus::Torus(float innerRadius, float outerRadius, float height,int stacks, int 
     double theta = 0.0, phi = 0.0;
     int halfstacks = stacks/2;
 
-    int thicc = height;
+    double thicc = height;
 
     double r = thicc/2;
-    double R = innerRadius + ((outerRadius - innerRadius)/2);
+    double x,y,z,R = innerRadius + ((outerRadius - innerRadius)/2);
 
     //cout<<"sides: "<<slices<<endl;
 
@@ -22,8 +23,14 @@ Torus::Torus(float innerRadius, float outerRadius, float height,int stacks, int 
         phi = 0.0;
         //cout<<"anel "<<i+1<<endl;
         for (int j = 0; j <= stacks; j++){
-            //cout<<"vertice "<<j<<endl;
-            Torus::addVertice((R+r*cos(phi))*cos(theta),r*sin(phi),(R+r*cos(phi))*sin(theta));
+            x = (R+r*cos(phi))*cos(theta);
+            y = r*sin(phi);
+            z = (R+r*cos(phi))*sin(theta);
+            Torus::addVertice((float)x,(float)y,(float)z);
+            Vec3 p = (*new Vec3({(float)x,(float)y,(float)z})).normalize();
+            Figure::addNormal(p.getX(), p.getY(), p.getZ());
+            Figure::addTexCoord((float)i / (float)slices,
+                                (float)j / (float)stacks);
             phi += phiinc;
         }
 

@@ -31,8 +31,9 @@ void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[i]);
     glDrawElements(GL_TRIANGLES, obj.getIndices().size(), GL_UNSIGNED_INT, nullptr);
 
+    /*
+    // UNCOMMENT FOR NORMAL TESTING
     // Debug normals.
-
     glColor3f(0.0f, 0.0f, 0.0f);
     int t;
     vector<GLfloat> normals = obj.getNormals();
@@ -48,6 +49,7 @@ void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
                     points[t+2] + normals[t+2]);           // Pi + Ni
         glEnd();
     }
+    */
 }
 
 void Group::pushTrace(float *mat) {
