@@ -66,6 +66,9 @@ int Box::genLateral(float *normals, float *steps,
         for(int i = 0; i <= divisions; i++) {
             Vec3 Pi = vstep * ( (s * (float)i) + (dlt * (float)j) ) + P0;  
             Figure::addVertice(Pi.getX(), Pi.getY(), Pi.getZ());
+            Figure::addNormal(normals[0], normals[1], normals[2]);
+            Figure::addTexCoord((float) i / (float) divisions,
+                    (float) j / (float) divisions);
             nNew++;
         }
 

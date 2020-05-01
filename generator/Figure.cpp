@@ -55,9 +55,9 @@ void Figure::dump_new(char * file) {
 
     for(unsigned int i = 0; i < m_vertices.size() / 3; i++) {
         t = 3*i;
-        outfile << m_vertices[t] << " " << m_vertices[t+1] << " " << m_vertices[t+2] << " ";
-        outfile << m_normals[t] << " " << m_normals[t+1] << " " << m_normals[t+2] << " ";
-        outfile << m_tex[2*i] << " " << m_tex[2*i+1] << endl;
+        outfile << m_vertices[t] << " " << m_vertices[t+1] << " " << m_vertices[t+2] << " "
+                << m_normals[t] << " " << m_normals[t+1] << " " << m_normals[t+2] << " "
+                << m_tex[2*i] << " " << m_tex[2*i+1] << endl;
     }
 
     for(unsigned int i = 0; i < nvertices; i++) {

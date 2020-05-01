@@ -32,14 +32,17 @@ void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
     glDrawElements(GL_TRIANGLES, obj.getIndices().size(), GL_UNSIGNED_INT, nullptr);
 
     // Debug normals.
+    glColor3f(0.0f, 0.0f, 0.0f);
     int t;
     vector<GLfloat> normals = obj.getNormals();
-    vector<GLfloat> points = obj.getNormals();
+    vector<GLfloat> points = obj.getPontos();
+
     for(int ix = 0; ix < obj.getNumVertices(); ix++) {
         t = 3*ix;
+
         glBegin(GL_LINES);
-            glVertex3f(points[t], points[t+1], points[t+2]);           // Pi
-            glVertex3f(points[t] + normals[t],
+        glVertex3f(points[t] ,points[t+1] , points[t+2] );           // Pi
+            glVertex3f(points[t] + normals[t] ,
                     points[t+1] + normals[t+1],
                     points[t+2] + normals[t+2]);           // Pi + Ni
         glEnd();
