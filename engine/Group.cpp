@@ -30,6 +30,20 @@ void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
     glVertexPointer(3, GL_FLOAT, 0, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[i]);
     glDrawElements(GL_TRIANGLES, obj.getIndices().size(), GL_UNSIGNED_INT, nullptr);
+
+    // Debug normals.
+    int t;
+    vector<GLfloat> normals = obj.getNormals();
+    vector<GLfloat> points = obj.getNormals();
+    for(int ix = 0; ix < obj.getNumVertices(); ix++) {
+        t = 3*ix;
+        glBegin(GL_LINES);
+            glVertex3f(points[t], points[t+1], points[t+2]);           // Pi
+            glVertex3f(points[t] + normals[t],
+                    points[t+1] + normals[t+1],
+                    points[t+2] + normals[t+2]);           // Pi + Ni
+        glEnd();
+    }
 }
 
 void Group::pushTrace(float *mat) {

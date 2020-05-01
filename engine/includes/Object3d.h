@@ -79,6 +79,10 @@ public:
         index.clear();
     }
 
+    int getNumVertices() {
+        return numVertices;
+    }
+
     vector<GLfloat> getPontos()
     {
         //cout << "Points size:" << points.size() << endl;
