@@ -24,6 +24,8 @@ private:
     int numVertices;
     vector<GLfloat> points;
     vector<GLuint> index;
+    vector<GLfloat> normals;
+    vector<GLfloat> texCoord;
 
 public:
     Object3d() {
@@ -40,7 +42,7 @@ public:
         char * workdir = strdup("../../samples/3D/");
         workdir = (char*) realloc(workdir, strlen(workdir) + strlen(string) + 1);
         char * useThis = strcat(workdir,string);
-        float x,y,z;
+        float x,y,z,nx,ny,nz,uv,vv;
         unsigned int tempI;
         ifstream inFile(useThis);
         inFile >> numVertices;
@@ -48,10 +50,18 @@ public:
         /* alocado estado para um array de floats grande o suficiente para gerir todos os vertices do objeto */
         for (int i=0;i<numVertices;i++)
         {
-            inFile >> x >> y >> z;
+            inFile >> x >> y >> z >> nx >> ny >> nz >> uv >> vv;
+
             points.push_back(x);
             points.push_back(y);
             points.push_back(z);
+
+            normals.push_back(nx);
+            normals.push_back(ny);
+            normals.push_back(nz);
+
+            texCoord.push_back(uv);
+            texCoord.push_back(vv);
         }
         while (!inFile.eof())
         {
@@ -74,11 +84,19 @@ public:
         //cout << "Points size:" << points.size() << endl;
         return points;
     }
+
     vector<GLuint> getIndices()
     {
         return index;
     }
 
+    vector<GLfloat> getNormals() {
+        return normals;
+    }
+
+    vector<GLfloat> getTexCoords() {
+        return texCoord;
+    }
 };
 
 

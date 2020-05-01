@@ -18,6 +18,8 @@ private:
     int m_slices;
     vector<float> m_vertices;
     vector<int> m_indexes;
+    vector<float> m_normals; // normal coords.
+    vector<float> m_tex;     // tex coords.
 public:
     Figure(int stacks, int slices);
     int getStacks();
@@ -26,11 +28,14 @@ public:
     int getIndexSize();
     vector<float> getVertices();
     vector<int> getIndexes();
-    void dump_old(char * file);    // DEPRECATED
+    vector<float> getNormals();
+    vector<float> getTexCoords();
     void dump_new(char * file);
 protected:
     void addVertice(float x, float y, float z);
     void addIndex(int x, int y, int z);
+    void addNormal(float x, float y, float z);
+    void addTexCoord(float u, float v);
 };
 
 #endif //GENERATOR_FIGURE_H
