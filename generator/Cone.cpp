@@ -15,15 +15,20 @@ Cone::Cone(float radius, float height, int stacks, int slices)
     float oneRadius = radius / (float) stacks;
     float currentRadius = radius;
     float x, z;
+    float ratio = 1 / (radius / height);
     int i,t1, t2, k1, k2, count;
 
     Figure::addVertice(0.0, 0.0, 0.0);
+    Figure::addNormal(0.0f, -1.0f, 0.0f);
+    Figure::addTexCoord(0.0f, 0.0f);
 
     // Gera base
     for(i = 0; i < slices; i++) {
         z = radius*cos(oneSlice*(float)i);
         x = radius*sin(oneSlice*(float)i);
         Figure::addVertice(x, 0.0f, z);
+        Figure::addNormal(0.0f, -1.0f, 0.0f);
+        Figure::addTexCoord(0.0f, (float) i / (float) slices);
     }
 
     // Gera lateral
@@ -32,13 +37,17 @@ Cone::Cone(float radius, float height, int stacks, int slices)
         float currentHeight = oneStack * i;
 
         for(int j = 0; j < slices; j++){
-            polarVertex(oneSlice, oneSlice, currentRadius, currentHeight, j, j);
+            polarVertex(oneSlice, currentRadius, currentHeight, j, ratio);
+            Figure::addTexCoord((float) j / (float) slices,
+                                (float) i / (float) stacks);
         }
         currentRadius -= oneRadius;
     }
 
     count = Figure::getVerticeSize() / 3;
     Figure::addVertice(0.0, height, 0.0);
+    Figure::addNormal(0.0f, 1.0f, 0.0f);
+    Figure::addTexCoord(1.0f, 1.0f);
 
     // Indexa base
     for(i = 1; i < slices; i++) {
@@ -69,9 +78,16 @@ Cone::Cone(float radius, float height, int stacks, int slices)
 
 
 
-void Cone::polarVertex(double al, double be, float radius, float sz, int i, int j) {
-    float px = radius * sin(al * i);
+void Cone::polarVertex(float al, float radius, float sz, int j,float ratio) {
+    float angle = al * (float) j;
+    float px = radius * sin(angle);
     float py = sz;
-    float pz = radius * cos(be * j);
+    float pz = radius * cos(angle);
+    Vec3 grad = Cone::getGradient(angle, ratio).normalize();
     Figure::addVertice(px, py, pz);
+    Figure::addNormal(grad.getX(), grad.getY(), grad.getZ());
+}
+
+Vec3 Cone::getGradient(float angle, float c) {
+    return * new Vec3(c*sin(angle), 1.0f, c*cos(angle));
 }
