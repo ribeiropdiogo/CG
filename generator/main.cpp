@@ -73,11 +73,11 @@ int main(int argc, char *argv[]) {
             pfig.dump_new(redir(argv[4]));
         }
     } else if (figure == "torus") {
-        if(argc != 8) {
+        if(argc != 7) {
             cout << "Wrong number of arguments!" << endl;
         } else {
-            Torus tor(atof(argv[2]), atof(argv[3]), atof(argv[4]), atoi(argv[5]), atoi(argv[6]));
-            tor.dump_new(redir(argv[7]));
+            Torus tor(atof(argv[2]), atof(argv[3]), atoi(argv[4]), atoi(argv[5]));
+            tor.dump_new(redir(argv[6]));
         }
     } else {
         cout<<"Invalid figure!"<<endl;

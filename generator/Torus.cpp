@@ -6,16 +6,13 @@
 #include <Vec3.h>
 #include "Torus.h"
 
-Torus::Torus(float innerRadius, float outerRadius, float height,int stacks, int slices) : Figure(stacks, slices) {
-    double thetainc = 2*M_PI / slices;
-    double phiinc = 2*M_PI / stacks;
-    double theta = 0.0, phi = 0.0;
+Torus::Torus(float R, float r, int stacks, int slices) : Figure(stacks, slices) {
+    float thetainc = 2*M_PI / slices;
+    float phiinc = 2*M_PI / stacks;
+    float theta = 0.0, phi = 0.0;
     int halfstacks = stacks/2;
 
-    double thicc = height;
-
-    double r = thicc/2;
-    double x,y,z,R = innerRadius + ((outerRadius - innerRadius)/2);
+    float x,y,z;
 
     //cout<<"sides: "<<slices<<endl;
 
@@ -27,7 +24,7 @@ Torus::Torus(float innerRadius, float outerRadius, float height,int stacks, int 
             y = r*sin(phi);
             z = (R+r*cos(phi))*sin(theta);
             Torus::addVertice((float)x,(float)y,(float)z);
-            Vec3 p = (*new Vec3({(float)x,(float)y,(float)z})).normalize();
+            Vec3 p = Torus::getGradient(phi,theta,r,R).normalize();
             Figure::addNormal(p.getX(), p.getY(), p.getZ());
             Figure::addTexCoord((float)i / (float)slices,
                                 (float)j / (float)stacks);
@@ -57,5 +54,20 @@ Torus::Torus(float innerRadius, float outerRadius, float height,int stacks, int 
                 Torus::addIndex(i+1,i,j+i);
         }
     }
+}
 
+Vec3 Torus::getGradient(float u, float v, float r, float R) {
+    // Calcular du.
+    Vec3 du = * new Vec3(
+            -r*cos(v)*sin(u),
+            r*cos(u),
+            -r*sin(v)*sin(u));
+
+    // Calcular dv.
+    Vec3 dv = * new Vec3(
+            -R*sin(v) - r*sin(v)*cos(u),
+            0.0f,
+            R*cos(v) + r*cos(v)*cos(u));
+
+    return du.crossprod(dv);
 }

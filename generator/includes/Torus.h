@@ -6,11 +6,13 @@
 #define GENERATOR_TORUS_H
 
 #include "Figure.h"
+#include <Vec3.h>
 
 class Torus : public Figure{
 public:
-    Torus(float innerRadius, float outerRadius, float height,int stacks, int slices);
+    Torus(float R, float r, int stacks, int slices);
 private:
+    Vec3 getGradient(float u, float v, float r, float R);
 
 };
 
