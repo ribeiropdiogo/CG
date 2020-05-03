@@ -77,7 +77,6 @@ Cone::Cone(float radius, float height, int stacks, int slices)
 }
 
 
-
 void Cone::polarVertex(float al, float radius, float sz, int j,float ratio) {
     float angle = al * (float) j;
     float px = radius * sin(angle);

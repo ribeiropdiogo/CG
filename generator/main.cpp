@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <Torus.h>
+#include <MobiusStrip.h>
 #include "PatchFig.h"
 #include "Sphere.h"
 #include "Plane.h"
@@ -73,11 +74,18 @@ int main(int argc, char *argv[]) {
             pfig.dump_new(redir(argv[4]));
         }
     } else if (figure == "torus") {
-        if(argc != 7) {
+        if (argc != 7) {
             cout << "Wrong number of arguments!" << endl;
         } else {
             Torus tor(atof(argv[2]), atof(argv[3]), atoi(argv[4]), atoi(argv[5]));
             tor.dump_new(redir(argv[6]));
+        }
+    } else if (figure == "mobius") {
+        if(argc != 5) {
+            cout << "Wrong number of arguments!" << endl;
+        } else {
+            MobiusStrip mob(atoi(argv[2]), atoi(argv[3]));
+            mob.dump_new(redir(argv[4]));
         }
     } else {
         cout<<"Invalid figure!"<<endl;
