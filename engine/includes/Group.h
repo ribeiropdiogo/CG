@@ -23,14 +23,14 @@ private:
     vector<Vec3> tracing;
     int init=0, N=0,MAX_TRACE=200;
 
-    void popDraw(int idx, GLuint * buffers, GLuint * indexes);
+    void popDraw(int idx, GLuint * buffers, GLuint * indexes, GLuint * textures);
 public:
     Group();
     void pushTransformation(TransformEvent te);
     void pushDraw(DrawEvent de);
     void pushTrace(float *mat);
 
-    int publish(GLuint * buffers, GLuint * indexes, int milis, float *viewMatrix);
+    int publish(GLuint * buffers, GLuint * indexes, GLuint * textures, int milis, float *viewMatrix);
     void drawTracing();
     int addSubgroup();
     vector<int> getUpgroup();

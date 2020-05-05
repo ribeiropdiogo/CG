@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Vec3.h>
 #include "Box.h"
+#include <cmath>
 
 #define DIM 3
 

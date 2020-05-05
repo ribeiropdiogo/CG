@@ -11,6 +11,7 @@
 #include <GL/glut.h>
 #endif
 #include "Group.h"
+#include "IL/il.h"
 
 EngineMotion Group::motion;
 
@@ -21,15 +22,24 @@ Group::Group() {
     tracing.resize(MAX_TRACE);
 }
 
-void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes) {
+void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes, GLuint * textures) {
 
     Object3d obj = drawings[idx].getObj();
     glColor3f(drawings[idx].getRed(),drawings[idx].getGreen(),drawings[idx].getBlue());
     unsigned int i = drawings[idx].getBufferId();
+
+    float white[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+
     glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
     glVertexPointer(3, GL_FLOAT, 0, 0);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[i]);
     glDrawElements(GL_TRIANGLES, obj.getIndices().size(), GL_UNSIGNED_INT, nullptr);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, textures[i]);
+    glTexCoordPointer(2, GL_FLOAT, 0, 0);
 
     /*
     // UNCOMMENT FOR NORMAL TESTING
@@ -82,7 +92,7 @@ void Group::pushDraw(DrawEvent de) {
     drawings.push_back(de);
 }
 
-int Group::publish(GLuint * buffers, GLuint * indexes, int milis, float *viewMatrix) {
+int Group::publish(GLuint * buffers, GLuint * indexes, GLuint * textures, int milis, float *viewMatrix) {
     float tmp[16];
 
     for (auto & transformation : transformations) {
@@ -97,7 +107,7 @@ int Group::publish(GLuint * buffers, GLuint * indexes, int milis, float *viewMat
     glMultMatrixf(tmp);
 
     for (int j = 0; j < drawings.size(); ++j) {
-        popDraw(j, buffers, indexes);
+        popDraw(j, buffers, indexes, textures);
     }
 
     glPopMatrix();

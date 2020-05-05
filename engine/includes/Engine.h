@@ -54,6 +54,16 @@ private:
     static GLuint * indexes;
 
     /**
+     * Buffer das texturas.
+     */
+    static GLuint * normals;
+
+    /**
+     * Buffer das texturas.
+     */
+    static GLuint * textures;
+
+    /**
      * Calcula o grupo mais recente a ser encontrado,
      * correspondente àquele que de momento está a ser
      * processado.
@@ -74,6 +84,11 @@ private:
      * @return Evento criado.
      */
     DrawEvent newDrawing(const string& file);
+
+    /**
+     * Guarda as texturas fornecidasdna estrutura devida.
+     */
+    void loadTexture(int idx, string texture, GLuint *textures);
 
     /**
      * Efetua o binding de todos os objetos, fazendo

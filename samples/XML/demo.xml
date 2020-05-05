@@ -66,7 +66,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="relva.jpg"/>
                     </models>
                 </group>
                 <group>
