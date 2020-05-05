@@ -64,7 +64,8 @@ DrawEvent Engine::newDrawing(const string& file){
     return *event;
 }
 
-DrawEvent Engine::newDrawing(const string& file, int r, int g, int b){
+DrawEvent Engine::newDrawing(const string& file, int r, int g, int b,
+        float diffR, float diffG, float diffB, const string& texture){
     DrawEvent * event = nullptr;
     auto iter = loadedEvents.find(file);
 
@@ -79,8 +80,16 @@ DrawEvent Engine::newDrawing(const string& file, int r, int g, int b){
         event = new DrawEvent(numObjs++, newObj);
         loadedEvents.insert({file, *event});
     }
-    printf("\n\n\n\n%d, %d, %d\n\n\n",r,g,b);
+    //printf("\n\n\n\n%d, %d, %d\n\n\n",r,g,b);
+
     event->addColor(r,g,b);
+
+    event->addAmbiance(diffR, diffG, diffB);
+
+    event->addTexture(texture);
+
+    printf("%s\n", event->getTexture().c_str());
+
     return *event;
 }
 
@@ -278,8 +287,10 @@ void Engine::newObj(const string& file){
     }
 }
 
-void Engine::newObj(const string& file, int r, int g, int b){
-    DrawEvent event = newDrawing(file,r,g,b);
+void Engine::newObj(const string& file, int r, int g, int b,
+        float diffR, float diffG, float diffB, const string &texture){
+
+    DrawEvent event = newDrawing(file,r,g,b,diffR,diffG,diffB,texture);
 
     if(!groups.empty()) {
         Group * last = groups.back();

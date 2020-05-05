@@ -9,6 +9,8 @@ DrawEvent::DrawEvent(unsigned int id, Object3d obj) {
     r = 0;
     g = 0;
     b = 255;
+    diffR = diffG = diffB = 0.0f;
+    texture = "";
 }
 
 Object3d DrawEvent::getObj() {
@@ -25,6 +27,16 @@ void DrawEvent::addColor(int red, int green, int blue) {
     b = blue;
 }
 
+void DrawEvent::addAmbiance(float n_diffR, float n_diffG, float n_diffB) {
+    diffR = n_diffR;
+    diffG = n_diffG;
+    diffB = n_diffB;
+}
+
+void DrawEvent::addTexture(const string &n_texture) {
+    texture = n_texture;
+}
+
 int DrawEvent::getRed(){
     return r;
 }
@@ -35,4 +47,20 @@ int DrawEvent::getGreen(){
 
 int DrawEvent::getBlue(){
     return b;
+}
+
+float DrawEvent::getDiffR() {
+    return diffR;
+}
+
+float DrawEvent::getDiffG() {
+    return diffG;
+}
+
+float DrawEvent::getDiffB() {
+    return diffB;
+}
+
+string DrawEvent::getTexture() {
+    return texture;
 }

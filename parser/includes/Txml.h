@@ -39,7 +39,9 @@ public:
             putchar('\n');
         }
         TiXmlElement * aux;
+        string texture;
         float x,y,z,angle, time;
+        float diffR, diffG, diffB;
         bool timeDep = false;
         int hCurrent;
         x=y=z=angle=0;
@@ -128,6 +130,21 @@ public:
 
                 for (TiXmlElement * models = aux->FirstChildElement();models;models = models -> NextSiblingElement()){
                     int r = 0, g = 0 ,b = 255;
+                    diffR = diffG = diffB = 0.0f;
+
+                    if(models->Attribute("texture")) {
+                        texture = * new string(models->Attribute("texture"));
+                    }
+
+                    if(models->Attribute("diffR")) {
+                        diffR = (float) atof(models->Attribute("diffR"));
+                    }
+                    if(models->Attribute("diffG")) {
+                        diffG = (float) atof(models->Attribute("diffG"));
+                    }
+                    if(models->Attribute("diffB")) {
+                        diffB = (float) atof(models->Attribute("diffB"));
+                    }
 
                     if(models->Attribute("r"))
                         r = (int) atoi(models->Attribute("r"));
@@ -137,8 +154,11 @@ public:
 
                     if(models->Attribute("b"))
                         b = (int) atoi(models->Attribute("b"));
+
+
                     if(models->Attribute("file"))
-                        e->newObj(models->Attribute("file"), r, g, b);
+                        e->newObj(models->Attribute("file"), r, g, b, diffR, diffG, diffB, texture);
+                    texture.erase();
 
                     /*
                     if(models->Attribute("bezier")) {

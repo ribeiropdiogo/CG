@@ -171,9 +171,11 @@ public:
 
     void initialCamera(float x, float y, float z);
 
-    void newObj(const string &file, int r, int g, int b);
+    void newObj(const string &file, int r, int g, int b,
+            float diffR, float diffG, float diffB, const string &texture);
 
-    DrawEvent newDrawing(const string &file, int r, int g, int b);
+    DrawEvent newDrawing(const string &file, int r, int g, int b,
+            float diffR, float diffG, float diffB, const string& texture);
 };
 
 #endif //GENERATOR_ENGINE_H
