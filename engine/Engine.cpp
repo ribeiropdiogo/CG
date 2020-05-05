@@ -44,29 +44,6 @@ void Engine::wrap_up_special(int key, int x, int y) {
     motion.up_special(key, x, y);
 }
 
-Group * Engine::latestGroup(){
-    return groups.back();
-}
-
-DrawEvent Engine::newDrawing(const string& file){
-    DrawEvent * event = nullptr;
-    auto iter = loadedEvents.find(file);
-
-    if(iter != loadedEvents.end()) {
-        // Existe já armazenado em memoria
-        event = &(iter->second);
-    }
-    else {
-        // Não existe em memoria;
-        Object3d newObj;
-        newObj.loadObject(file);
-        event = new DrawEvent(numObjs++, newObj);
-        loadedEvents.insert({file, *event});
-    }
-
-    return *event;
-}
-
 DrawEvent Engine::newDrawing(const string& file, int r, int g, int b,
         float diffR, float diffG, float diffB, const string& texture){
     DrawEvent * event = nullptr;
@@ -80,29 +57,21 @@ DrawEvent Engine::newDrawing(const string& file, int r, int g, int b,
         // Não existe em memoria;
         Object3d newObj;
         newObj.loadObject(file);
-        event = new DrawEvent(numObjs++, newObj);
+        event = new DrawEvent(numObjs++, newObj, r, g, b, diffR, diffG, diffB, texture);
         loadedEvents.insert({file, *event});
     }
-    //printf("\n\n\n\n%d, %d, %d\n\n\n",r,g,b);
-
-    event->addColor(r,g,b);
-
-    event->addAmbiance(diffR, diffG, diffB);
-
-    event->addTexture(texture);
-
-    printf("%s\n", event->getTexture().c_str());
 
     return *event;
 }
 
 void Engine::loadTexture(int idx, string texture_name, GLuint *textures){
+    if(!texture_name.empty()) {
         unsigned int t, tw, th;
         unsigned char *texData;
         ilGenImages(1, &t);
         ilBindImage(t);
-        //ilLoadImage((ILstring)texture_name.c_str());
-        ilLoadImage((ILstring)"relva.jpg");
+
+        ilLoadImage((ILstring) texture_name.c_str());
         tw = ilGetInteger(IL_IMAGE_WIDTH);
         th = ilGetInteger(IL_IMAGE_HEIGHT);
         ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
@@ -117,6 +86,7 @@ void Engine::loadTexture(int idx, string texture_name, GLuint *textures){
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
         glGenerateMipmap(GL_TEXTURE_2D);
+    }
 }
 
 void Engine::bindAllObjects() {
@@ -185,23 +155,6 @@ int Engine::runGroups(int idx, int milis, float *viewMatrix) {
     }
 
     return nprocd;
-}
-
-void Engine::drawAxes(){
-    glBegin(GL_LINES);
-    // X axis in red
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(0.0f, 0.0f, 0.0f);
-    glVertex3f( 100.0f, 0.0f, 0.0f);
-    // Y Axis in Green
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(0.0f, 0.0f, 0.0f);
-    glVertex3f(0.0f, 100.0f, 0.0f);
-    // Z Axis in Blue
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.0f, 0.0f, 0.0f);
-    glVertex3f(0.0f, 0.0f, 100.0f);
-    glEnd();
 }
 
 void Engine::renderScene(){
@@ -332,17 +285,8 @@ void Engine::newGroup(){
     groups.push_back(new Group());
 }
 
-void Engine::newObj(const string& file){
-    DrawEvent event = newDrawing(file);
-
-    if(!groups.empty()) {
-        Group * last = groups.back();
-        last->pushDraw(event);
-    }
-}
-
 void Engine::newObj(const string& file, int r, int g, int b,
-        float diffR, float diffG, float diffB, const string &texture){
+        float diffR, float diffG, float diffB, string texture){
 
     DrawEvent event = newDrawing(file,r,g,b,diffR,diffG,diffB,texture);
 

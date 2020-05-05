@@ -13,6 +13,13 @@ DrawEvent::DrawEvent(unsigned int id, Object3d obj) {
     texture = "";
 }
 
+DrawEvent::DrawEvent(unsigned int id, Object3d obj,
+        int r, int g, int b,float diffR, float diffG, float diffB, string texture) : DrawEvent(id,obj) {
+    addColor(r,g,b);
+    addAmbiance(diffR,diffG,diffB);
+    addTexture(texture);
+}
+
 Object3d DrawEvent::getObj() {
     return m_obj;
 }

@@ -20,6 +20,8 @@ private:
     string texture;
 public:
     DrawEvent(unsigned int id, Object3d obj);
+    DrawEvent(unsigned int id, Object3d obj,
+              int r, int g, int b,float diffR, float diffG, float diffB, string texture);
     Object3d getObj();
     unsigned int getBufferId();
 

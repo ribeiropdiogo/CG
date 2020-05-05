@@ -166,15 +166,6 @@ public:
     void newGroup();
 
     /**
-     * Adiciona um novo objeto ao Engine, que posteriormente
-     * será transformado num DrawEvent. Este DrawEvent é associado
-     * ao grupo mais recente a ser processado, ou seja, aquele que se
-     * obtem da chamada mais recente de newGroup.
-     * @param file Ficheiro a ser processado.
-     */
-    void newObj(const string& file);
-
-    /**
      * Adiciona uma nova transformação, associando esta ao grupo
      * mas recente.
      * @param te Transformação a ser associada.
@@ -188,7 +179,7 @@ public:
     void initialCamera(float x, float y, float z);
 
     void newObj(const string &file, int r, int g, int b,
-            float diffR, float diffG, float diffB, const string &texture);
+            float diffR, float diffG, float diffB, string texture);
 
     DrawEvent newDrawing(const string &file, int r, int g, int b,
             float diffR, float diffG, float diffB, const string& texture);
