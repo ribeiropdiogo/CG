@@ -11,6 +11,7 @@ EngineMotion Engine::motion;
 vector<Group*> Engine::groups;
 GLuint * Engine::buffers;
 GLuint * Engine::indexes;
+GLuint * Engine::textures;
 
 bool focus = false;
 float lookX=0.0,lookY=0.0,lookZ=0.0;
@@ -95,7 +96,7 @@ DrawEvent Engine::newDrawing(const string& file, int r, int g, int b,
 }
 
 void Engine::loadTexture(int idx, string texture_name, GLuint *textures){
-        unsigned int t, tw, th;
+        /*unsigned int t, tw, th;
         unsigned char *texData;
         ilGenImages(1, &t);
         ilBindImage(t);
@@ -114,7 +115,7 @@ void Engine::loadTexture(int idx, string texture_name, GLuint *textures){
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
-        //glGenerateMipmap(GL_TEXTURE_2D);
+        //glGenerateMipmap(GL_TEXTURE_2D);*/
 }
 
 void Engine::bindAllObjects() {
@@ -122,11 +123,11 @@ void Engine::bindAllObjects() {
     buffers = (GLuint *) malloc(sizeof(GLuint) * N);
     indexes = (GLuint *) malloc(sizeof(GLuint) * N);
 
-    ilInit();
+    //ilInit();
 
     glGenBuffers(N, buffers);
     glGenBuffers(N, indexes);
-    glGenBuffers(N, textures);
+   // glGenBuffers(N, textures);
 
     GLuint ts[N];
     glGenTextures(N, ts);
@@ -135,7 +136,7 @@ void Engine::bindAllObjects() {
         Object3d obj = elem.second.getObj();
         idx = elem.second.getBufferId();
 
-        loadTexture(idx, elem.second.getTexture(), textures);
+        //loadTexture(idx, elem.second.getTexture(), textures);
 
         glBindBuffer(GL_ARRAY_BUFFER, buffers[idx]);
         glBufferData(GL_ARRAY_BUFFER, obj.getPontos().size() * sizeof(GLfloat),
@@ -143,12 +144,12 @@ void Engine::bindAllObjects() {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[idx]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj.getIndices().size() * sizeof(GLuint),
                      obj.getIndices().data(), GL_STATIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, normals[idx]);
-        glBufferData(GL_ARRAY_BUFFER, obj.getNormals().size() * sizeof(GLuint),
-                     obj.getNormals().data(), GL_STATIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, textures[idx]);
-        glBufferData(GL_ARRAY_BUFFER, obj.getTexCoords().size() * sizeof(GLuint),
-                     obj.getTexCoords().data(), GL_STATIC_DRAW);
+        //glBindBuffer(GL_ARRAY_BUFFER, normals[idx]);
+        //glBufferData(GL_ARRAY_BUFFER, obj.getNormals().size() * sizeof(GLuint),
+          //           obj.getNormals().data(), GL_STATIC_DRAW);
+        //glBindBuffer(GL_ARRAY_BUFFER, textures[idx]);
+        //glBufferData(GL_ARRAY_BUFFER, obj.getTexCoords().size() * sizeof(GLuint),
+                 //    obj.getTexCoords().data(), GL_STATIC_DRAW);
     }
 }
 
@@ -200,7 +201,7 @@ void Engine::drawAxes(){
 
 void Engine::renderScene(){
     float viewMatrix[16];
-    glClearColor(0.5, 0.5, 0.5, 0.5);
+    glClearColor(1,1,1,1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     glEnable(GL_STENCIL_TEST);
     glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
@@ -219,7 +220,7 @@ void Engine::renderScene(){
     }
 
     float lpos[4] = { 1,1,1,0 };
-    glLightfv(GL_LIGHT0, GL_POSITION, lpos);
+    //glLightfv(GL_LIGHT0, GL_POSITION, lpos);
 
 
     glutSwapBuffers();

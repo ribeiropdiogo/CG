@@ -10,6 +10,7 @@
 #include "DrawEvent.h"
 #include "Group.h"
 #include "EngineMotion.h"
+#include "IL/il.h"
 
 class Engine {
 private:
