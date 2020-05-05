@@ -11,7 +11,7 @@ EngineMotion Engine::motion;
 vector<Group*> Engine::groups;
 GLuint * Engine::buffers;
 GLuint * Engine::indexes;
-GLuint * Engine::textures;
+GLuint * Engine::texCoords;
 
 bool focus = false;
 float lookX=0.0,lookY=0.0,lookZ=0.0;
@@ -19,6 +19,7 @@ int frame = 0, timebase = 0;
 int idxFocus=-1;
 int mudaCor=-1;
 int timeT=0;
+unsigned int * textures;
 
 void Engine::wrap_proj(int w, int h) {
     motion.projection_size(w, h);
@@ -96,12 +97,12 @@ DrawEvent Engine::newDrawing(const string& file, int r, int g, int b,
 }
 
 void Engine::loadTexture(int idx, string texture_name, GLuint *textures){
-        /*unsigned int t, tw, th;
+        unsigned int t, tw, th;
         unsigned char *texData;
         ilGenImages(1, &t);
         ilBindImage(t);
         //ilLoadImage((ILstring)texture_name.c_str());
-    ilLoadImage((ILstring)"relva.jpg");
+        ilLoadImage((ILstring)"relva.jpg");
         tw = ilGetInteger(IL_IMAGE_WIDTH);
         th = ilGetInteger(IL_IMAGE_HEIGHT);
         ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
@@ -115,28 +116,29 @@ void Engine::loadTexture(int idx, string texture_name, GLuint *textures){
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
-        //glGenerateMipmap(GL_TEXTURE_2D);*/
+        glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 void Engine::bindAllObjects() {
     unsigned int idx, N = loadedEvents.size();
     buffers = (GLuint *) malloc(sizeof(GLuint) * N);
     indexes = (GLuint *) malloc(sizeof(GLuint) * N);
+    texCoords = (GLuint *) malloc(sizeof(GLuint) * N);
+    textures = (unsigned int *) malloc(sizeof(unsigned int) * N);
 
-    //ilInit();
 
     glGenBuffers(N, buffers);
     glGenBuffers(N, indexes);
-   // glGenBuffers(N, textures);
+    glGenBuffers(N, texCoords);
 
-    GLuint ts[N];
-    glGenTextures(N, ts);
+    ;
+    glGenTextures(N, textures);
 
     for(auto elem : loadedEvents) {
         Object3d obj = elem.second.getObj();
         idx = elem.second.getBufferId();
 
-        //loadTexture(idx, elem.second.getTexture(), textures);
+        loadTexture(idx, elem.second.getTexture(), textures);
 
         glBindBuffer(GL_ARRAY_BUFFER, buffers[idx]);
         glBufferData(GL_ARRAY_BUFFER, obj.getPontos().size() * sizeof(GLfloat),
@@ -144,12 +146,15 @@ void Engine::bindAllObjects() {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[idx]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj.getIndices().size() * sizeof(GLuint),
                      obj.getIndices().data(), GL_STATIC_DRAW);
-        //glBindBuffer(GL_ARRAY_BUFFER, normals[idx]);
-        //glBufferData(GL_ARRAY_BUFFER, obj.getNormals().size() * sizeof(GLuint),
-          //           obj.getNormals().data(), GL_STATIC_DRAW);
-        //glBindBuffer(GL_ARRAY_BUFFER, textures[idx]);
-        //glBufferData(GL_ARRAY_BUFFER, obj.getTexCoords().size() * sizeof(GLuint),
-                 //    obj.getTexCoords().data(), GL_STATIC_DRAW);
+        /*
+        glBindBuffer(GL_ARRAY_BUFFER, normals[idx]);
+        glBufferData(GL_ARRAY_BUFFER, obj.getNormals().size() * sizeof(GLuint),
+                obj.getNormals().data(), GL_STATIC_DRAW);
+                */
+
+        glBindBuffer(GL_ARRAY_BUFFER, texCoords[idx]);
+        glBufferData(GL_ARRAY_BUFFER, obj.getTexCoords().size() * sizeof(GLuint),
+                obj.getTexCoords().data(), GL_STATIC_DRAW);
     }
 }
 
@@ -170,7 +175,7 @@ int Engine::runGroups(int idx, int milis, float *viewMatrix) {
 
         glStencilFunc(GL_ALWAYS,idx+1,-1);
 
-        tmp = group->publish(buffers, indexes, textures, milis, viewMatrix);
+        tmp = group->publish(buffers, indexes, texCoords, textures, milis, viewMatrix);
 
         for(int j = 0; j < tmp; j++) {
             nprocd += runGroups(idx + nprocd, milis, viewMatrix);
@@ -201,7 +206,7 @@ void Engine::drawAxes(){
 
 void Engine::renderScene(){
     float viewMatrix[16];
-    glClearColor(1,1,1,1);
+    //glClearColor(1,1,1,1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     glEnable(GL_STENCIL_TEST);
     glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
@@ -219,7 +224,7 @@ void Engine::renderScene(){
         groups[i]->drawTracing();
     }
 
-    float lpos[4] = { 1,1,1,0 };
+    float lpos[4] = { 4,4,4,0 };
     //glLightfv(GL_LIGHT0, GL_POSITION, lpos);
 
 
@@ -301,12 +306,13 @@ void Engine::start(int *eargc, char **argv){
         glewInit();
     #endif
 
+    ilInit();
     glEnable(GL_TEXTURE_2D);
 
     glEnable(GL_DEPTH_TEST);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
+    //glEnableClientState(GL_NORMAL_ARRAY);
     glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);

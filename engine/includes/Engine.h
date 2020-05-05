@@ -60,9 +60,9 @@ private:
     static GLuint * normals;
 
     /**
-     * Buffer das texturas.
+     * Buffer das coordenadas das texturas.
      */
-    static GLuint * textures;
+    static GLuint * texCoords;
 
     /**
      * Calcula o grupo mais recente a ser encontrado,

@@ -22,24 +22,27 @@ Group::Group() {
     tracing.resize(MAX_TRACE);
 }
 
-void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes, GLuint * textures) {
+void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes, GLuint * texCoords, unsigned int * textures) {
 
     Object3d obj = drawings[idx].getObj();
-    glColor3f(drawings[idx].getRed(),drawings[idx].getGreen(),drawings[idx].getBlue());
+    //glColor3f(drawings[idx].getRed(),drawings[idx].getGreen(),drawings[idx].getBlue());
     unsigned int i = drawings[idx].getBufferId();
 
-    float white[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+    //float white[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    //glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+
+    glBindTexture(GL_TEXTURE_2D, textures[i]);
 
     glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
     glVertexPointer(3, GL_FLOAT, 0, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, texCoords[i]);
+    glTexCoordPointer(2, GL_FLOAT, 0, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[i]);
     glDrawElements(GL_TRIANGLES, obj.getIndices().size(), GL_UNSIGNED_INT, nullptr);
 
     glBindTexture(GL_TEXTURE_2D, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, textures[i]);
-    glTexCoordPointer(2, GL_FLOAT, 0, 0);
 
     /*
     // UNCOMMENT FOR NORMAL TESTING
@@ -92,7 +95,7 @@ void Group::pushDraw(DrawEvent de) {
     drawings.push_back(de);
 }
 
-int Group::publish(GLuint * buffers, GLuint * indexes, GLuint * textures, int milis, float *viewMatrix) {
+int Group::publish(GLuint * buffers, GLuint * indexes, GLuint * texCoords, unsigned int * textures,int milis, float *viewMatrix) {
     float tmp[16];
 
     for (auto & transformation : transformations) {
@@ -107,7 +110,7 @@ int Group::publish(GLuint * buffers, GLuint * indexes, GLuint * textures, int mi
     glMultMatrixf(tmp);
 
     for (int j = 0; j < drawings.size(); ++j) {
-        popDraw(j, buffers, indexes, textures);
+        popDraw(j, buffers, indexes, texCoords, textures);
     }
 
     glPopMatrix();
