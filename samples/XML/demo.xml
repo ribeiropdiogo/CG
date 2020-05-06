@@ -138,7 +138,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/makemake.jpg"/>
                     </models>
                 </group>
             </group>
@@ -150,7 +150,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/ceres.jpg"/>
                     </models>
                 </group>
             </group>
@@ -162,7 +162,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/eris.jpg"/>
                     </models>
                 </group>
             </group>
@@ -174,7 +174,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/haumea.jpg"/>
                     </models>
                 </group>
             </group>
@@ -198,7 +198,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d" />
+                        <model file="sphere.3d" texture="planetas/ceres.jpg"/>
                     </models>
                 </group>
             </group>
@@ -210,7 +210,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/eris.jpg"/>
                     </models>
                 </group>
             </group>
@@ -222,7 +222,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/haumea.jpg"/>
                     </models>
                 </group>
             </group>
@@ -234,7 +234,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/makemake.jpg"/>
                     </models>
                 </group>
             </group>
@@ -246,7 +246,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/neptune.jpg"/>
                     </models>
                 </group>
             </group>
@@ -258,7 +258,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/moon.jpg"/>
                     </models>
                 </group>
             </group>
@@ -270,7 +270,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="relva.jpg"/>
                     </models>
                 </group>
             </group>
@@ -294,7 +294,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/eris.jpg"/>
                     </models>
                 </group>
             </group>
@@ -306,7 +306,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/ceres.jpg"/>
                     </models>
                 </group>
             </group>
@@ -318,7 +318,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/makemake.jpg"/>
                     </models>
                 </group>
             </group>
@@ -330,7 +330,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" texture="planetas/makemake.jpg"/>
                     </models>
                 </group>
             </group>
@@ -342,7 +342,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" exture="planetas/eris.jpg"/>
                     </models>
                 </group>
             </group>
@@ -366,7 +366,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" exture="planetas/eris.jpg"/>
                     </models>
                 </group>
             </group>
@@ -378,7 +378,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" exture="planetas/haumea.jpg"/>
                     </models>
                 </group>
             </group>
@@ -402,7 +402,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d"/>
+                        <model file="sphere.3d" exture="planetas/moon.jpg"/>
                     </models>
                 </group>
             </group>
