@@ -21,7 +21,7 @@ Sphere::Sphere(float radius, int stacks, int slices) : Figure(stacks, slices) {
         k2 = k1 + slices + 1;
 
         for(int i = 0; i < slices ; i++, k1++, k2++) {
-            Figure::addIndex(k2 + 1, k1 + 1, k1);
+            Figure::addIndex(k2 + 1, k1 +1, k1);
             Figure::addIndex(k2, k2 + 1, k1);
         }
 
@@ -30,8 +30,8 @@ Sphere::Sphere(float radius, int stacks, int slices) : Figure(stacks, slices) {
 
 void Sphere::polarVertex(double al, double be, float radius, int i, int j) {
     float px = radius * sin(al * i) * cos(-M_PI_2 + be * j);
-    float py = radius * cos(al * i) * cos(-M_PI_2 + be * j);
-    float pz = radius * sin(-M_PI_2 +  be * j);
+    float pz = radius * cos(al * i) * cos(-M_PI_2 + be * j);
+    float py = -radius * sin(-M_PI_2 +  be * j);
     float len = sqrtf(powf(px,2) + powf(py,2) + powf(pz,2));
     Figure::addVertice(px, py, pz);
     Figure::addNormal(px / len, py / len, pz / len);
