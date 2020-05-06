@@ -44,7 +44,7 @@ void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes, GLuint * texCoo
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
-
+    /*
     // UNCOMMENT FOR NORMAL TESTING
     // Debug normals.
     glColor3f(0.0f, 0.0f, 0.0f);
@@ -62,7 +62,7 @@ void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes, GLuint * texCoo
                     points[t+2] + normals[t+2]);           // Pi + Ni
         glEnd();
     }
-
+    */
 }
 
 void Group::pushTrace(float *mat) {
