@@ -25,12 +25,14 @@ private:
      */
     static EngineMotion motion;
 
+    vector<DrawEvent> loadedEvents;
+
     /**
-     * Armazena pares <Nome_Ficheiro, Evento> de forma
+     * Armazena pares <Nome_Ficheiro, Objeto> de forma
      * a conseguir eficientemente evitar leituras de ficheiros
      * anteriormente já processados.
      */
-    unordered_map<string,DrawEvent> loadedEvents;
+    unordered_map<string,Object3d> loadedObj;
 
     /**
      * Fila de espera constituida por todos os grupos

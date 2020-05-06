@@ -46,20 +46,23 @@ void Engine::wrap_up_special(int key, int x, int y) {
 
 DrawEvent Engine::newDrawing(const string& file, int r, int g, int b,
         float diffR, float diffG, float diffB, const string& texture){
+    Object3d * newObj = nullptr;
     DrawEvent * event = nullptr;
-    auto iter = loadedEvents.find(file);
 
-    if(iter != loadedEvents.end()) {
+    auto iter = loadedObj.find(file);
+
+    if(iter != loadedObj.end()) {
         // Existe já armazenado em memoria
-        event = &(iter->second);
+        newObj = &(iter->second);
     }
     else {
-        // Não existe em memoria;
-        Object3d newObj;
-        newObj.loadObject(file);
-        event = new DrawEvent(numObjs++, newObj, r, g, b, diffR, diffG, diffB, texture);
-        loadedEvents.insert({file, *event});
+        newObj = new Object3d();
+        newObj->loadObject(file);
+        loadedObj.insert({file, *newObj});
     }
+
+    event = new DrawEvent(numObjs++, *newObj, r, g, b, diffR, diffG, diffB, texture);
+    loadedEvents.push_back(*event);
 
     return *event;
 }
@@ -105,10 +108,10 @@ void Engine::bindAllObjects() {
     glGenTextures(N, textures);
 
     for(auto elem : loadedEvents) {
-        Object3d obj = elem.second.getObj();
-        idx = elem.second.getBufferId();
+        Object3d obj = elem.getObj();
+        idx = elem.getBufferId();
 
-        loadTexture(idx, elem.second.getTexture(), textures);
+        loadTexture(idx, elem.getTexture(), textures);
 
         glBindBuffer(GL_ARRAY_BUFFER, buffers[idx]);
         glBufferData(GL_ARRAY_BUFFER, obj.getPontos().size() * sizeof(GLfloat),
