@@ -28,26 +28,21 @@ Cone::Cone(float radius, float height, int stacks, int slices)
         x = radius*sin(oneSlice*(float)i);
         Figure::addVertice(x, 0.0f, z);
         Figure::addNormal(0.0f, -1.0f, 0.0f);
-        Figure::addTexCoord(0.0f, (float) i / (float) slices);
+        Figure::addTexCoord(z/radius, x/radius);
     }
 
     // Gera lateral
-    for(i = 0; i < stacks; i++){
+    for(i = 0; i <= stacks; i++){
 
         float currentHeight = oneStack * i;
 
-        for(int j = 0; j < slices; j++){
+        for(int j = 0; j <= slices; j++){
             polarVertex(oneSlice, currentRadius, currentHeight, j, ratio);
             Figure::addTexCoord((float) j / (float) slices,
                                 (float) i / (float) stacks);
         }
         currentRadius -= oneRadius;
     }
-
-    count = Figure::getVerticeSize() / 3;
-    Figure::addVertice(0.0, height, 0.0);
-    Figure::addNormal(0.0f, 1.0f, 0.0f);
-    Figure::addTexCoord(1.0f, 1.0f);
 
     // Indexa base
     for(i = 1; i < slices; i++) {
@@ -56,24 +51,24 @@ Cone::Cone(float radius, float height, int stacks, int slices)
     Figure::addIndex(0, 1, i);
 
     // Indexa lateral
-    for(i = 0; i < stacks - 1; i++) {
-        t1 = k1 = slices + i*slices + 1;
-        t2 = k2 = k1 + slices;
+    for(i = 0; i < stacks ; i++) {
+        t1 = k1 = slices + i*(slices + 1);
+        t2 = k2 = k1 + slices + 1;
 
-        for(int j = 0; j < slices  - 1; j++, k1++, k2++) {
+        for(int j = 0; j <= slices  ; j++, k1++, k2++) {
             Figure::addIndex(k1, k1 + 1, k2);
             Figure::addIndex(k2, k1 + 1, k2 + 1);
         }
 
-        Figure::addIndex(k1, t1, k2);
-        Figure::addIndex(k2, t1, t2);
+        //Figure::addIndex(k1, t1, k2);
+        //Figure::addIndex(k2, t1, t2);
     }
 
-    t1 = count - slices;
+    /*t1 = count - slices;
     for(i = 0; i < slices; i++) {
         Figure::addIndex(t1 + i, t1 + i + 1, count);
     }
-    Figure::addIndex(count - 1, t1, count);
+    Figure::addIndex(count - 1, t1, count);*/
 }
 
 

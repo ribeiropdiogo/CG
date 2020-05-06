@@ -17,7 +17,13 @@ DrawEvent::DrawEvent(unsigned int id, Object3d obj,
         int r, int g, int b,float diffR, float diffG, float diffB, string texture) : DrawEvent(id,obj) {
     addColor(r,g,b);
     addAmbiance(diffR,diffG,diffB);
-    addTexture(texture);
+
+    if(!texture.empty()) {
+        string prepend = "../../samples/textures/";
+        prepend.append(texture);
+        addTexture(prepend);
+        printf("%s\n",prepend.c_str());
+    }
 }
 
 Object3d DrawEvent::getObj() {
