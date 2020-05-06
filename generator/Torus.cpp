@@ -7,18 +7,17 @@
 #include "Torus.h"
 
 Torus::Torus(float R, float r, int stacks, int slices) : Figure(stacks, slices) {
-    float thetainc = 2*M_PI / slices;
+    int k1, k2;
+    float thetainc = 2.0f*M_PI / slices;
     float phiinc = 2*M_PI / stacks;
-    float theta = 0.0, phi = 0.0;
-    int halfstacks = stacks/2;
+    float theta = 0.0, phi;
 
     float x,y,z;
 
-    //cout<<"sides: "<<slices<<endl;
 
-    for (int i = 0; i < slices; i++){
+    for (int i = 0; i <= slices; i++){
         phi = 0.0;
-        //cout<<"anel "<<i+1<<endl;
+
         for (int j = 0; j <= stacks; j++){
             x = (R+r*cos(phi))*cos(theta);
             y = r*sin(phi);
@@ -34,25 +33,16 @@ Torus::Torus(float R, float r, int stacks, int slices) : Figure(stacks, slices) 
         theta += thetainc;
     }
 
+    for(int i = 0; i < slices; i++) {
 
-    int verts = Torus::getVerticeSize()/3;
+        k1 = i * (stacks + 1);
+        k2 = k1 + stacks + 1;
 
-    cout<<"vertices: "<<verts<<endl;
-    int j = 0;
-    for (j = 0; j < verts; j+=(stacks+1)) {
-        if (j < verts-(stacks+1)) {
-            for (int i = 0; i < stacks; i++)
-                Torus::addIndex(j + i, j + i + 1, j + i + (stacks + 2));
-
-            for (int i = 0; i < stacks; i++)
-                Torus::addIndex(j + i + stacks + 2, j + i + (stacks + 1), j + i);
-        } else {
-            for (int i = 0; i < stacks; i++)
-                Torus::addIndex(j+i,j+i+1,i+1);
-
-            for (int i = 0; i < stacks; i++)
-                Torus::addIndex(i+1,i,j+i);
+        for(int j = 0; j < stacks; j++, k1++, k2++) {
+            Figure::addIndex(k2 + 1, k1, k1 + 1);
+            Figure::addIndex(k2, k1, k2 + 1);
         }
+
     }
 }
 
