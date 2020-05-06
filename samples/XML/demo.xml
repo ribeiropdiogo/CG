@@ -19,7 +19,7 @@
                 </translate>
                 <scale axisX="0.01" axisY="0.01" axisZ="0.01"/>
                 <models>
-                    <model file="cometa.3d" texture="relva.jpg"/>
+                    <model file="cometa.3d" texture="flag.png"/>
                 </models>
             </group>
         </group>
