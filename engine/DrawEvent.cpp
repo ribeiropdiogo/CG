@@ -19,10 +19,9 @@ DrawEvent::DrawEvent(unsigned int id, Object3d obj,
     addAmbiance(diffR,diffG,diffB);
 
     if(!texture.empty()) {
-        string prepend = "../../samples/textures/";
+        string prepend = "../../resources/textures/";
         prepend.append(texture);
         addTexture(prepend);
-        printf("%s\n",prepend.c_str());
     }
 }
 
