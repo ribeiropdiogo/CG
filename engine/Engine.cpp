@@ -5,7 +5,7 @@
 #include <GL/glut.h>
 #endif
 #include "Engine.h"
-#include "IL/il.h"
+#include <IL/il.h>
 
 EngineMotion Engine::motion;
 vector<Group*> Engine::groups;
