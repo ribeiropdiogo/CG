@@ -18,8 +18,8 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath) {
     string vShaderCode = Shader::loadCodeFile(vertexPath);
     string fShaderCode = Shader::loadCodeFile(fragmentPath);
 
-    vertex = Shader::compileSource(vShaderCode.c_str());
-    fragment = Shader::compileSource(fShaderCode.c_str());
+    vertex = Shader::compileSource(vShaderCode.c_str(), GL_VERTEX_SHADER);
+    fragment = Shader::compileSource(fShaderCode.c_str(), GL_FRAGMENT_SHADER);
 
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
@@ -75,12 +75,12 @@ string Shader::loadCodeFile(const char *path) {
     return code;
 }
 
-unsigned int Shader::compileSource(const char * source) {
+unsigned int Shader::compileSource(const char * source, GLuint shaderc) {
     unsigned int v;
     int sucess;
     char infoLog[512];
 
-    v = glCreateShader(GL_VERTEX_SHADER);
+    v = glCreateShader(shaderc);
     glShaderSource(v, 1, &source, NULL);
     glCompileShader(v);
 

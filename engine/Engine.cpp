@@ -1,12 +1,13 @@
 #ifdef __APPLE__
-#include <GLUT/glut.h>
+#include <GL/freeglut.h>
 #else
 #include <GL/glew.h>
-#include <GL/glut.h>
 #endif
 #include "Engine.h"
 #include <IL/il.h>
 #include <Shader.h>
+#include <GL/freeglut.h>
+
 
 EngineMotion Engine::motion;
 vector<Group*> Engine::groups;
@@ -239,8 +240,12 @@ void Engine::processMouseButtons(int button, int state, int xx, int yy) {
 }
 
 void Engine::start(int *eargc, char **argv){
-
     glutInit(eargc, argv);
+
+    glutInitContextVersion(4, 0);
+    glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
+    glutInitContextProfile(GLUT_CORE_PROFILE);
+
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_STENCIL);
     glutInitWindowPosition(100,100);
     glutInitWindowSize(800,800);
