@@ -30,13 +30,7 @@ public:
         if (isSub)
         {
             e->addSubgroup(*parentGroup);
-            vector<int> x=e->addUpgroup(*parentGroup,*currentGroup);
-            printf("idPai: %d idAtual: %d\nGrupos Ascendentes:\n",*parentGroup,*currentGroup);
-            for(int a:x)
-            {
-                printf("%d, ",a);
-            }
-            putchar('\n');
+            e->addUpgroup(*parentGroup,*currentGroup);
         }
         TiXmlElement * aux;
         string texture;

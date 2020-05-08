@@ -22,47 +22,21 @@ Group::Group() {
     tracing.resize(MAX_TRACE);
 }
 
-void Group::popDraw(int idx, GLuint * buffers, GLuint * indexes, GLuint * texCoords, unsigned int * textures) {
-
+void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, unsigned int progs) {
     Object3d obj = drawings[idx].getObj();
-    //glColor3f(drawings[idx].getRed(),drawings[idx].getGreen(),drawings[idx].getBlue());
-    unsigned int i = drawings[idx].getBufferId();
+    unsigned int id = drawings[idx].getBufferId();
 
-    //float white[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    //glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
+    glUseProgram(progs);
 
-    glBindTexture(GL_TEXTURE_2D, textures[i]);
+    glBindTexture(GL_TEXTURE_2D, textures[id]);
+    glBindVertexArray(vaos[id]);
 
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-    glVertexPointer(3, GL_FLOAT, 0, 0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, texCoords[i]);
-    glTexCoordPointer(2, GL_FLOAT, 0, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[i]);
     glDrawElements(GL_TRIANGLES, obj.getIndices().size(), GL_UNSIGNED_INT, nullptr);
 
+
+    glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-
-    /*
-    // UNCOMMENT FOR NORMAL TESTING
-    // Debug normals.
-    glColor3f(0.0f, 0.0f, 0.0f);
-    int t;
-    vector<GLfloat> normals = obj.getNormals();
-    vector<GLfloat> points = obj.getPontos();
-
-    for(int ix = 0; ix < obj.getNumVertices(); ix++) {
-        t = 3*ix;
-
-        glBegin(GL_LINES);
-        glVertex3f(points[t] ,points[t+1] , points[t+2] );           // Pi
-            glVertex3f(points[t] + normals[t] ,
-                    points[t+1] + normals[t+1],
-                    points[t+2] + normals[t+2]);           // Pi + Ni
-        glEnd();
-    }
-    */
 }
 
 void Group::pushTrace(float *mat) {
@@ -95,25 +69,14 @@ void Group::pushDraw(DrawEvent de) {
     drawings.push_back(de);
 }
 
-int Group::publish(GLuint * buffers, GLuint * indexes, GLuint * texCoords, unsigned int * textures,int milis, float *viewMatrix) {
-    float tmp[16];
-
+int Group::publish(GLuint * vaos, GLuint * textures, unsigned int progs, int milis) {
     for (auto & transformation : transformations) {
         transformation.process(milis);
     }
 
-    glGetFloatv(GL_MODELVIEW_MATRIX, tmp);
-    Group::pushTrace(tmp);
-
-    glPushMatrix();
-    glLoadMatrixf(viewMatrix);
-    glMultMatrixf(tmp);
-
     for (int j = 0; j < drawings.size(); ++j) {
-        popDraw(j, buffers, indexes, texCoords, textures);
+        popDraw(j, vaos, textures, progs);
     }
-
-    glPopMatrix();
 
     return n_subgroups;
 }

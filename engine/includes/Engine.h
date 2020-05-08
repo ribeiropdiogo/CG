@@ -41,6 +41,9 @@ private:
      */
     static vector<Group*> groups;
 
+    static GLuint* VAOs;
+    static GLuint* VBOs;
+
     /**
      * Numero de objetos distintos já encontrados.
      */
@@ -111,7 +114,7 @@ private:
      *
      * @param idx Ponto de partida.
      */
-    static int runGroups(int idx, int milis, float *viewMatrix);
+    static int runGroups(int idx, int milis);
 
     /**
      * Desenha um eixo xyz, de forma a conseguir tornar o

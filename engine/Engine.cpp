@@ -12,6 +12,8 @@ vector<Group*> Engine::groups;
 GLuint * Engine::buffers;
 GLuint * Engine::indexes;
 GLuint * Engine::texCoords;
+GLuint * Engine::VAOs;
+GLuint * Engine::VBOs;
 
 bool focus = false;
 float lookX=0.0,lookY=0.0,lookZ=0.0;
@@ -93,45 +95,51 @@ void Engine::loadTexture(int idx, string texture_name, GLuint *textures){
 }
 
 void Engine::bindAllObjects() {
+    float *vertices;
     unsigned int idx, N = loadedEvents.size();
-    buffers = (GLuint *) malloc(sizeof(GLuint) * N);
-    indexes = (GLuint *) malloc(sizeof(GLuint) * N);
-    texCoords = (GLuint *) malloc(sizeof(GLuint) * N);
-    textures = (unsigned int *) malloc(sizeof(unsigned int) * N);
+    VAOs = (GLuint *) malloc(sizeof(GLuint)*N);
+    VBOs = (GLuint *) malloc(sizeof(GLuint)*N);
+    textures = (GLuint *) malloc(sizeof(GLuint)*N);
+    indexes = (GLuint *) malloc(sizeof(GLuint)*N);
 
-
-    glGenBuffers(N, buffers);
+    glGenVertexArrays(N, VAOs);
+    glGenBuffers(N, VBOs);
     glGenBuffers(N, indexes);
-    glGenBuffers(N, texCoords);
-
-    ;
     glGenTextures(N, textures);
+
 
     for(auto elem : loadedEvents) {
         Object3d obj = elem.getObj();
         idx = elem.getBufferId();
+        vector<GLfloat> tmp = obj.getPontos();
+        vertices = tmp.data();
 
-        loadTexture(idx, elem.getTexture(), textures);
+        glBindVertexArray(VAOs[idx]);
 
-        glBindBuffer(GL_ARRAY_BUFFER, buffers[idx]);
-        glBufferData(GL_ARRAY_BUFFER, obj.getPontos().size() * sizeof(GLfloat),
-                     obj.getPontos().data(), GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, VBOs[idx]);
+        glBufferData(GL_ARRAY_BUFFER, tmp.size() * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[idx]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj.getIndices().size() * sizeof(GLuint),
                      obj.getIndices().data(), GL_STATIC_DRAW);
-        /*
-        glBindBuffer(GL_ARRAY_BUFFER, normals[idx]);
-        glBufferData(GL_ARRAY_BUFFER, obj.getNormals().size() * sizeof(GLuint),
-                obj.getNormals().data(), GL_STATIC_DRAW);
-                */
 
-        glBindBuffer(GL_ARRAY_BUFFER, texCoords[idx]);
-        glBufferData(GL_ARRAY_BUFFER, obj.getTexCoords().size() * sizeof(GLuint),
-                obj.getTexCoords().data(), GL_STATIC_DRAW);
+        loadTexture(idx, elem.getTexture(), textures);
+
+        // position attribute
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+        // color attribute
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+        glEnableVertexAttribArray(1);
+        // texture coord attribute
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+        glEnableVertexAttribArray(2);
+
+        glBindVertexArray(0);
     }
 }
 
-int Engine::runGroups(int idx, int milis, float *viewMatrix) {
+int Engine::runGroups(int idx, int milis) {
     int tmp, nprocd = 0;
     int r=0,g=0,b=255;
     if(idx < groups.size()) {
@@ -148,10 +156,10 @@ int Engine::runGroups(int idx, int milis, float *viewMatrix) {
 
         glStencilFunc(GL_ALWAYS,idx+1,-1);
 
-        tmp = group->publish(buffers, indexes, texCoords, textures, milis, viewMatrix);
+        tmp = group->publish(VAOs, textures, 0, milis);
 
         for(int j = 0; j < tmp; j++) {
-            nprocd += runGroups(idx + nprocd, milis, viewMatrix);
+            nprocd += runGroups(idx + nprocd, milis);
         }
 
         glPopMatrix();
@@ -161,28 +169,19 @@ int Engine::runGroups(int idx, int milis, float *viewMatrix) {
 }
 
 void Engine::renderScene(){
-    float viewMatrix[16];
-    //glClearColor(1,1,1,1);
+    glClearColor(1,1,1,1);
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
     glEnable(GL_STENCIL_TEST);
+
     glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
 
     glLoadIdentity();
+
     motion.place_camera(focus,lookX,lookY,lookZ);
-    glGetFloatv(GL_MODELVIEW_MATRIX, viewMatrix);
-    glLoadIdentity();
-    //drawAxes();
 
-    runGroups(0, timeT, viewMatrix);
-
-    glLoadMatrixf(viewMatrix);
-    for(int i = 0; i < groups.size(); i++) {
-        groups[i]->drawTracing();
-    }
-
-    float lpos[4] = { 4,4,4,0 };
-    //glLightfv(GL_LIGHT0, GL_POSITION, lpos);
-
+    runGroups(0, timeT);
 
     glutSwapBuffers();
 }
@@ -197,7 +196,7 @@ void Engine::idleFunc()
         fps = frame*1000.0/(timeT-timebase);
         timebase = timeT;
         frame = 0;
-        sprintf(title,"FPS: %8.2f",fps);//motion.getFrustumState(),fps);
+        sprintf(title,"FPS: %8.2f",fps);
         glutSetWindowTitle(title);
     }
     if (focus){
@@ -270,6 +269,7 @@ void Engine::start(int *eargc, char **argv){
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     //glEnableClientState(GL_NORMAL_ARRAY);
     glEnable(GL_CULL_FACE);
+
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 }
