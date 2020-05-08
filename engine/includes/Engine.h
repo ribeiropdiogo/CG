@@ -11,6 +11,7 @@
 #include "Group.h"
 #include "EngineMotion.h"
 #include "IL/il.h"
+#include "Shader.h"
 
 class Engine {
 private:
@@ -114,7 +115,7 @@ private:
      *
      * @param idx Ponto de partida.
      */
-    static int runGroups(int idx, int milis);
+    static int runGroups(int idx, int milis, vector<Shader> progs);
 
     /**
      * Desenha um eixo xyz, de forma a conseguir tornar o

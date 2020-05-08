@@ -15,11 +15,11 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath) {
     unsigned int vertex, fragment;
     char infoLog[512];
 
-    const char* vShaderCode = Shader::loadCodeFile(vertexPath);
-    const char* fShaderCode = Shader::loadCodeFile(fragmentPath);
+    string vShaderCode = Shader::loadCodeFile(vertexPath);
+    string fShaderCode = Shader::loadCodeFile(fragmentPath);
 
-    vertex = Shader::compileSource(vShaderCode);
-    fragment = Shader::compileSource(fShaderCode);
+    vertex = Shader::compileSource(vShaderCode.c_str());
+    fragment = Shader::compileSource(fShaderCode.c_str());
 
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
@@ -52,7 +52,7 @@ void Shader::setFloat(const string &name, float value) const {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
-const char* Shader::loadCodeFile(const char *path) {
+string Shader::loadCodeFile(const char *path) {
     string code;
     ifstream file;
 
@@ -72,7 +72,7 @@ const char* Shader::loadCodeFile(const char *path) {
         cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << endl;
     }
 
-    return code.c_str();
+    return code;
 }
 
 unsigned int Shader::compileSource(const char * source) {

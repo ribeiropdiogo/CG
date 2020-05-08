@@ -9,6 +9,7 @@
 #include "TransformEvent.h"
 #include "DrawEvent.h"
 #include "EngineMotion.h"
+#include "Shader.h"
 
 using namespace std;
 
@@ -23,14 +24,14 @@ private:
     vector<Vec3> tracing;
     int init=0, N=0,MAX_TRACE=200;
 
-    void popDraw(int idx, GLuint * vaos, GLuint * textures, unsigned int progs);
+    void popDraw(int idx, GLuint * vaos, GLuint * textures, vector<Shader> progs);
 public:
     Group();
     void pushTransformation(TransformEvent te);
     void pushDraw(DrawEvent de);
     void pushTrace(float *mat);
 
-    int publish(GLuint * vaos, GLuint * textures, unsigned int progs, int milis);
+    int publish(GLuint * vaos, GLuint * textures, vector<Shader> progs, int milis);
     void drawTracing();
     int addSubgroup();
     vector<int> getUpgroup();

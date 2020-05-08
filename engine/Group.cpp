@@ -9,6 +9,8 @@
 #else
 #include <GL/glew.h>
 #include <GL/glut.h>
+#include <Shader.h>
+
 #endif
 #include "Group.h"
 #include "IL/il.h"
@@ -22,11 +24,12 @@ Group::Group() {
     tracing.resize(MAX_TRACE);
 }
 
-void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, unsigned int progs) {
+void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, vector<Shader> progs) {
     Object3d obj = drawings[idx].getObj();
     unsigned int id = drawings[idx].getBufferId();
 
-    glUseProgram(progs);
+    for(int i = 0; i < progs.size(); i++)
+        progs[i].use();
 
     glBindTexture(GL_TEXTURE_2D, textures[id]);
     glBindVertexArray(vaos[id]);
@@ -69,7 +72,7 @@ void Group::pushDraw(DrawEvent de) {
     drawings.push_back(de);
 }
 
-int Group::publish(GLuint * vaos, GLuint * textures, unsigned int progs, int milis) {
+int Group::publish(GLuint * vaos, GLuint * textures, vector<Shader> progs, int milis) {
     for (auto & transformation : transformations) {
         transformation.process(milis);
     }

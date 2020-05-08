@@ -6,6 +6,7 @@
 #endif
 #include "Engine.h"
 #include <IL/il.h>
+#include <Shader.h>
 
 EngineMotion Engine::motion;
 vector<Group*> Engine::groups;
@@ -22,6 +23,8 @@ int idxFocus=-1;
 int mudaCor=-1;
 int timeT=0;
 unsigned int * textures;
+
+vector<Shader> progs;
 
 void Engine::wrap_proj(int w, int h) {
     motion.projection_size(w, h);
@@ -139,7 +142,7 @@ void Engine::bindAllObjects() {
     }
 }
 
-int Engine::runGroups(int idx, int milis) {
+int Engine::runGroups(int idx, int milis, vector<Shader> progs) {
     int tmp, nprocd = 0;
     int r=0,g=0,b=255;
     if(idx < groups.size()) {
@@ -156,10 +159,10 @@ int Engine::runGroups(int idx, int milis) {
 
         glStencilFunc(GL_ALWAYS,idx+1,-1);
 
-        tmp = group->publish(VAOs, textures, 0, milis);
+        tmp = group->publish(VAOs, textures, progs, milis);
 
         for(int j = 0; j < tmp; j++) {
-            nprocd += runGroups(idx + nprocd, milis);
+            nprocd += runGroups(idx + nprocd, milis, progs);
         }
 
         glPopMatrix();
@@ -181,7 +184,7 @@ void Engine::renderScene(){
 
     motion.place_camera(focus,lookX,lookY,lookZ);
 
-    runGroups(0, timeT);
+    runGroups(0, timeT, progs);
 
     glutSwapBuffers();
 }
@@ -236,6 +239,7 @@ void Engine::processMouseButtons(int button, int state, int xx, int yy) {
 }
 
 void Engine::start(int *eargc, char **argv){
+
     glutInit(eargc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_STENCIL);
     glutInitWindowPosition(100,100);
@@ -272,10 +276,15 @@ void Engine::start(int *eargc, char **argv){
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+    printf("%s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 }
 
 void Engine::loop() {
     bindAllObjects();
+
+    progs.push_back(* new Shader(
+            "../../resources/shaders/base.vs",
+            "../../resources/shaders/base.fs"));
 
     glutMainLoop();
 }

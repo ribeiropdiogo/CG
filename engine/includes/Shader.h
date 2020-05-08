@@ -13,7 +13,7 @@ class Shader {
 
 private:
     unsigned int ID;
-    static const char* loadCodeFile(const char *path);
+    static string loadCodeFile(const char *path);
     static unsigned int compileSource(const char * source);
 
 public:
