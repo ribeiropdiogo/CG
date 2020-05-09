@@ -1,5 +1,4 @@
 <scene>
-    <camera posX="100" posY="100" posZ="100"/>
     <group>
         <group>
             <scale axisX="50" axisY="50" axisZ="50"/>

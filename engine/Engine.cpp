@@ -287,9 +287,9 @@ void Engine::start(int *eargc, char **argv){
 void Engine::loop() {
     bindAllObjects();
 
-    progs.push_back(* new Shader(
-            "../../resources/shaders/base.vs",
-            "../../resources/shaders/base.fs"));
+    //progs.push_back(* new Shader(
+    //        "../../resources/shaders/base.vs",
+    //        "../../resources/shaders/base.fs"));
 
     glutMainLoop();
 }

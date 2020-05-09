@@ -1,10 +1,7 @@
 #version 330
 
-out vec4 FragColor;
-
-in vec4 vertexColor;
 
 void main() 
 {
-	FragColor = vertexColor;
+	gl_FragColor = vec4(0.4,0.4,0.8, 1.0);
 }
