@@ -29,20 +29,10 @@ void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, vector<Shader> pr
     Object3d obj = drawings[idx].getObj();
     unsigned int id = drawings[idx].getBufferId();
 
-    for(int i = 0; i < progs.size(); i++) {
-        Shader tmp = progs[i];
-        tmp.use();
-        mt::bindTrans(tmp.getID());
-        mt::bindProj(tmp.getID());
-        mt::bindView(tmp.getID());
-    }
-
     glBindTexture(GL_TEXTURE_2D, textures[id]);
     glBindVertexArray(vaos[id]);
 
-
     glDrawElements(GL_TRIANGLES, obj.getIndices().size(), GL_UNSIGNED_INT, nullptr);
-
 
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -81,6 +71,16 @@ void Group::pushDraw(DrawEvent de) {
 int Group::publish(GLuint * vaos, GLuint * textures, vector<Shader> progs, int milis) {
     for (auto & transformation : transformations) {
         transformation.process(milis);
+    }
+
+    for(int i = 0; i < progs.size(); i++) {
+        Shader tmp = progs[i];
+        tmp.use();
+        mt::bindTrans(tmp.getID());
+        mt::bindProj(tmp.getID());
+        mt::bindView(tmp.getID());
+        glUniform1i(glGetUniformLocation(tmp.getID(), "ourTexture"), 0);
+
     }
 
     for (int j = 0; j < drawings.size(); ++j) {
