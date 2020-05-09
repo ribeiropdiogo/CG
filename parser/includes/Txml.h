@@ -64,7 +64,7 @@ public:
             else if (strcmp(s,"translate")==0){
                 time = 0.0f;
                 timeDep = false;
-                vector<Vec3> points;
+                vector<glm::vec3> points;
 
                 if (aux->Attribute("time")) {
                     time = (float) atof(aux->Attribute("time"));
@@ -75,7 +75,7 @@ public:
                     x = (float) atof(models->Attribute("X"));
                     y = (float) atof(models->Attribute("Y"));
                     z = (float) atof(models->Attribute("Z"));
-                    points.push_back(*new Vec3(x, y, z));
+                    points.push_back(glm::vec3(x, y, z));
                 }
 
                 if(points.size() >= 4) {

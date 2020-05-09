@@ -18,6 +18,7 @@ private:
 
 public:
     Shader(const char* vertexPath, const char* fragmentPath);
+    unsigned int getID();
     void use();
     void setBool(const string &name, bool value) const;
     void setInt(const string &name, int value) const;

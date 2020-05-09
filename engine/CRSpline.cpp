@@ -3,14 +3,13 @@
 //
 #include "CRSpline.h"
 
-CRSpline::CRSpline(vector<Vec3> points, bool loop) {
+CRSpline::CRSpline(vector<glm::vec3> points, bool loop) {
     int sz = points.size();
     isLoop = loop;
-    m_points = *(new vector<Vec3>(sz));
+    m_points = *(new vector<glm::vec3>(sz));
 
     for(int i = 0; i < sz; i++) {
         m_points[i] = points[i];
-        Vec3 P = points[i];
     }
 
     if(loop) {
@@ -29,7 +28,7 @@ bool CRSpline::isLooping() {
     return isLoop;
 }
 
-Vec3 CRSpline::getValueAt(float t) {
+glm::vec3 CRSpline::getValueAt(float t) {
     int inds[4];
     getPointIndexes(t, inds);
 
@@ -47,7 +46,7 @@ Vec3 CRSpline::getValueAt(float t) {
             + ( m_points[inds[2]] * q2 ) + ( m_points[inds[3]] * q3 );
 }
 
-Vec3 CRSpline::getGradientAt(float t) {
+glm::vec3 CRSpline::getGradientAt(float t) {
     int inds[4];
     getPointIndexes(t, inds);
     t = t - (float)(int)t;

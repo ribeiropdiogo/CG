@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -29,7 +30,7 @@ void mt::translate(glm::vec3 v) {
 }
 
 void mt::scale(glm::vec3 s) {
-    stack[N] = glm::translate(stack.back(), s);
+    stack[N] = glm::scale(stack.back(), s);
 }
 
 void mt::rotate(GLfloat angle, glm::vec3 v) {
@@ -40,12 +41,16 @@ void mt::lookat(glm::vec3 eye, glm::vec3 ls, glm::vec3 upv) {
     view = glm::lookAt(eye, ls, upv);
 }
 
+void mt::multMatix(glm::mat4 mt) {
+    stack[N] = stack[N] * mt;
+}
+
 void mt::identity() {
     stack[N] = glm::mat4(1.0f);
 }
 
-void mt::loadProj(float * p) {
-    proj = glm::make_mat4(p);
+void mt::perspective(GLfloat fovy, GLfloat aspect, GLfloat near, GLfloat far) {
+    proj = glm::perspective(fovy, aspect, near, far);
 }
 
 void mt::bindProj(GLuint id) {

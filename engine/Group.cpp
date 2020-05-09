@@ -10,6 +10,7 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include <Shader.h>
+#include <mathAct.h>
 
 #endif
 #include "Group.h"
@@ -28,8 +29,13 @@ void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, vector<Shader> pr
     Object3d obj = drawings[idx].getObj();
     unsigned int id = drawings[idx].getBufferId();
 
-    for(int i = 0; i < progs.size(); i++)
-        progs[i].use();
+    for(int i = 0; i < progs.size(); i++) {
+        Shader tmp = progs[i];
+        tmp.use();
+        mt::bindTrans(tmp.getID());
+        mt::bindProj(tmp.getID());
+        mt::bindView(tmp.getID());
+    }
 
     glBindTexture(GL_TEXTURE_2D, textures[id]);
     glBindVertexArray(vaos[id]);
@@ -96,11 +102,11 @@ void Group::setUpgroup(int upGroupIndex, vector<int> upGroupParents) {
     this->n_upGroups = upGroupParents;
     this->n_upGroups.push_back(upGroupIndex);
 }
-
+/*
 void Group::adjustCenter(vector<Group*> groups,int milis) {
     float matrixf [16];
-    glPushMatrix();
-    glLoadIdentity();
+    mt::pushMatrix();//glPushMatrix();
+    mt::identity();//glLoadIdentity();
     for (int ui : this->getUpgroup())
     {
         for (auto & transformation : groups[ui]->transformations) {
@@ -123,7 +129,7 @@ void Group::adjustCenter(vector<Group*> groups,int milis) {
         center[2]/=center[3];
         center[3]/=center[3];
     }
-}
+}*/
 
 float Group::getCenterX() {
     return center[0];

@@ -1,7 +1,6 @@
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
-#include <GL/glut.h>
 #endif
 #include <math.h>
 #include <iostream>
@@ -9,6 +8,10 @@
 #include "EngineMotion.h"
 #include <unordered_map>
 #include <unordered_set>
+#include <GL/glew.h>
+#include <GL/glut.h>
+#include <glm/glm.hpp>
+#include "mathAct.h"
 
 using namespace std;
 
@@ -24,14 +27,14 @@ bool inFocus=false, paused=false;
 // angle of rotation for the camera direction
 float alpha=0.0, beta=0.0f;
 // actual vector representing the camera's direction
-Vec3 l(0.0f, 0.0f, -1.0f);
+glm::vec3 l(0.0f, 0.0f, -1.0f);
 //float lx=0.0f,lz=-1.0f, ly=0.0f;
 // XZ position of the camera
-Vec3 p(0.0, 1.0f,5.0f);
-Vec3 up(0.0f,1.0f,0.0f);
+glm::vec3 p(0.0, 1.0f,5.0f);
+glm::vec3 up(0.0f,1.0f,0.0f);
 //float x=0.0f,z=5.0f,y=1.0f;
-Vec3 focusV(1.0,0.0,0.0);
-Vec3 holdL(1.0,0.0,0.0);
+glm::vec3 focusV(1.0,0.0,0.0);
+glm::vec3 holdL(1.0,0.0,0.0);
 float range=1;
 
 unordered_map<unsigned char, EMKeyProc> keyboardMappers;
@@ -113,8 +116,8 @@ void EngineMotion::place_camera(bool focused,float lookX,float lookY,float lookZ
             range=1;
             inFocus=true;
         }
-        focusV = *(new Vec3(lookX,lookY,lookZ));
-        l = (focusV*-1).normalize();
+        focusV = glm::vec3(lookX, lookY, lookZ);//*(new Vec3(lookX,lookY,lookZ));
+        l = glm::normalize(focusV * (-1.0f));
         p = focusV * range;
         apply_active_keys_focused();
     }
@@ -127,11 +130,9 @@ void EngineMotion::place_camera(bool focused,float lookX,float lookY,float lookZ
         }
         apply_active_keys();
     }
-    Vec3 fut = p + l;
+    glm::vec3 fut = p + l;
 
-    gluLookAt(	p.getX(), p.getY(), p.getZ(),
-                  fut.getX(), fut.getY(),  fut.getZ(),
-                  up.getX(),up.getY(),up.getZ());
+    mt::lookat(	p, fut, up);
 
 
     glPolygonMode(GL_FRONT_AND_BACK, mode);
@@ -144,21 +145,13 @@ void EngineMotion::projection_size(int w, int h) {
         h = 1;
 
     // compute window's aspect ratio
-    float ratio = w * 1.0 / h;
-
-    // Set the projection matrix as current
-    glMatrixMode(GL_PROJECTION);
-    // Load Identity Matrix
-    glLoadIdentity();
+    float ratioz = w * 1.0 / h;
 
     // Set the viewport to be the entire window
     glViewport(0, 0, w, h);
 
     // Set perspective
-    gluPerspective(angle,ratio,1.0f,1000.0f);
-
-    // return to the model view matrix mode
-    glMatrixMode(GL_MODELVIEW);
+    mt::perspective(angle,ratioz,1.0f,1000.0f);
 }
 
 void EngineMotion::build_key_mappers() {
@@ -240,19 +233,21 @@ void move_back() {
 }
 
 void move_left() {
-    p = p - (l.crossprod((*new Vec3(0.0f,1.0f, 0.0f))) * speed);
+    glm::vec3 dir = glm::normalize(glm::cross(l, up));
+    p = p - (dir * speed);
 }
 
 void move_right() {
-    p = p + (l.crossprod((*new Vec3(0.0f,1.0f, 0.0f))) * speed);
+    glm::vec3 dir = glm::normalize(glm::cross(l, up));
+    p = p + (dir * speed);
 }
 
 void move_down() {
-    p = p - *(new Vec3(0.0f, speed, 0.0f));
+    p = p - (up * speed);
 }
 
 void move_up() {
-    p = p + *(new Vec3(0.0f, speed, 0.0f));
+    p = p + (up * speed);
 }
 
 void inc_speed() {
@@ -270,28 +265,32 @@ void reset_world() {
     speed = 0.1f;
     beta = 0.0f;
     alpha = 0.0f;
-    l = *(new Vec3(0.0f, 0.0f, -1.0f));
-    p = *(new Vec3(0.0f, 1.0f, 5.0f));
+    l = glm::vec3(0.0f, 0.0f, -1.0f);//*(new Vec3(0.0f, 0.0f, -1.0f));
+    p = glm::vec3(0.0f, 1.0f, 5.0f);//*(new Vec3(0.0f, 1.0f, 5.0f));
 }
 
 void look_up() {
     beta -= speed / 10;
-    l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
+    l = glm::vec3(sin(alpha), -sin(beta), -cos(alpha));
+    //l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
 }
 
 void look_down() {
     beta += speed / 10;
-    l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
+    l = glm::vec3(sin(alpha), -sin(beta), -cos(alpha));
+    //l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
 }
 
 void look_left() {
     alpha -= speed / 10;
-    l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
+    l = glm::vec3(sin(alpha), -sin(beta), -cos(alpha));
+    //l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
 }
 
 void look_right() {
     alpha += speed / 10;
-    l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
+    l = glm::vec3(sin(alpha), -sin(beta), -cos(alpha));
+    //l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
 }
 
 void frustummode(){
@@ -303,5 +302,5 @@ void pauseplay() {
 }
 
 void EngineMotion::setCamera(float x, float y, float z){
-    p.set(x,y,z);
+    p = glm::vec3(x, y, z);//p.set(x,y,z);
 }

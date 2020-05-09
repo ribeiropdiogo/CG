@@ -11,10 +11,14 @@
 #include <iostream>
 
 #else
+#include <GL/glew.h>
 #include <GL/glut.h>
 
 #include <utility>
 #include <iostream>
+#include <glm/vec3.hpp>
+#include <mathAct.h>
+#include <glm/gtc/type_ptr.hpp>
 
 #endif
 
@@ -31,9 +35,9 @@ TransformEvent::TransformEvent(TType type, float x, float y, float z,
     m_oldtime = 0;
 }
 
-TransformEvent::TransformEvent(vector<Vec3> points, int laptime, bool loop)
+TransformEvent::TransformEvent(vector<glm::vec3> points, int laptime, bool loop)
         : TransformEvent(CATMULLROM, 0.0f, 0.0f, 0.0f, 0.0f, laptime){
-    Yii = new Vec3(0.0f, 1.0f, 0.0f);
+    Yii = glm::vec3(0.0f, 1.0f, 0.0f);
     spline = new CRSpline(std::move(points), loop);
 }
 
@@ -77,13 +81,16 @@ void TransformEvent::process(int milis) {
 
     switch (m_type) {
         case SCALE:
-            glScalef(k*m_x, k*m_y, k*m_z);
+            mt::scale(glm::vec3(m_x, m_y, m_z)*k);
+            //glScalef(k*m_x, k*m_y, k*m_z);
             break;
         case ROTATE:
-            glRotatef(k*m_angle, m_x, m_y, m_z);
+            mt::rotate(k*m_angle * (M_PI / 180.0f), glm::vec3(m_x, m_y, m_z));
+            //glRotatef(k*m_angle, m_x, m_y, m_z);
             break;
         case TRANSLATE:
-            glTranslatef(k*m_x, k*m_y, k*m_z);
+            mt::translate(glm::vec3(m_x, m_y, m_z)*k);
+            //glTranslatef(k*m_x, k*m_y, k*m_z);
             break;
         case CATMULLROM:
             dealWithCatmullR(k);
@@ -94,22 +101,24 @@ void TransformEvent::process(int milis) {
 
 void TransformEvent::dealWithCatmullR(float milis) {
     // Mover ponto
-    Vec3 P = spline->getValueAt(milis);
+    glm::vec3 P = spline->getValueAt(milis);
 
     // Rotação
-    Vec3 Xi = (spline->getGradientAt(milis)).normalize();
-    Vec3 Zi = (Xi.crossprod(*Yii)).normalize();
-    Vec3 Yi = (Zi.crossprod(Xi)).normalize();
+    glm::vec3 Xi = glm::normalize(spline->getGradientAt(milis));
+    glm::vec3 Zi = glm::normalize(glm::cross(Xi, Yii));//Xi.crossprod(*Yii)).normalize();
+    glm::vec3 Yi = glm::normalize(glm::cross(Zi, Xi));//(Zi.crossprod(Xi)).normalize();
 
-    Yii->set(Yi.getX(), Yi.getY(), Yi.getZ());
+    Yii = glm::vec3(Yi);//Yii->set(Yi.getX(), Yi.getY(), Yi.getZ());
 
     float M[16] = {
-            Xi.getX(),  Xi.getY(),  Xi.getZ(),  0.0f,
-            Yi.getX(),  Yi.getY(),  Yi.getZ(),  0.0f,
-            Zi.getX(),  Zi.getY(),  Zi.getZ(),  0.0f,
+            Xi.x,  Xi.y,  Xi.z,  0.0f,
+            Yi.x,  Yi.y,  Yi.z,  0.0f,
+            Zi.x,  Zi.y,  Zi.z,  0.0f,
             0.0f,       0.0f,       0.0f,       1.0f
     };
 
-    glTranslatef(P.getX(), P.getY(), P.getZ());
-    glMultMatrixf(M);
+    mt::translate(P);
+    mt::multMatix(glm::make_mat4(M));
+    //glTranslatef(P.getX(), P.getY(), P.getZ());
+    //glMultMatrixf(M);
 }

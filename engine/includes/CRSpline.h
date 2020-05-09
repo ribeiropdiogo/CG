@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "Vec3.h"
+#include <glm/glm.hpp>
 
 using namespace std;
 
@@ -18,14 +19,14 @@ class CRSpline {
 private:
     int m_segments;
     bool isLoop;
-    vector<Vec3> m_points;
+    vector<glm::vec3> m_points;
     void getPointIndexes(float t, int *ind);
 public:
-    CRSpline(vector<Vec3> points, bool loop);
+    CRSpline(vector<glm::vec3> points, bool loop);
     int getNSegments();
     bool isLooping();
-    Vec3 getValueAt(float t);
-    Vec3 getGradientAt(float t);
+    glm::vec3 getValueAt(float t);
+    glm::vec3 getGradientAt(float t);
 };
 
 #endif //GENERATOR_CRSPLINE_H

@@ -18,14 +18,14 @@ private:
     bool m_timeDep;
     int m_oldtime, m_laptime;
     float m_x, m_y, m_z, m_angle, m_totaltime;
-    Vec3 *Yii = nullptr;
+    glm::vec3 Yii;
     CRSpline *spline = nullptr;
     TransformEvent(TType type, float x, float y, float z,
                     float angle, int laptime);
     void dealWithCatmullR(float milis);
 public:
     TransformEvent(TType type, float x, float y, float z);
-    TransformEvent(vector<Vec3> points, int laptime, bool loop);
+    TransformEvent(vector<glm::vec3> points, int laptime, bool loop);
     TransformEvent(TType type, float x, float y, float z, int laptime);
     TransformEvent(float x, float y, float z, float angle);
     TransformEvent(float x, float y, float z, int laptime);

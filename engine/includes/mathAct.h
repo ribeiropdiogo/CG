@@ -15,9 +15,10 @@ namespace mt {
     void translate(glm::vec3 v);
     void scale(glm::vec3 s);
     void rotate(GLfloat angle, glm::vec3 v);
+    void perspective(GLfloat fovy, GLfloat aspect, GLfloat near, GLfloat far);
     void lookat(glm::vec3 eye, glm::vec3 ls, glm::vec3 upv);
+    void multMatix(glm::mat4 mt);
     void identity();
-    void loadProj(float* p);
     void bindProj(GLuint id);
     void bindView(GLuint id);
     void bindTrans(GLuint id);
