@@ -151,7 +151,7 @@ void EngineMotion::projection_size(int w, int h) {
     glViewport(0, 0, w, h);
 
     // Set perspective
-    mt::perspective(angle,ratioz,1.0f,1000.0f);
+    mt::perspective(angle * M_PI / 180.0f,ratioz,1.0f,1000.0f);
 }
 
 void EngineMotion::build_key_mappers() {

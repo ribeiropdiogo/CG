@@ -22,6 +22,9 @@ namespace mt {
     void bindProj(GLuint id);
     void bindView(GLuint id);
     void bindTrans(GLuint id);
+    void lightat(glm::vec3 lightPos);
+    void bindLight(GLuint id);
+    void undoViewTranslation();
 }
 
 #endif //GENERATOR_MATHACT_H

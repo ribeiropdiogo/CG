@@ -25,10 +25,11 @@ Group::Group() {
     tracing.resize(MAX_TRACE);
 }
 
-void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, vector<Shader> progs) {
+void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, GLuint * materials, vector<Shader> progs) {
     Object3d obj = drawings[idx].getObj();
     unsigned int id = drawings[idx].getBufferId();
 
+    glBindBuffer(GL_UNIFORM_BUFFER, materials[idx]);
     glBindTexture(GL_TEXTURE_2D, textures[id]);
     glBindVertexArray(vaos[id]);
 
@@ -36,6 +37,7 @@ void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, vector<Shader> pr
 
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void Group::pushTrace(float *mat) {
@@ -68,7 +70,7 @@ void Group::pushDraw(DrawEvent de) {
     drawings.push_back(de);
 }
 
-int Group::publish(GLuint * vaos, GLuint * textures, vector<Shader> progs, int milis) {
+int Group::publish(GLuint * vaos, GLuint * textures, GLuint * materials, vector<Shader> progs, int milis) {
     for (auto & transformation : transformations) {
         transformation.process(milis);
     }
@@ -80,11 +82,11 @@ int Group::publish(GLuint * vaos, GLuint * textures, vector<Shader> progs, int m
         mt::bindProj(tmp.getID());
         mt::bindView(tmp.getID());
         glUniform1i(glGetUniformLocation(tmp.getID(), "ourTexture"), 0);
-
     }
+    mt::bindLight(progs[1].getID());
 
     for (int j = 0; j < drawings.size(); ++j) {
-        popDraw(j, vaos, textures, progs);
+        popDraw(j, vaos, textures, materials, progs);
     }
 
     return n_subgroups;

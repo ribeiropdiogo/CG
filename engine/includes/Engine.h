@@ -44,6 +44,8 @@ private:
 
     static GLuint* VAOs;
     static GLuint* VBOs;
+    static GLuint* materials;
+    static GLuint lights;
 
     /**
      * Numero de objetos distintos já encontrados.
@@ -118,13 +120,6 @@ private:
     static int runGroups(int idx, int milis, vector<Shader> progs);
 
     /**
-     * Desenha um eixo xyz, de forma a conseguir tornar o
-     * engine mais intuitivo e para facilitação em termos
-     * de debugging.
-     */
-    static void drawAxes();
-
-    /**
      * Efetuar a renderização do Engine, processando
      * todas os eventos e transformações existentes.
      *
@@ -136,7 +131,6 @@ private:
      * forma compor as diferentes transformações.
      */
     static void renderScene();
-
     static void idleFunc();
 
     static void wrap_proj(int w, int h);

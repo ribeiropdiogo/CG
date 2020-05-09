@@ -14,6 +14,7 @@ int N = 0;
 vector<glm::mat4> stack = {glm::mat4(1.0f)};
 glm::mat4 view = glm::mat4(1.0f);
 glm::mat4 proj = glm::mat4(1.0f);
+vector<glm::vec3> lights;
 
 void mt::pushMatrix() {
     N++;
@@ -63,4 +64,16 @@ void mt::bindView(GLuint id) {
 
 void mt::bindTrans(GLuint id) {
     glUniformMatrix4fv(glGetUniformLocation(id,"model"),1,GL_FALSE,glm::value_ptr(stack[N]));
+}
+
+void mt::lightat(glm::vec3 lightPos) {
+    lights.push_back(lightPos);
+}
+
+void mt::bindLight(GLuint id) {
+    glUniform3fv(glGetUniformLocation(id, "lightPos"), 1, glm::value_ptr(lights[0]));
+}
+
+void mt::undoViewTranslation() {
+    view = glm::mat4(glm::mat3(view));
 }

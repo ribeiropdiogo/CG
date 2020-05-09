@@ -9,6 +9,12 @@
 #include <GL/freeglut.h>
 #include <mathAct.h>
 
+#define MAX_NUM_LIGHTS 20
+
+typedef struct light {
+    int type;
+    float x;
+} Light;
 
 EngineMotion Engine::motion;
 vector<Group*> Engine::groups;
@@ -17,6 +23,11 @@ GLuint * Engine::indexes;
 GLuint * Engine::texCoords;
 GLuint * Engine::VAOs;
 GLuint * Engine::VBOs;
+GLuint * Engine::materials;
+GLuint Engine::lights;
+
+unsigned int skyboxVAO;
+unsigned int cubemapTexture;
 
 bool focus = false;
 float lookX=0.0,lookY=0.0,lookZ=0.0;
@@ -27,6 +38,54 @@ int timeT=0;
 unsigned int * textures;
 
 vector<Shader> progs;
+
+vector<string> skyBoxFaces;
+Shader *skyBoxShader= nullptr;
+
+float skyboxVertices[] = {
+        // positions
+        -1.0f,  1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        -1.0f,  1.0f, -1.0f,
+        1.0f,  1.0f, -1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+        1.0f, -1.0f,  1.0f
+};
 
 void Engine::wrap_proj(int w, int h) {
     motion.projection_size(w, h);
@@ -49,6 +108,40 @@ void Engine::wrap_up_ascii(unsigned char key, int x, int y) {
 
 void Engine::wrap_up_special(int key, int x, int y) {
     motion.up_special(key, x, y);
+}
+
+unsigned int loadCubemap(vector<std::string> faces)
+{
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+    int width, height;
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+        ilLoadImage((ILstring)faces[i].c_str());
+        width = ilGetInteger(IL_IMAGE_WIDTH);
+        height = ilGetInteger(IL_IMAGE_HEIGHT);
+        ilConvertImage(IL_RGB, IL_UNSIGNED_BYTE);
+        unsigned char *data = ilGetData();
+        if (data)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                         0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
+            );
+        }
+        else
+        {
+            std::cout << "Cubemap tex failed to load at path: " << faces[i] << std::endl;
+        }
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    return textureID;
 }
 
 DrawEvent Engine::newDrawing(const string& file, int r, int g, int b,
@@ -106,14 +199,20 @@ void Engine::bindAllObjects() {
     VBOs = (GLuint *) malloc(sizeof(GLuint)*N);
     textures = (GLuint *) malloc(sizeof(GLuint)*N);
     indexes = (GLuint *) malloc(sizeof(GLuint)*N);
+    materials = (GLuint *) malloc(sizeof(GLuint)*N);
 
     glGenVertexArrays(N, VAOs);
     glGenBuffers(N, VBOs);
     glGenBuffers(N, indexes);
+    glGenBuffers(N, materials);
+    glGenBuffers(1, &lights);
     glGenTextures(N, textures);
 
 
     for(auto elem : loadedEvents) {
+        float myFloats[13] = {0.8, 0.2, 0.2, 1.0,
+                             0.0, 0.4, 0.1, 1.0,
+                             0.5, 0.5, 0.5, 1.0, 0.1};
         Object3d obj = elem.getObj();
         idx = elem.getBufferId();
         vector<GLfloat> tmp = obj.getPontos();
@@ -123,6 +222,9 @@ void Engine::bindAllObjects() {
 
         glBindBuffer(GL_ARRAY_BUFFER, VBOs[idx]);
         glBufferData(GL_ARRAY_BUFFER, tmp.size() * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
+
+        glBindBuffer(GL_UNIFORM_BUFFER, materials[idx]);
+        glBufferData(GL_UNIFORM_BUFFER, sizeof(myFloats), myFloats, GL_DYNAMIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[idx]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj.getIndices().size() * sizeof(GLuint),
@@ -141,6 +243,18 @@ void Engine::bindAllObjects() {
         glEnableVertexAttribArray(2);
 
         glBindVertexArray(0);
+    }
+
+    if(skyBoxFaces.size() == 6) {
+        unsigned int skyboxVBO;
+        glGenVertexArrays(1, &skyboxVAO);
+        glGenBuffers(1, &skyboxVBO);
+        glBindVertexArray(skyboxVAO);
+        glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        cubemapTexture = loadCubemap(skyBoxFaces);
     }
 }
 
@@ -161,7 +275,7 @@ int Engine::runGroups(int idx, int milis, vector<Shader> progs) {
 
         glStencilFunc(GL_ALWAYS,idx+1,-1);
 
-        tmp = group->publish(VAOs, textures, progs, milis);
+        tmp = group->publish(VAOs, textures, materials, progs, milis);
 
         for(int j = 0; j < tmp; j++) {
             nprocd += runGroups(idx + nprocd, milis, progs);
@@ -174,6 +288,7 @@ int Engine::runGroups(int idx, int milis, vector<Shader> progs) {
 }
 
 void Engine::renderScene(){
+    GLuint id;
     glClearColor(1,1,1,1);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -188,6 +303,25 @@ void Engine::renderScene(){
     motion.place_camera(focus,lookX,lookY,lookZ);
 
     runGroups(0, timeT, progs);
+
+    if(skyBoxFaces.size() == 6) {
+        glEnable(GL_DEPTH_CLAMP);
+        id = skyBoxShader->getID();
+        glDepthFunc(GL_LEQUAL);
+        skyBoxShader->use();
+
+        mt::undoViewTranslation();
+        mt::bindView(id);
+        mt::bindProj(id);
+
+        glBindVertexArray(skyboxVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
+        glDepthFunc(GL_LESS);
+        glDisable(GL_DEPTH_CLAMP);
+    }
 
     glutSwapBuffers();
 }
@@ -242,6 +376,7 @@ void Engine::processMouseButtons(int button, int state, int xx, int yy) {
 }
 
 void Engine::start(int *eargc, char **argv){
+
     glutInit(eargc, argv);
 
     glutInitContextVersion(4, 0);
@@ -257,6 +392,15 @@ void Engine::start(int *eargc, char **argv){
 
     motion.build_key_mappers();
     motion.build_special_mappers();
+
+    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/right.jpg");
+    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/left.jpg");
+    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/top.jpg");
+    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/bottom.jpg");
+    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/front.jpg");
+    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/back.jpg");
+
+    cout << skyBoxFaces.size() << endl;
 
     glutDisplayFunc(renderScene);
     glutIdleFunc(idleFunc);
@@ -282,8 +426,8 @@ void Engine::start(int *eargc, char **argv){
     glEnable(GL_CULL_FACE);
 
     glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    printf("%s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+    //glEnable(GL_LIGHT0);
+
 }
 
 void Engine::loop() {
@@ -292,6 +436,12 @@ void Engine::loop() {
     progs.push_back(* new Shader(
             "../../resources/shaders/base.vs",
             "../../resources/shaders/base.fs"));
+
+    if(skyBoxFaces.size() == 6) {
+        skyBoxShader = new Shader("../../resources/shaders/skybox.vs",
+                        "../../resources/shaders/skybox.fs");
+        glUniform1i(glGetUniformLocation(skyBoxShader->getID(), "skybox"), 0);
+    }
 
     glutMainLoop();
 }
