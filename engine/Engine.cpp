@@ -37,6 +37,8 @@ int mudaCor=-1;
 int timeT=0;
 unsigned int * textures;
 
+glm::vec3 * bgcolor = new glm::vec3(0.0f, 0.0f, 0.0f);
+
 vector<Shader> progs;
 
 vector<string> skyBoxFaces;
@@ -289,7 +291,7 @@ int Engine::runGroups(int idx, int milis, vector<Shader> progs) {
 
 void Engine::renderScene(){
     GLuint id;
-    glClearColor(1,1,1,1);
+    glClearColor(bgcolor->x,bgcolor->y,bgcolor->z,1);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -483,4 +485,8 @@ void Engine::appendCubeMapFace(string face) {
     string file = "../../resources/textures/skyboxes/";
     file = file.append(face);
     skyBoxFaces.push_back(file);
+}
+
+void Engine::setBackgroundColor(float r, float g, float b) {
+    bgcolor = new glm::vec3(r, g, b);
 }

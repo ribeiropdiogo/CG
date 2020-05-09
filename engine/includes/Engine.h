@@ -185,6 +185,8 @@ public:
 
     DrawEvent newDrawing(const string &file, int r, int g, int b,
             float diffR, float diffG, float diffB, const string& texture);
+
+    void setBackgroundColor(float r, float g, float b);
 };
 
 #endif //GENERATOR_ENGINE_H

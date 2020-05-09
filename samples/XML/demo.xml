@@ -1,12 +1,7 @@
 <scene>
-    <cubemap>
-        <face file="sea/right.jpg"/>
-        <face file="sea/left.jpg"/>
-        <face file="sea/top.jpg"/>
-        <face file="sea/bottom.jpg"/>
-        <face file="sea/front.jpg"/>
-        <face file="sea/back.jpg"/>
-    </cubemap>
+    <background>
+        <color r="0" g="0" b="0" />
+    </background>
     <group>
         <group>
             <scale axisX="50" axisY="50" axisZ="50"/>

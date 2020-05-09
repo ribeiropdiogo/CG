@@ -24,6 +24,29 @@ public:
         strcat(sampleDir,string);
     }
 
+    void backgroundSpec(Engine *e, TiXmlElement* elem) {
+        float r, g, b;
+        TiXmlElement * aux;
+        r = g = b = 0.0f;
+
+        for (aux=elem->FirstChildElement();aux;aux=aux->NextSiblingElement()) {
+
+            const char* s = aux->Value();
+
+            if(!strcmp(s,"color")) {
+                if(aux->Attribute("r"))
+                    r = atof(aux->Attribute("r"));
+                if(aux->Attribute("g"))
+                    g = atof(aux->Attribute("g"));
+                if(aux->Attribute("b"))
+                    b = atof(aux->Attribute("b"));
+            }
+
+            e->setBackgroundColor(r, g, b);
+
+        }
+    }
+
     void loadGroup(Engine * e,TiXmlElement * elem, bool isSub, int * parentGroup,int * currentGroup,int * latestGroup)
     {
         e->newGroup();
@@ -209,6 +232,9 @@ public:
                         }
 
                     }
+                }
+                else if(strcmp(pElem->Value(),"background") == 0) {
+                    backgroundSpec(e, pElem);
                 }
             }
         }
