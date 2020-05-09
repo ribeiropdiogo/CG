@@ -393,13 +393,6 @@ void Engine::start(int *eargc, char **argv){
     motion.build_key_mappers();
     motion.build_special_mappers();
 
-    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/right.jpg");
-    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/left.jpg");
-    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/top.jpg");
-    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/bottom.jpg");
-    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/front.jpg");
-    skyBoxFaces.push_back("../../resources/textures/skyboxes/sea/back.jpg");
-
     cout << skyBoxFaces.size() << endl;
 
     glutDisplayFunc(renderScene);
@@ -484,4 +477,10 @@ vector<int> Engine::addUpgroup(int upGroup,int group) {
 
 void Engine::initialCamera(float x, float y, float z){
     motion.setCamera(x,y,z);
+}
+
+void Engine::appendCubeMapFace(string face) {
+    string file = "../../resources/textures/skyboxes/";
+    file = file.append(face);
+    skyBoxFaces.push_back(file);
 }

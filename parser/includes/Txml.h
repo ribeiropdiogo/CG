@@ -177,6 +177,7 @@ public:
         TiXmlHandle hDoc(&doc);
         TiXmlElement *pElem;
         TiXmlHandle hRoot(0);
+        TiXmlElement * aux;
         pElem = hDoc.FirstChildElement().Element();
         if (!pElem) return;
         const char *line = pElem->Value();
@@ -200,6 +201,14 @@ public:
                     if(pElem->Attribute("posZ"))
                         posZ = (float) atof(pElem->Attribute("posZ"));
                     e->initialCamera(posX,posY,posZ);
+                }
+                else if(strcmp(pElem->Value(),"cubemap") == 0) {
+                    for (aux=pElem->FirstChildElement();aux;aux=aux->NextSiblingElement()) {
+                        if(strcmp(aux->Value(),"face") == 0 && aux->Attribute("file")) {
+                            e->appendCubeMapFace(aux->Attribute("file"));
+                        }
+
+                    }
                 }
             }
         }

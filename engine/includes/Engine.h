@@ -176,6 +176,8 @@ public:
 
     vector<int> addUpgroup(int upGroup,int group);
 
+    void appendCubeMapFace(string face);
+
     void initialCamera(float x, float y, float z);
 
     void newObj(const string &file, int r, int g, int b,
