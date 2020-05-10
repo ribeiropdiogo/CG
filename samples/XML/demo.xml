@@ -2,6 +2,7 @@
     <background>
         <color r="1" g="1" b="1" />
     </background>
+    <cubemap map="STARS"/>
     <group>
         <group>
             <scale axisX="50" axisY="50" axisZ="50"/>

@@ -464,7 +464,7 @@ void Engine::loop() {
         glUniform1i(glGetUniformLocation(skyBoxShader->getID(), "skybox"), 0);
     }
 
-    progs[0].use();
+    //skyBoxShader->use();
 
     bindAllObjects();
 

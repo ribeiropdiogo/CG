@@ -80,7 +80,7 @@ int Group::publish(GLuint * vaos, GLuint * textures, GLuint * materials, vector<
 
     for(int i = 0; i < progs.size(); i++) {
         Shader tmp = progs[i];
-
+        tmp.use();
         mt::bindTrans(tmp.getID());
         mt::bindProj(tmp.getID());
         mt::bindView(tmp.getID());

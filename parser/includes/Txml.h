@@ -10,6 +10,24 @@
 #include <includes/Engine.h>
 #include "tinyxml.h"
 
+string sea_cubemap[6] = {
+        "sea/right.jpg",
+        "sea/left.jpg",
+        "sea/top.jpg",
+        "sea/bottom.jpg",
+        "sea/front.jpg",
+        "sea/back.jpg"
+};
+
+string stars_cubemap[6] = {
+        "stars/px.png",
+        "stars/nx.png",
+        "stars/py.png",
+        "stars/ny.png",
+        "stars/pz.png",
+        "stars/nz.png"
+};
+
 class Txml {
 private:
     char * sampleDir = strdup("../../samples/XML/");
@@ -17,7 +35,15 @@ private:
     TiXmlHandle hRootGlobal=0;
     const char * info;
     int x=0;
+
+    void preLoadCubemap(Engine *e, string * cubemap) {
+        for(int i = 0; i < 6; i++) {
+            e->appendCubeMapFace(cubemap[i]);
+        }
+    }
+
 public:
+
     void loadFile(char * string)
     {
         sampleDir=(char *) realloc(sampleDir,strlen(sampleDir)+strlen(string)+1);
@@ -244,11 +270,19 @@ public:
                     e->initialCamera(posX,posY,posZ);
                 }
                 else if(strcmp(pElem->Value(),"cubemap") == 0) {
-                    for (aux=pElem->FirstChildElement();aux;aux=aux->NextSiblingElement()) {
-                        if(strcmp(aux->Value(),"face") == 0 && aux->Attribute("file")) {
-                            e->appendCubeMapFace(aux->Attribute("file"));
+                    if(pElem->Attribute("map")) {
+                        const char * prdef = pElem->Attribute("map");
+                        if(!strcmp( prdef, "SEA" ))
+                            preLoadCubemap(e, sea_cubemap);
+                        else if(!strcmp( prdef,"STARS" ))
+                            preLoadCubemap(e, stars_cubemap);
+                    }
+                    else {
+                        for (aux = pElem->FirstChildElement(); aux; aux = aux->NextSiblingElement()) {
+                            if (strcmp(aux->Value(), "face") == 0 && aux->Attribute("file")) {
+                                e->appendCubeMapFace(aux->Attribute("file"));
+                            }
                         }
-
                     }
                 }
                 else if(strcmp(pElem->Value(),"background") == 0) {

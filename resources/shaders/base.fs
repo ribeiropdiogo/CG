@@ -41,5 +41,5 @@ uniform sampler2D ourTexture;
 void main() {
  	vec4 texColor = texture(ourTexture, texCoord);
 
-    FragColor = (diffuse + ambient);//(ambient + diffuse + specular) ;//* texColor;
+    FragColor = (ambient + diffuse + specular) * texColor * 0.5;
 }
