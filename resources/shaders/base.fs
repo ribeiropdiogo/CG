@@ -4,7 +4,8 @@
 
 out vec4 FragColor;
 
-/*struct Light {
+struct Light {
+	bool isOn;
 	int type;
 
 	// Color components
@@ -19,7 +20,7 @@ out vec4 FragColor;
 
 	// caracteristics of intensity
 	float atenuation;
-}*/
+};
 
 layout (std140) uniform Materials {
     vec4 diffuse;
@@ -28,10 +29,9 @@ layout (std140) uniform Materials {
     float shininess;
 };
 
-/*layout (std140) uniform Lights {
-	int nLights;
+layout (std140) uniform Lights {
 	Light lights[MAX_NUM_LIGHTS];
-}*/
+};
  
 
 in vec2 texCoord;
@@ -41,5 +41,5 @@ uniform sampler2D ourTexture;
 void main() {
  	vec4 texColor = texture(ourTexture, texCoord);
 
-    FragColor = texColor;
+    FragColor = (diffuse + ambient);//(ambient + diffuse + specular) ;//* texColor;
 }

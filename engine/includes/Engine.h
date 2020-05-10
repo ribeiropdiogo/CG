@@ -13,6 +13,8 @@
 #include "IL/il.h"
 #include "Shader.h"
 
+#define MAX_NUM_LIGHTS 20
+
 class Engine {
 private:
     /**
@@ -105,6 +107,7 @@ private:
      * e vertices, armazenando-os desta forma em memória de buffer.
      */
     void bindAllObjects();
+    void bindMaterials();
 
     /**
      * Função que dá inicio ao processamento hierarquico
@@ -180,11 +183,9 @@ public:
 
     void initialCamera(float x, float y, float z);
 
-    void newObj(const string &file, int r, int g, int b,
-            float diffR, float diffG, float diffB, string texture);
+    void newObj(const string& file, float * materialOptions, string texture);
 
-    DrawEvent newDrawing(const string &file, int r, int g, int b,
-            float diffR, float diffG, float diffB, const string& texture);
+    DrawEvent newDrawing(const string& file, float * materialOptions, const string& texture);
 
     void setBackgroundColor(float r, float g, float b);
 };

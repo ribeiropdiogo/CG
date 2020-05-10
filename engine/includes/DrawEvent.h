@@ -15,33 +15,22 @@ class DrawEvent  {
 private:
     unsigned int m_id;
     Object3d m_obj;
-    int r, g, b;
-    float diffR, diffG, diffB;
     string texture;
+    float material[13] = {
+            0.0f, 0.0f, 0.0f, 1.0f, // Diffuse
+            0.0f, 0.0f, 0.0f, 1.0f, // Ambient
+            1.0f, 1.0f, 1.0f, 1.0f, // Specular
+            0.0f                    // Shininess
+    };
 public:
     DrawEvent(unsigned int id, Object3d obj);
-    DrawEvent(unsigned int id, Object3d obj,
-              int r, int g, int b,float diffR, float diffG, float diffB, string texture);
+    DrawEvent(unsigned int id, Object3d obj, float * materialOptions, string texture);
     Object3d getObj();
     unsigned int getBufferId();
 
-    void addColor(int red, int green, int blue);
-
-    void addAmbiance(float n_diffR, float n_diffG, float n_diffB);
-
     void addTexture(const string &n_texture);
 
-    int getGreen();
-
-    int getRed();
-
-    int getBlue();
-
-    float getDiffR();
-
-    float getDiffG();
-
-    float getDiffB();
+    float * getMaterialOptions();
 
     string getTexture();
 };

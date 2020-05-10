@@ -9,13 +9,6 @@
 #include <GL/freeglut.h>
 #include <mathAct.h>
 
-#define MAX_NUM_LIGHTS 20
-
-typedef struct light {
-    int type;
-    float x;
-} Light;
-
 EngineMotion Engine::motion;
 vector<Group*> Engine::groups;
 GLuint * Engine::buffers;
@@ -43,6 +36,12 @@ vector<Shader> progs;
 
 vector<string> skyBoxFaces;
 Shader *skyBoxShader= nullptr;
+
+float bruh[16] = {
+        0.5f, 0.0, 0.0f, 1.0f,
+        0.0f, 0.0f, 0.0f, 1.0f,
+        1.0, 1.0f, 1.0f, 1.0f, 0.0f
+};
 
 float skyboxVertices[] = {
         // positions
@@ -88,6 +87,21 @@ float skyboxVertices[] = {
         -1.0f, -1.0f,  1.0f,
         1.0f, -1.0f,  1.0f
 };
+
+/*
+typedef struct light {
+    bool isOn;
+    int type;
+
+    // Color components;
+    float diffuse[4];
+    float ambient[4];
+    float specular[4];
+
+    // Light props
+
+    // Intensity
+} Light;*/
 
 void Engine::wrap_proj(int w, int h) {
     motion.projection_size(w, h);
@@ -146,8 +160,7 @@ unsigned int loadCubemap(vector<std::string> faces)
     return textureID;
 }
 
-DrawEvent Engine::newDrawing(const string& file, int r, int g, int b,
-        float diffR, float diffG, float diffB, const string& texture){
+DrawEvent Engine::newDrawing(const string& file, float * materialOptions,const string& texture){
     Object3d * newObj = nullptr;
     DrawEvent * event = nullptr;
 
@@ -163,7 +176,7 @@ DrawEvent Engine::newDrawing(const string& file, int r, int g, int b,
         loadedObj.insert({file, *newObj});
     }
 
-    event = new DrawEvent(numObjs++, *newObj, r, g, b, diffR, diffG, diffB, texture);
+    event = new DrawEvent(numObjs++, *newObj, materialOptions, texture);
     loadedEvents.push_back(*event);
 
     return *event;
@@ -193,10 +206,25 @@ void Engine::loadTexture(int idx, string texture_name, GLuint *textures){
         glGenerateMipmap(GL_TEXTURE_2D);
     }
 }
+void Engine::bindMaterials() {
+    GLuint N = loadedEvents.size();
+    for(int i = 0; i < N; i++) {
+        float * tmp = loadedEvents[i].getMaterialOptions();
+
+        //unsigned int block_index = glGetUniformBlockIndex(progs[0].getID(), "Materials");
+
+        //glUniformBlockBinding(progs[0].getID(), block_index, i);
+        glBindBuffer(GL_UNIFORM_BUFFER, materials[i]);
+
+        glBufferData(GL_UNIFORM_BUFFER, 13*sizeof(float),tmp, GL_DYNAMIC_DRAW);
+        //glBindBufferBase(GL_UNIFORM_BUFFER, 1, materials[i]);
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    }
+}
 
 void Engine::bindAllObjects() {
     float *vertices;
-    unsigned int idx, N = loadedEvents.size();
+    GLuint blockIndex, idx, N = loadedEvents.size();
     VAOs = (GLuint *) malloc(sizeof(GLuint)*N);
     VBOs = (GLuint *) malloc(sizeof(GLuint)*N);
     textures = (GLuint *) malloc(sizeof(GLuint)*N);
@@ -211,10 +239,12 @@ void Engine::bindAllObjects() {
     glGenTextures(N, textures);
 
 
+    // Bind all object materials.
+    bindMaterials();
+
+
+
     for(auto elem : loadedEvents) {
-        float myFloats[13] = {0.8, 0.2, 0.2, 1.0,
-                             0.0, 0.4, 0.1, 1.0,
-                             0.5, 0.5, 0.5, 1.0, 0.1};
         Object3d obj = elem.getObj();
         idx = elem.getBufferId();
         vector<GLfloat> tmp = obj.getPontos();
@@ -225,8 +255,8 @@ void Engine::bindAllObjects() {
         glBindBuffer(GL_ARRAY_BUFFER, VBOs[idx]);
         glBufferData(GL_ARRAY_BUFFER, tmp.size() * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
 
-        glBindBuffer(GL_UNIFORM_BUFFER, materials[idx]);
-        glBufferData(GL_UNIFORM_BUFFER, sizeof(myFloats), myFloats, GL_DYNAMIC_DRAW);
+        //glBindBuffer(GL_UNIFORM_BUFFER, lights);
+        //glBufferData(GL_UNIFORM_BUFFER, MAX_NUM_LIGHTS * )
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexes[idx]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj.getIndices().size() * sizeof(GLuint),
@@ -300,7 +330,6 @@ void Engine::renderScene(){
     glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
 
     mt::identity();//    glLoadIdentity();
-
 
     motion.place_camera(focus,lookX,lookY,lookZ);
 
@@ -395,8 +424,6 @@ void Engine::start(int *eargc, char **argv){
     motion.build_key_mappers();
     motion.build_special_mappers();
 
-    cout << skyBoxFaces.size() << endl;
-
     glutDisplayFunc(renderScene);
     glutIdleFunc(idleFunc);
     glutReshapeFunc(wrap_proj);
@@ -426,7 +453,6 @@ void Engine::start(int *eargc, char **argv){
 }
 
 void Engine::loop() {
-    bindAllObjects();
 
     progs.push_back(* new Shader(
             "../../resources/shaders/base.vs",
@@ -437,6 +463,10 @@ void Engine::loop() {
                         "../../resources/shaders/skybox.fs");
         glUniform1i(glGetUniformLocation(skyBoxShader->getID(), "skybox"), 0);
     }
+
+    progs[0].use();
+
+    bindAllObjects();
 
     glutMainLoop();
 }
@@ -449,10 +479,9 @@ void Engine::newGroup(){
     groups.push_back(new Group());
 }
 
-void Engine::newObj(const string& file, int r, int g, int b,
-        float diffR, float diffG, float diffB, string texture){
+void Engine::newObj(const string& file,float * materialOptions, string texture){
 
-    DrawEvent event = newDrawing(file,r,g,b,diffR,diffG,diffB,texture);
+    DrawEvent event = newDrawing(file,materialOptions,texture);
 
     if(!groups.empty()) {
         Group * last = groups.back();

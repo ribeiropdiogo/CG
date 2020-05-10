@@ -1,6 +1,6 @@
 <scene>
     <background>
-        <color r="0" g="0" b="0" />
+        <color r="1" g="1" b="1" />
     </background>
     <group>
         <group>
@@ -31,7 +31,7 @@
             <group>
                 <rotate time="5" axisY="1"/>
                 <models>
-                    <model file="sphere.3d" texture="planetas/sunmap.jpg"/>
+                    <model file="sphere.3d" texture="planetas/sunmap.jpg" diffR="1"/>
                 </models>
             </group>
         </group>
@@ -45,7 +45,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d" texture="planetas/mercury.jpg"/>
+                        <model file="sphere.3d" texture="planetas/mercury.jpg" aB="1"/>
                     </models>
                 </group>
             </group>
@@ -404,7 +404,7 @@
                 <group>
                     <rotate time="5" axisY="1"/>
                     <models>
-                        <model file="sphere.3d" exture="planetas/moon.jpg"/>
+                        <model file="sphere.3d" exture="planetas/moon.jpg" aR="0.5"/>
                     </models>
                 </group>
             </group>

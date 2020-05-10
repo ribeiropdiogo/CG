@@ -58,7 +58,12 @@ public:
         TiXmlElement * aux;
         string texture;
         float x,y,z,angle, time;
-        float diffR, diffG, diffB;
+        float diffR, diffG, diffB,
+                aR, aG, aB,
+                sR, sG, sB, shine;
+        diffR = diffG = diffB = aR = aG = aB = shine = 0.0f;
+        sR = sG = sB = 1.0f;
+
         bool timeDep = false;
         int hCurrent;
         x=y=z=angle=0;
@@ -153,6 +158,7 @@ public:
                         texture = * new string(models->Attribute("texture"));
                     }
 
+                    // Permite definir luzes difusas.
                     if(models->Attribute("diffR")) {
                         diffR = (float) atof(models->Attribute("diffR"));
                     }
@@ -163,29 +169,41 @@ public:
                         diffB = (float) atof(models->Attribute("diffB"));
                     }
 
-                    if(models->Attribute("r"))
-                        r = (int) atoi(models->Attribute("r"));
+                    // Permite definir luzes ambiente.
+                    if(models->Attribute("aR")) {
+                        aR = (float) atof(models->Attribute("aR"));
+                    }
+                    if(models->Attribute("aG")) {
+                        aG = (float) atof(models->Attribute("aG"));
+                    }
+                    if(models->Attribute("aB")) {
+                        aB = (float) atof(models->Attribute("aB"));
+                    }
 
-                    if(models->Attribute("g"))
-                        g = (int) atoi(models->Attribute("g"));
+                    // Permite definir luzes especulares
+                    if(models->Attribute("sR")) {
+                        sR = (float) atof(models->Attribute("sR"));
+                    }
+                    if(models->Attribute("sG")) {
+                        sG = (float) atof(models->Attribute("sG"));
+                    }
+                    if(models->Attribute("sB")) {
+                        sB = (float) atof(models->Attribute("sB"));
+                    }
 
-                    if(models->Attribute("b"))
-                        b = (int) atoi(models->Attribute("b"));
+                    // representa o shine
+                    if(models->Attribute("shine")) {
+                        shine = (float) atof(models->Attribute("shine"));
+                    }
 
+                    float props[13] = {diffR,diffG,diffB, 1.0f,
+                                       aR,   aG,   aB,    1.0f,
+                                       sR,   sG,   sB,    1.0f,
+                                       shine};
 
                     if(models->Attribute("file"))
-                        e->newObj(models->Attribute("file"), r, g, b, diffR, diffG, diffB, texture);
+                        e->newObj(models->Attribute("file"),props, texture);
                     texture.erase();
-
-                    /*
-                    if(models->Attribute("bezier")) {
-                        int tessalation = 4;
-                        //./generator patch nomeFicheiro Tessalation outfile
-                        if (models->Attribute("tessalation"))
-                            tessalation = atoi(models->Attribute("tessalation"));
-                        e->newObj("../../samples/3D/bezier.3d",r,g,b);
-
-                    }*/
 
                 }
             }
