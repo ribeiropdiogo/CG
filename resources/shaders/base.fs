@@ -27,8 +27,6 @@ struct Light {
 	vec3 direction;
 	float emissionAngle;
 
-	// caracteristics of intensity
-	float atenuation;
 };
 
 struct Material {
@@ -65,9 +63,9 @@ vec3 calcDirLight(Light light, vec3 normal, vec3 viewDir) {
 
     float spec = pow(max(dot(halfvector, normal), 0.0), mat.shininess);
     
-    vec3 ambient  = mat.ambient * light.ambient ;
-    vec3 diffuse  = mat.diffuse * light.diffuse  * diff;
-    vec3 specular = mat.specular * light.specular * spec ;
+    vec3 ambient  = light.ambient ;
+    vec3 diffuse  =  light.diffuse  * diff;
+    vec3 specular =  light.specular * spec ;
 
     return (ambient + diffuse + specular);
 }  
@@ -85,15 +83,15 @@ vec3 calcPointLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir)
 
     // attenuation
     float distance    = length(light.position - fragPos);
-    float attenuation = 1.0 / ((distance * distance));   
+    //float attenuation = 1.0 / ((distance * distance));   
 
     // combine results
-    vec3 ambient  = mat.ambient * light.ambient  ;
-    vec3 diffuse  = mat.diffuse * light.diffuse  * diff ;
-    vec3 specular = mat.specular * light.specular * spec ;
-    ambient  *= attenuation;
+    vec3 ambient  = light.ambient  ;
+    vec3 diffuse  =  light.diffuse  * diff ;
+    vec3 specular =  light.specular * spec ;
+    /*ambient  *= attenuation;
     diffuse  *= attenuation;
-    specular *= attenuation;
+    specular *= attenuation;*/
     return (ambient + diffuse + specular);
 } 
 
@@ -112,9 +110,9 @@ vec3 calcSpotLight(Light light, vec3 fragPos, vec3 normal, vec3 viewDir) {
 
 		if(spotEffect > light.emissionAngle) {
 			attenuation = spotEffect / (dist * dist);
-			ambient  = mat.ambient * light.ambient  ;
-    		diffuse  = mat.diffuse * light.diffuse  * diff ;
-    		specular = mat.specular * light.specular * spec ;
+			ambient  = light.ambient  ;
+    		diffuse  =  light.diffuse  * diff ;
+    		specular =  light.specular * spec ;
     		color += attenuation * (ambient + diffuse + specular);
 		}
 
@@ -124,7 +122,7 @@ vec3 calcSpotLight(Light light, vec3 fragPos, vec3 normal, vec3 viewDir) {
 }
 
 void main() {
-	vec3 Normal =  normCoord;
+	vec3 Normal =  normalMatrix * normCoord;
 
 	vec3 viewDir = normalize(viewPos - fragPos);
 
@@ -152,5 +150,5 @@ void main() {
  	}
 
 
- 	FragColor = vec4(res,1.0);//*texColor;//(ambient + diffuse + specular) * texColor;
+ 	FragColor = vec4(res,1.0);//(ambient + diffuse + specular) * texColor;
 }

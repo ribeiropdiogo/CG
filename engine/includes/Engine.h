@@ -85,6 +85,7 @@ private:
     void bindLights();
     void setupLights();
 
+
     /**
      * Permite a criação de um novo DrawEvent, associado
      * a um determinado ficheiro.
@@ -147,6 +148,10 @@ private:
     static void processMouseButtons(int button, int state, int xx, int yy);
 
 public:
+    void addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular);
+    void addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular);
+    void addSpotLight(glm::vec3 position, glm::vec3 direction,
+                      glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular, float emissionAngle);
     /**
      * Inicia o Engine, neste momento o Engine está
      * pronto a receber novos inputs, como grupos,

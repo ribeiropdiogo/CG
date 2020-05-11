@@ -101,17 +101,14 @@ typedef struct light {
     int type;
 
     // Color components
-    float diffuse[3] = {1.0f, 0.0f, 1.0f};
-    float ambient[3] = {0.0f, 0.0f, 1.0f};
-    float specular[3] = {1.0f, 1.0f, 1.0f};
+    float diffuse[3];
+    float ambient[3] ;
+    float specular[3];
 
     // extrinsic light props
-    float position[3] = {0.0f, 0.0f, 0.0f};
-    float direction[3] = {0.0f, 1.0f, 0.0f};
-    float emissionAngle;
-
-    // caracteristics of intensity
-    float atenuation;
+    float position[3];
+    float direction[3];
+    float emissionAngle = M_PI_2;
 } Light;
 
 Light lighting[MAX_LIGHT_UNITS];
@@ -127,7 +124,7 @@ void setupColorComponents(glm::vec3 diffuse,
     }
 }
 
-void addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular) {
+void Engine::addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular) {
     Light light = lighting[usedLights];
     light.isOn = 1;
     light.type = POINT_LIGHT;
@@ -138,7 +135,7 @@ void addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm
     usedLights++;
 }
 
-void addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular) {
+void Engine::addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular) {
     Light light = lighting[usedLights];
     light.isOn = 1;
     light.type = DIRECTIONAL_LIGHT;
@@ -149,7 +146,7 @@ void addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::vec3 ambie
     usedLights++;
 }
 
-void addSpotLight(glm::vec3 position, glm::vec3 direction,
+void Engine::addSpotLight(glm::vec3 position, glm::vec3 direction,
         glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular, float emissionAngle) {
     Light light = lighting[usedLights];
     light.isOn = 1;
@@ -169,8 +166,6 @@ void Engine::setupLights() {
         lighting[i].isOn = 0;
     }
 
-    lighting[0].isOn = 1;
-    lighting[0].type = DIRECTIONAL_LIGHT;
 }
 
 void Engine::wrap_proj(int w, int h) {

@@ -50,6 +50,112 @@ public:
         strcat(sampleDir,string);
     }
 
+    void setupLightingSpecs(Engine *e, TiXmlElement* pElem) {
+        float r, g, b;
+        TiXmlElement * models;
+        const char * type;
+        r = g = b = 0.0f;
+
+        for (models=pElem->FirstChildElement();models;models=models->NextSiblingElement()) {
+
+            glm::vec3 position = glm::vec3(0.0f, 0.0f, 1.0f);
+            glm::vec3 direction = glm::vec3(0.0f, 0.0f, -1.0f);
+            glm::vec3 ambient = glm::vec3(1.0f);
+            glm::vec3 diffuse = glm::vec3(1.0f);
+            glm::vec3 specular = glm::vec3(1.0f);
+            float cutoffAngle = 180.0f;
+
+            const char* s = models->Value();
+
+            if(!strcmp(s,"light")) {
+                type = models->Attribute("type");
+
+                if(type) {
+
+                    // Set up direction and position
+                    if(models->Attribute("posX")) {
+                        position.x = (float) atof(models->Attribute("posX"));
+                    }
+                    if(models->Attribute("posY")) {
+                        position.y = (float) atof(models->Attribute("posY"));
+                    }
+                    if(models->Attribute("posZ")) {
+                        position.z = (float) atof(models->Attribute("posZ"));
+                    }
+
+                    if(models->Attribute("dirX")) {
+                        direction.x = (float) atof(models->Attribute("dirX"));
+                    }
+                    if(models->Attribute("dirY")) {
+                        direction.y = (float) atof(models->Attribute("dirY"));
+                    }
+                    if(models->Attribute("dirX")) {
+                        direction.z = (float) atof(models->Attribute("dirZ"));
+                    }
+
+                    // setup angle
+                    if(models->Attribute("angle")) {
+                        cutoffAngle = (float) atof(models->Attribute("angle"));
+                    }
+                    // Setup for color components
+                    // Permite definir luzes difusas.
+                    if(models->Attribute("diffR")) {
+                        diffuse.x = (float) atof(models->Attribute("diffR"));
+                    }
+                    if(models->Attribute("diffG")) {
+                        diffuse.y = (float) atof(models->Attribute("diffG"));
+                    }
+                    if(models->Attribute("diffB")) {
+                        diffuse.z = (float) atof(models->Attribute("diffB"));
+                    }
+
+                    // Permite definir luzes ambiente.
+                    if(models->Attribute("aR")) {
+                        ambient.x = (float) atof(models->Attribute("aR"));
+                    }
+                    if(models->Attribute("aG")) {
+                        ambient.y = (float) atof(models->Attribute("aG"));
+                    }
+                    if(models->Attribute("aB")) {
+                        ambient.z = (float) atof(models->Attribute("aB"));
+                    }
+
+                    // Permite definir luzes especulares
+                    if(models->Attribute("sR")) {
+                        specular.x = (float) atof(models->Attribute("sR"));
+                    }
+                    if(models->Attribute("sG")) {
+                        specular.y = (float) atof(models->Attribute("sG"));
+                    }
+                    if(models->Attribute("sB")) {
+                        specular.z = (float) atof(models->Attribute("sB"));
+                    }
+
+                    // Point light found
+                    if( !strcmp(type,"POINT") ) {
+                        e->addPointLight(position, diffuse, ambient, specular);
+                    }
+                    // Directional light found
+                    else if ( !strcmp(type,"DIR") ) {
+                        e->addDirectionalLight(direction, diffuse, ambient, specular);
+                    }
+                    // Spot light found
+                    else if ( !strcmp(type,"SPOT") ) {
+                        e->addSpotLight(position, direction, diffuse, ambient, specular, cutoffAngle);
+                    }
+                    else {
+                        cout << "Invalid type of light indicated" << endl;
+                    }
+
+                }
+                else {
+                    cout << "Invalid light has been entered and ignored" << endl;
+                }
+            }
+
+        }
+    }
+
     void backgroundSpec(Engine *e, TiXmlElement* elem) {
         float r, g, b;
         TiXmlElement * aux;
@@ -87,7 +193,9 @@ public:
         float diffR, diffG, diffB,
                 aR, aG, aB,
                 sR, sG, sB, shine;
-        diffR = diffG = diffB = aR = aG = aB = shine = 1.0f;
+        diffR = diffG = diffB = 1.0f;
+        aR = aG = aB = 0.0f;
+        shine = 50.0f;
         sR = sG = sB = 1.0f;
 
         bool timeDep = false;
@@ -249,7 +357,7 @@ public:
         if (!pElem) return;
         const char *line = pElem->Value();
         hRoot = TiXmlHandle(pElem);
-        int currentGroup=0;
+        int currentGroup=0;setupLightingSpecs(e, pElem);
         int parentGroup=0;
         int latestGroup=0;
 
@@ -287,6 +395,9 @@ public:
                 }
                 else if(strcmp(pElem->Value(),"background") == 0) {
                     backgroundSpec(e, pElem);
+                }
+                else if(strcmp(pElem->Value(),"lights") == 0) {
+                    setupLightingSpecs(e, pElem);
                 }
             }
         }
