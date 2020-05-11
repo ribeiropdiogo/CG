@@ -22,8 +22,10 @@ namespace mt {
     void bindProj(GLuint id);
     void bindView(GLuint id);
     void bindTrans(GLuint id);
-    void lightat(glm::vec3 lightPos);
     void bindLight(GLuint id);
+    void bindNormalMatrix(GLuint id);
+    void bindModelViewMatrix(GLuint id);
+    void bindViewPos(GLuint id);
     void undoViewTranslation();
 }
 

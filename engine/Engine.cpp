@@ -9,6 +9,8 @@
 #include <GL/freeglut.h>
 #include <mathAct.h>
 
+#define MAX_LIGHT_UNITS 20
+
 EngineMotion Engine::motion;
 vector<Group*> Engine::groups;
 GLuint * Engine::buffers;
@@ -88,20 +90,88 @@ float skyboxVertices[] = {
         1.0f, -1.0f,  1.0f
 };
 
-/*
+#define POINT_LIGHT 0
+#define DIRECTIONAL_LIGHT 1
+#define SPOT_LIGHT 2
+
+int usedLights = 0;
+
 typedef struct light {
-    bool isOn;
+    int isOn;
     int type;
 
-    // Color components;
-    float diffuse[4];
-    float ambient[4];
-    float specular[4];
+    // Color components
+    float diffuse[3] = {1.0f, 0.0f, 1.0f};
+    float ambient[3] = {0.0f, 0.0f, 1.0f};
+    float specular[3] = {1.0f, 1.0f, 1.0f};
 
-    // Light props
+    // extrinsic light props
+    float position[3] = {0.0f, 0.0f, 0.0f};
+    float direction[3] = {0.0f, 1.0f, 0.0f};
+    float emissionAngle;
 
-    // Intensity
-} Light;*/
+    // caracteristics of intensity
+    float atenuation;
+} Light;
+
+Light lighting[MAX_LIGHT_UNITS];
+
+void setupColorComponents(glm::vec3 diffuse,
+        glm::vec3 ambient, glm::vec3 specular) {
+    int i;
+    Light l = lighting[usedLights];
+    for(i = 0; i < 3; i++) {
+        l.diffuse[i] = diffuse[i];
+        l.ambient[i] = ambient[i];
+        l.specular[i] = specular[i];
+    }
+}
+
+void addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular) {
+    Light light = lighting[usedLights];
+    light.isOn = 1;
+    light.type = POINT_LIGHT;
+    setupColorComponents(diffuse, ambient, specular);
+    for(int i = 0; i < 3; i++) {
+        light.position[i] = position[i];
+    }
+    usedLights++;
+}
+
+void addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular) {
+    Light light = lighting[usedLights];
+    light.isOn = 1;
+    light.type = DIRECTIONAL_LIGHT;
+    setupColorComponents(diffuse, ambient, specular);
+    for(int i = 0; i < 3; i++) {
+        light.direction[i] = direction[i];
+    }
+    usedLights++;
+}
+
+void addSpotLight(glm::vec3 position, glm::vec3 direction,
+        glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular, float emissionAngle) {
+    Light light = lighting[usedLights];
+    light.isOn = 1;
+    light.type = SPOT_LIGHT;
+    setupColorComponents(diffuse, ambient, specular);
+    for(int i = 0; i < 3; i++) {
+        light.position[i] = position[i];
+        light.direction[i] = direction[i];
+    }
+    light.emissionAngle = emissionAngle;
+    usedLights++;
+}
+
+void Engine::setupLights() {
+    // Initially all lights are turned off.
+    for(int i = 0; i < MAX_LIGHT_UNITS; i++) {
+        lighting[i].isOn = 0;
+    }
+
+    lighting[0].isOn = 1;
+    lighting[0].type = DIRECTIONAL_LIGHT;
+}
 
 void Engine::wrap_proj(int w, int h) {
     motion.projection_size(w, h);
@@ -206,6 +276,15 @@ void Engine::loadTexture(int idx, string texture_name, GLuint *textures){
         glGenerateMipmap(GL_TEXTURE_2D);
     }
 }
+
+void Engine::bindLights() {
+    glBindBuffer(GL_UNIFORM_BUFFER, lights);
+
+    glBufferData(GL_UNIFORM_BUFFER, MAX_LIGHT_UNITS*sizeof(Light), lighting, GL_DYNAMIC_DRAW);
+
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
 void Engine::bindMaterials() {
     GLuint N = loadedEvents.size();
     for(int i = 0; i < N; i++) {
@@ -216,7 +295,7 @@ void Engine::bindMaterials() {
         //glUniformBlockBinding(progs[0].getID(), block_index, i);
         glBindBuffer(GL_UNIFORM_BUFFER, materials[i]);
 
-        glBufferData(GL_UNIFORM_BUFFER, 13*sizeof(float),tmp, GL_DYNAMIC_DRAW);
+        glBufferData(GL_UNIFORM_BUFFER, 10*sizeof(float),tmp, GL_DYNAMIC_DRAW);
         //glBindBufferBase(GL_UNIFORM_BUFFER, 1, materials[i]);
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
     }
@@ -239,10 +318,11 @@ void Engine::bindAllObjects() {
     glGenTextures(N, textures);
 
 
+    // Bind all lights.
+    bindLights();
+
     // Bind all object materials.
     bindMaterials();
-
-
 
     for(auto elem : loadedEvents) {
         Object3d obj = elem.getObj();
@@ -307,7 +387,7 @@ int Engine::runGroups(int idx, int milis, vector<Shader> progs) {
 
         glStencilFunc(GL_ALWAYS,idx+1,-1);
 
-        tmp = group->publish(VAOs, textures, materials, progs, milis);
+        tmp = group->publish(VAOs, textures, materials, lights, progs, milis);
 
         for(int j = 0; j < tmp; j++) {
             nprocd += runGroups(idx + nprocd, milis, progs);
@@ -332,6 +412,8 @@ void Engine::renderScene(){
     mt::identity();//    glLoadIdentity();
 
     motion.place_camera(focus,lookX,lookY,lookZ);
+
+    glBindBufferBase(GL_UNIFORM_BUFFER, 0, lights);
 
     runGroups(0, timeT, progs);
 
@@ -407,7 +489,7 @@ void Engine::processMouseButtons(int button, int state, int xx, int yy) {
 }
 
 void Engine::start(int *eargc, char **argv){
-
+    setupLights();
     glutInit(eargc, argv);
 
     glutInitContextVersion(4, 0);

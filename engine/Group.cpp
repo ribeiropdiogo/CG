@@ -25,7 +25,7 @@ Group::Group() {
     tracing.resize(MAX_TRACE);
 }
 
-void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, GLuint * materials, vector<Shader> progs) {
+void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, GLuint * materials, GLuint lights, vector<Shader> progs) {
     Object3d obj = drawings[idx].getObj();
     unsigned int id = drawings[idx].getBufferId();
 
@@ -71,7 +71,7 @@ void Group::pushDraw(DrawEvent de) {
     drawings.push_back(de);
 }
 
-int Group::publish(GLuint * vaos, GLuint * textures, GLuint * materials, vector<Shader> progs, int milis) {
+int Group::publish(GLuint * vaos, GLuint * textures, GLuint * materials, GLuint lights, vector<Shader> progs, int milis) {
     GLuint blockIndex;
 
     for (auto & transformation : transformations) {
@@ -81,18 +81,18 @@ int Group::publish(GLuint * vaos, GLuint * textures, GLuint * materials, vector<
     for(int i = 0; i < progs.size(); i++) {
         Shader tmp = progs[i];
         tmp.use();
-        mt::bindTrans(tmp.getID());
-        mt::bindProj(tmp.getID());
-        mt::bindView(tmp.getID());
+        mt::bindModelViewMatrix(tmp.getID());
+        mt::bindNormalMatrix(tmp.getID());
+        mt::bindViewPos(progs[0].getID());
         glUniform1i(glGetUniformLocation(tmp.getID(), "ourTexture"), 0);
         blockIndex = glGetUniformBlockIndex(tmp.getID(), "Materials");
         glUniformBlockBinding(tmp.getID(), blockIndex, 1);
         //cout << blockIndex << endl;
     }
-    mt::bindLight(progs[1].getID());
+    //mt::bindLight(progs[1].getID());
 
     for (int j = 0; j < drawings.size(); ++j) {
-        popDraw(j, vaos, textures, materials, progs);
+        popDraw(j, vaos, textures, materials, lights, progs);
     }
 
     return n_subgroups;

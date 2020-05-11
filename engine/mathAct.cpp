@@ -14,7 +14,7 @@ int N = 0;
 vector<glm::mat4> stack = {glm::mat4(1.0f)};
 glm::mat4 view = glm::mat4(1.0f);
 glm::mat4 proj = glm::mat4(1.0f);
-vector<glm::vec3> lights;
+glm::vec3 cameraPos = glm::vec3(0.0f);
 
 void mt::pushMatrix() {
     N++;
@@ -39,6 +39,7 @@ void mt::rotate(GLfloat angle, glm::vec3 v) {
 }
 
 void mt::lookat(glm::vec3 eye, glm::vec3 ls, glm::vec3 upv) {
+    cameraPos = eye;
     view = glm::lookAt(eye, ls, upv);
 }
 
@@ -66,12 +67,18 @@ void mt::bindTrans(GLuint id) {
     glUniformMatrix4fv(glGetUniformLocation(id,"model"),1,GL_FALSE,glm::value_ptr(stack[N]));
 }
 
-void mt::lightat(glm::vec3 lightPos) {
-    lights.push_back(lightPos);
+void mt::bindNormalMatrix(GLuint id) {
+    glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(stack[N])));
+    glUniformMatrix3fv(glGetUniformLocation(id,"normalMatrix"),1,GL_FALSE,glm::value_ptr(normalMatrix));
 }
 
-void mt::bindLight(GLuint id) {
-    glUniform3fv(glGetUniformLocation(id, "lightPos"), 1, glm::value_ptr(lights[0]));
+void mt::bindModelViewMatrix(GLuint id) {
+    glm::mat4 mvp = proj * view * stack[N];
+    glUniformMatrix4fv(glGetUniformLocation(id,"modelViewProj"),1,GL_FALSE,glm::value_ptr(mvp));
+}
+
+void mt::bindViewPos(GLuint id) {
+    glUniform3f(glGetUniformLocation(id,"viewPos"),cameraPos.x,cameraPos.y,cameraPos.z);
 }
 
 void mt::undoViewTranslation() {

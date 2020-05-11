@@ -87,7 +87,7 @@ public:
         float diffR, diffG, diffB,
                 aR, aG, aB,
                 sR, sG, sB, shine;
-        diffR = diffG = diffB = aR = aG = aB = shine = 0.0f;
+        diffR = diffG = diffB = aR = aG = aB = shine = 1.0f;
         sR = sG = sB = 1.0f;
 
         bool timeDep = false;
@@ -222,9 +222,9 @@ public:
                         shine = (float) atof(models->Attribute("shine"));
                     }
 
-                    float props[13] = {diffR,diffG,diffB, 1.0f,
-                                       aR,   aG,   aB,    1.0f,
-                                       sR,   sG,   sB,    1.0f,
+                    float props[10] = {diffR,diffG,diffB,
+                                       aR,   aG,   aB,
+                                       sR,   sG,   sB,
                                        shine};
 
                     if(models->Attribute("file"))

@@ -82,6 +82,9 @@ private:
      */
     Group * latestGroup();
 
+    void bindLights();
+    void setupLights();
+
     /**
      * Permite a criação de um novo DrawEvent, associado
      * a um determinado ficheiro.
