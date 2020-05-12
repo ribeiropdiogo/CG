@@ -84,9 +84,11 @@ int Group::publish(GLuint * vaos, GLuint * textures, GLuint * materials, GLuint 
         mt::bindModelViewMatrix(tmp.getID());
         mt::bindNormalMatrix(tmp.getID());
         mt::bindViewPos(progs[0].getID());
+        mt::bindTrans(tmp.getID());
         glUniform1i(glGetUniformLocation(tmp.getID(), "ourTexture"), 0);
         blockIndex = glGetUniformBlockIndex(tmp.getID(), "Materials");
         glUniformBlockBinding(tmp.getID(), blockIndex, 1);
+        //glBindBufferBase(GL_UNIFORM_BUFFER, 0, lights);
         //cout << blockIndex << endl;
     }
     //mt::bindLight(progs[1].getID());
