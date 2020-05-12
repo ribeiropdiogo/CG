@@ -97,18 +97,19 @@ float skyboxVertices[] = {
 int usedLights = 0;
 
 typedef struct light {
+    // Color components
+    float diffuse[4];
+    float ambient[4] ;
+    float specular[4];
+
+    // extrinsic light props
+    float position[4] = {0.0, 0.0, 0.0};
+    float direction[4] = {0.0, 0.0, 0.0,0.0};
     int isOn;
     int type;
 
-    // Color components
-    float diffuse[3];
-    float ambient[3] ;
-    float specular[3];
-
-    // extrinsic light props
-    float position[3];
-    float direction[3];
     float emissionAngle = M_PI_2;
+    float trash;
 } Light;
 
 Light lighting[MAX_LIGHT_UNITS];
@@ -116,23 +117,32 @@ Light lighting[MAX_LIGHT_UNITS];
 void setupColorComponents(glm::vec3 diffuse,
         glm::vec3 ambient, glm::vec3 specular) {
     int i;
-    Light l = lighting[usedLights];
+    Light* light = lighting + usedLights;
     for(i = 0; i < 3; i++) {
-        l.diffuse[i] = diffuse[i];
-        l.ambient[i] = ambient[i];
-        l.specular[i] = specular[i];
+        light->diffuse[i] = diffuse[i];
+        light->ambient[i] = ambient[i];
+        light->specular[i] = specular[i];
     }
+    light->diffuse[i] = 1;
+    light->ambient[i] = 1;
+    light->specular[i] = 1;
 }
 
 void Engine::addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular) {
-    Light light = lighting[usedLights];
-    light.isOn = 1;
-    light.type = POINT_LIGHT;
+    Light* light = lighting + usedLights;
+    //lighting[usedLights].isOn = 1;
+    light->isOn = 1;
+    //cout << light.isOn << endl;
+    light->type = POINT_LIGHT;
     setupColorComponents(diffuse, ambient, specular);
     for(int i = 0; i < 3; i++) {
-        light.position[i] = position[i];
+        light->position[i] = position[i];
     }
+    light->position[3] = 1;
     usedLights++;
+
+    cout << sizeof(glm::vec3) << endl;
+    cout << "POS IS | " << "x:" << light->position[0] << " ,y:" << light->position[1] << " ,z:" << light->position[2] << endl;
 }
 
 void Engine::addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular) {
@@ -290,7 +300,7 @@ void Engine::bindMaterials() {
         //glUniformBlockBinding(progs[0].getID(), block_index, i);
         glBindBuffer(GL_UNIFORM_BUFFER, materials[i]);
 
-        glBufferData(GL_UNIFORM_BUFFER, 10*sizeof(float),tmp, GL_DYNAMIC_DRAW);
+        glBufferData(GL_UNIFORM_BUFFER, 13*sizeof(float),tmp, GL_DYNAMIC_DRAW);
         //glBindBufferBase(GL_UNIFORM_BUFFER, 1, materials[i]);
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
     }
@@ -405,6 +415,8 @@ void Engine::renderScene(){
     glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
 
     mt::identity();//    glLoadIdentity();
+
+    cout << "Number lights used: " << usedLights << endl;
 
     motion.place_camera(focus,lookX,lookY,lookZ);
 

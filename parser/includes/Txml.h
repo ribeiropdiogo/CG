@@ -58,9 +58,9 @@ public:
 
         for (models=pElem->FirstChildElement();models;models=models->NextSiblingElement()) {
 
-            glm::vec3 position = glm::vec3(0.0f, 0.0f, 1.0f);
-            glm::vec3 direction = glm::vec3(0.0f, 0.0f, -1.0f);
-            glm::vec3 ambient = glm::vec3(1.0f);
+            glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+            glm::vec3 direction = glm::vec3(0.0f, 0.0f, 0.0f);
+            glm::vec3 ambient = glm::vec3(0.0f);
             glm::vec3 diffuse = glm::vec3(1.0f);
             glm::vec3 specular = glm::vec3(1.0f);
             float cutoffAngle = 180.0f;
@@ -89,7 +89,7 @@ public:
                     if(models->Attribute("dirY")) {
                         direction.y = (float) atof(models->Attribute("dirY"));
                     }
-                    if(models->Attribute("dirX")) {
+                    if(models->Attribute("dirZ")) {
                         direction.z = (float) atof(models->Attribute("dirZ"));
                     }
 
@@ -151,6 +151,8 @@ public:
                 else {
                     cout << "Invalid light has been entered and ignored" << endl;
                 }
+
+                cout << "x:" << position.x << " ,y:" << position.y << " ,z:" << position.z << endl;
             }
 
         }
@@ -193,7 +195,7 @@ public:
         float diffR, diffG, diffB,
                 aR, aG, aB,
                 sR, sG, sB, shine;
-        diffR = diffG = diffB = 1.0f;
+        diffR = diffG = diffB = 0.0f;
         aR = aG = aB = 0.0f;
         shine = 50.0f;
         sR = sG = sB = 1.0f;
@@ -330,9 +332,9 @@ public:
                         shine = (float) atof(models->Attribute("shine"));
                     }
 
-                    float props[10] = {diffR,diffG,diffB,
-                                       aR,   aG,   aB,
-                                       sR,   sG,   sB,
+                    float props[13] = {diffR,diffG,diffB, 1.0f,
+                                       aR,   aG,   aB, 1.0f,
+                                       sR,   sG,   sB, 1.0f,
                                        shine};
 
                     if(models->Attribute("file"))

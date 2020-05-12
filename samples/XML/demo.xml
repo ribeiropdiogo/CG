@@ -2,7 +2,10 @@
     <background>
         <color r="1" g="1" b="1" />
     </background>
-    
+    <lights>
+        <light type="POINT" posX="10" diffB="1" aR="0.5"/>
+        
+    </lights>
     <group>
         <group>
             <scale axisX="50" axisY="50" axisZ="50"/>
