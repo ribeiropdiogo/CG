@@ -79,9 +79,23 @@ vec3 calcDirLight(Light light, vec3 normal, vec3 viewDir) {
 vec3 calcPointLight(Light light, vec3 normal, vec3 viewDir)
 {
     vec3 lightDir = normalize(vec3(light.position) - fragPos);
+    
     float diff = max(dot(normal, lightDir), 0.0);
-    vec3 diffuse = diff * vec3(light.diffuse);
-    return (vec3(light.ambient) + diffuse);
+    
+    vec3 reflectDir = reflect(-lightDir, normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), mat.shininess);
+    
+    float distance    = length(vec3(light.position) - fragPos);
+    float attenuation = 1.0 / (light.att_constant + light.att_linear * distance + 
+                 light.att_quadratic * (distance * distance));    
+    // combine results
+    vec3 ambient  = vec3(light.ambient) ;
+    vec3 diffuse  = vec3(light.diffuse  * diff) ;
+    vec3 specular = vec3(light.specular * spec) ;
+    ambient  *= attenuation;
+    diffuse  *= attenuation;
+    specular *= attenuation;
+    return (ambient + diffuse + specular);
 } 
 
 /*vec3 calcSpotLight(Light light, vec3 fragPos, vec3 normal, vec3 viewDir) {
