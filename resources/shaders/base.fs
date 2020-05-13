@@ -109,7 +109,7 @@ vec3 calcSpotLight(Light light, vec3 fragPos, vec3 normal, vec3 viewDir) {
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), mat.shininess);
     float distance    = length(vec3(light.position) - fragPos);  
 
-
+    //if(diff > 0.0) {
 		spotEffect = dot(normalize(vec3(light.direction)),normalize(-lightDir));
 
         float epsilon   = light.innerCutOff - light.outerCutOff;
@@ -126,7 +126,7 @@ vec3 calcSpotLight(Light light, vec3 fragPos, vec3 normal, vec3 viewDir) {
         else {
             color = vec3(light.ambient * mat.ambient);
         }
-
+    //}
 
 	return color;
 }
