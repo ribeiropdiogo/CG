@@ -26,7 +26,12 @@ struct Light {
     int type;
 
     float emissionAngle;
-    float trash;
+    float att_constant;
+    float att_linear;
+    float att_quadratic;
+
+    // just to conform to layout std140
+    vec2 trash;
 };
 
 struct Material {

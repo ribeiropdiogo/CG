@@ -63,6 +63,9 @@ public:
             glm::vec3 ambient = glm::vec3(0.2f);
             glm::vec3 diffuse = glm::vec3(1.0f);
             glm::vec3 specular = glm::vec3(1.0f);
+            float att_constant = 1.0f;
+            float att_linear = 0.0f;
+            float att_quadratic = 0.0f;
             float cutoffAngle = 180.0f;
 
             const char* s = models->Value();
@@ -131,17 +134,28 @@ public:
                         specular.z = (float) atof(models->Attribute("sB"));
                     }
 
+                    // for attenuation purposes
+                    if(models->Attribute("CONSTANT")) {
+                        att_constant = (float) atof(models->Attribute("CONSTANT"));
+                    }
+                    if(models->Attribute("LINEAR")) {
+                        att_linear = (float) atof(models->Attribute("LINEAR"));
+                    }
+                    if(models->Attribute("QUADRATIC")) {
+                        att_quadratic = (float) atof(models->Attribute("QUADRATIC"));
+                    }
+
                     // Point light found
                     if( !strcmp(type,"POINT") ) {
-                        e->addPointLight(position, diffuse, ambient, specular);
+                        e->addPointLight(position, diffuse, ambient, specular, att_constant, att_linear, att_quadratic);
                     }
                     // Directional light found
                     else if ( !strcmp(type,"DIR") ) {
-                        e->addDirectionalLight(direction, diffuse, ambient, specular);
+                        e->addDirectionalLight(direction, diffuse, ambient, specular, att_constant, att_linear, att_quadratic);
                     }
                     // Spot light found
                     else if ( !strcmp(type,"SPOT") ) {
-                        e->addSpotLight(position, direction, diffuse, ambient, specular, cutoffAngle);
+                        e->addSpotLight(position, direction, diffuse, ambient, specular, cutoffAngle, att_constant, att_linear, att_quadratic);
                     }
                     else {
                         cout << "Invalid type of light indicated" << endl;

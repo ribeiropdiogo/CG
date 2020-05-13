@@ -112,7 +112,13 @@ typedef struct light {
     int type;
 
     float emissionAngle = M_PI_2;
-    float trash;
+
+    // Attenuation of light
+    float att_constant;
+    float att_linear;
+    float att_quadratic;
+    // Just to conform to layout std140.
+    float trash[2];
 } Light;
 
 Light lighting[MAX_LIGHT_UNITS];
@@ -131,7 +137,14 @@ void setupColorComponents(glm::vec3 diffuse,
     light->specular[i] = 1;
 }
 
-void Engine::addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular) {
+void setupAttenuation(Light * light, float att_constant, float att_linear, float att_quadratic) {
+    light->att_constant = att_constant;
+    light->att_linear = att_linear;
+    light->att_quadratic = att_quadratic;
+}
+
+void Engine::addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular
+                , float att_constant, float att_linear, float att_quadratic) {
     Light* light = lighting + usedLights;
     //lighting[usedLights].isOn = 1;
     light->isOn = 1;
@@ -142,34 +155,41 @@ void Engine::addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambi
         light->position[i] = position[i];
     }
     light->position[3] = 1;
+    setupAttenuation(light, att_constant, att_linear, att_quadratic);
     usedLights++;
-
-    cout << sizeof(glm::vec3) << endl;
-    cout << "POS IS | " << "x:" << light->position[0] << " ,y:" << light->position[1] << " ,z:" << light->position[2] << endl;
 }
 
-void Engine::addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular) {
-    Light light = lighting[usedLights];
-    light.isOn = 1;
-    light.type = DIRECTIONAL_LIGHT;
+void Engine::addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular
+                , float att_constant, float att_linear, float att_quadratic) {
+    Light* light = lighting + usedLights;
+
+    light->isOn = 1;
+    light->type = DIRECTIONAL_LIGHT;
     setupColorComponents(diffuse, ambient, specular);
     for(int i = 0; i < 3; i++) {
-        light.direction[i] = direction[i];
+        light->direction[i] = direction[i];
     }
+    light->direction[3] = 1;
+    setupAttenuation(light, att_constant, att_linear, att_quadratic);
     usedLights++;
 }
 
 void Engine::addSpotLight(glm::vec3 position, glm::vec3 direction,
-        glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular, float emissionAngle) {
-    Light light = lighting[usedLights];
-    light.isOn = 1;
-    light.type = SPOT_LIGHT;
+        glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular, float emissionAngle
+        , float att_constant, float att_linear, float att_quadratic) {
+    Light* light = lighting + usedLights;
+
+    light->isOn = 1;
+    light->type = SPOT_LIGHT;
     setupColorComponents(diffuse, ambient, specular);
     for(int i = 0; i < 3; i++) {
-        light.position[i] = position[i];
-        light.direction[i] = direction[i];
+        light->position[i] = position[i];
+        light->direction[i] = direction[i];
     }
-    light.emissionAngle = emissionAngle;
+    light->position[3] = 1;
+    light->direction[3] = 1;
+    light->emissionAngle = emissionAngle;
+    setupAttenuation(light, att_constant, att_linear, att_quadratic);
     usedLights++;
 }
 
@@ -428,8 +448,6 @@ void Engine::renderScene(){
     glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
 
     mt::identity();//    glLoadIdentity();
-
-    cout << "Number lights used: " << usedLights << endl;
 
     motion.place_camera(focus,lookX,lookY,lookZ);
 

@@ -148,10 +148,14 @@ private:
     static void processMouseButtons(int button, int state, int xx, int yy);
 
 public:
-    void addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular);
-    void addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular);
+    void addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular
+            , float att_constant, float att_linear, float att_quadratic);
+    void addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular
+            , float att_constant, float att_linear, float att_quadratic);
     void addSpotLight(glm::vec3 position, glm::vec3 direction,
-                      glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular, float emissionAngle);
+                      glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular, float emissionAngle
+                    , float att_constant, float att_linear, float att_quadratic);
+
     /**
      * Inicia o Engine, neste momento o Engine está
      * pronto a receber novos inputs, como grupos,
