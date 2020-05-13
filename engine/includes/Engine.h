@@ -154,7 +154,7 @@ public:
             , float att_constant, float att_linear, float att_quadratic);
     void addSpotLight(glm::vec3 position, glm::vec3 direction,
                       glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular, float emissionAngle
-                    , float att_constant, float att_linear, float att_quadratic);
+                , float outerCutOff, float att_constant, float att_linear, float att_quadratic);
 
     /**
      * Inicia o Engine, neste momento o Engine está

@@ -117,8 +117,10 @@ typedef struct light {
     float att_constant;
     float att_linear;
     float att_quadratic;
+
+    float outerCutOff;
     // Just to conform to layout std140.
-    float trash[2];
+    float trash;
 } Light;
 
 Light lighting[MAX_LIGHT_UNITS];
@@ -176,7 +178,7 @@ void Engine::addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::ve
 
 void Engine::addSpotLight(glm::vec3 position, glm::vec3 direction,
         glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular, float emissionAngle
-        , float att_constant, float att_linear, float att_quadratic) {
+        , float outerCutOff, float att_constant, float att_linear, float att_quadratic) {
     Light* light = lighting + usedLights;
 
     light->isOn = 1;
@@ -189,6 +191,7 @@ void Engine::addSpotLight(glm::vec3 position, glm::vec3 direction,
     light->position[3] = 1;
     light->direction[3] = 1;
     light->emissionAngle = emissionAngle;
+    light->outerCutOff = outerCutOff;
     setupAttenuation(light, att_constant, att_linear, att_quadratic);
     usedLights++;
 }
@@ -567,9 +570,9 @@ void Engine::start(int *eargc, char **argv){
     //glEnableClientState(GL_NORMAL_ARRAY);
     glEnable(GL_CULL_FACE);
 
-    glEnable(GL_LIGHTING);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glEnable(GL_LIGHTING);
+    //glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     //glEnable(GL_LIGHT0);
 
 }

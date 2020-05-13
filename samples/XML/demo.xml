@@ -4,7 +4,7 @@
     </background>
     <cubemap map="STARS"/>
     <lights>
-        <light type="POINT" posX="0" diffB="1" aG="0.1" aB="0.1" aR="0.1"/>
+        <light type="DIR" LINEAR="0.05" dirZ="5" />
     </lights>
     <group>
         <group>

@@ -25,13 +25,16 @@ struct Light {
     int isOn;
     int type;
 
-    float emissionAngle;
+    float innerCutOff;
     float att_constant;
     float att_linear;
     float att_quadratic;
 
+    // for spot light;
+    float outerCutOff;
+
     // just to conform to layout std140
-    vec2 trash;
+    float trash;
 };
 
 struct Material {
@@ -64,14 +67,13 @@ vec3 calcDirLight(Light light, vec3 normal, vec3 viewDir) {
     
     float diff = max(dot(normal, lightDir), 0.0);
     
-    // half vector from Brinn.
-    vec3 halfvector = normalize(lightDir + viewDir);
+    vec3 reflectDir = reflect(-lightDir, normal);
 
-    float spec = pow(max(dot(halfvector, normal), 0.0), mat.shininess);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), mat.shininess);
     
-    vec4 ambient  = light.ambient ;
-    vec4 diffuse  =  light.diffuse  * diff;
-    vec4 specular =  light.specular * spec ;
+    vec4 ambient  = light.ambient * mat.ambient;
+    vec4 diffuse  =  light.diffuse  * diff * mat.diffuse;
+    vec4 specular =  light.specular * spec * mat.specular;
 
     return vec3(ambient + diffuse + specular);
 }
@@ -87,42 +89,47 @@ vec3 calcPointLight(Light light, vec3 normal, vec3 viewDir)
     
     float distance    = length(vec3(light.position) - fragPos);
     float attenuation = 1.0 / (light.att_constant + light.att_linear * distance + 
-                 light.att_quadratic * (distance * distance));    
+                 light.att_quadratic * (distance * distance));   
+
     // combine results
-    vec3 ambient  = vec3(light.ambient) ;
-    vec3 diffuse  = vec3(light.diffuse  * diff) ;
-    vec3 specular = vec3(light.specular * spec) ;
-    ambient  *= attenuation;
-    diffuse  *= attenuation;
-    specular *= attenuation;
-    return (ambient + diffuse + specular);
+    vec4 ambient  = light.ambient * mat.ambient;
+    vec4 diffuse  =  light.diffuse  * diff * mat.diffuse;
+    vec4 specular =  light.specular * spec * mat.specular;
+
+    return vec3(ambient + diffuse + specular) * attenuation;
 } 
 
-/*vec3 calcSpotLight(Light light, vec3 fragPos, vec3 normal, vec3 viewDir) {
+vec3 calcSpotLight(Light light, vec3 fragPos, vec3 normal, vec3 viewDir) {
 	vec3 color = vec3(0.0);
-	vec3 lightDir = normalize(light.position - fragPos);
+	vec3 lightDir = normalize(vec3(light.position) - fragPos);
 	float attenuation, spotEffect, dist = length(lightDir);
-    vec3 halfvector = normalize(lightDir + viewDir);
-    vec3 ambient, diffuse, specular;
+    vec3 reflectDir = reflect(-lightDir, normal);
+    vec4 ambient, diffuse, specular;
     float diff = max(dot(normal, lightDir), 0.0);
-    float spec = pow(max(dot(halfvector, normal), 0.0), mat.shininess);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), mat.shininess);
+    float distance    = length(vec3(light.position) - fragPos);  
 
-	if( diff > 0.0 ) {
 
-		spotEffect = dot(normalize(light.direction),normalize(-lightDir));
+		spotEffect = dot(normalize(vec3(light.direction)),normalize(-lightDir));
 
-		if(spotEffect > light.emissionAngle) {
-			attenuation = spotEffect / (dist * dist);
-			ambient  = light.ambient  ;
-    		diffuse  =  light.diffuse  * diff ;
-    		specular =  light.specular * spec ;
-    		color += attenuation * (ambient + diffuse + specular);
+        float epsilon   = light.innerCutOff - light.outerCutOff;
+        float intensity = clamp((spotEffect - light.outerCutOff) / epsilon, 0.0, 1.0);  
+
+		if(spotEffect > light.outerCutOff) {
+			attenuation = 1 / (light.att_constant + light.att_linear * distance + 
+                 light.att_quadratic * (distance * distance));
+			ambient  = light.ambient  * mat.ambient;
+    		diffuse  =  light.diffuse  * diff * mat.diffuse * intensity;
+    		specular =  light.specular * spec * mat.specular * intensity;
+    		color += vec3(ambient + diffuse + specular) * attenuation;
 		}
+        else {
+            color = vec3(light.ambient * mat.ambient);
+        }
 
-	}
 
 	return color;
-}*/
+}
 
 void main() {
 	vec3 Normal = normCoord;
@@ -144,7 +151,7 @@ void main() {
 					res += calcDirLight(lights[i],Normal,viewDir);
 					break;
 				case SPOT_LIGHT:
- 					//res += calcSpotLight(lights[i],fragPos,Normal,viewDir);
+ 					res += calcSpotLight(lights[i],fragPos,Normal,viewDir);
  					break;
  			}
 

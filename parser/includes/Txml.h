@@ -66,7 +66,8 @@ public:
             float att_constant = 1.0f;
             float att_linear = 0.0f;
             float att_quadratic = 0.0f;
-            float cutoffAngle = 180.0f;
+            float cutoffAngle = 180;
+            float outerCutOff = 180;
 
             const char* s = models->Value();
 
@@ -99,6 +100,11 @@ public:
                     // setup angle
                     if(models->Attribute("angle")) {
                         cutoffAngle = (float) atof(models->Attribute("angle"));
+                        //outerCutOff = cutoffAngle;
+                    }
+
+                    if(models->Attribute("outer")) {
+                        outerCutOff = (float) atof(models->Attribute("outer"));
                     }
                     // Setup for color components
                     // Permite definir luzes difusas.
@@ -155,7 +161,8 @@ public:
                     }
                     // Spot light found
                     else if ( !strcmp(type,"SPOT") ) {
-                        e->addSpotLight(position, direction, diffuse, ambient, specular, cutoffAngle, att_constant, att_linear, att_quadratic);
+                        e->addSpotLight(position, direction, diffuse, ambient, specular, glm::cos(cutoffAngle*M_PI/180.0f),
+                                        glm::cos(outerCutOff*M_PI/180.0f), att_constant, att_linear, att_quadratic);
                     }
                     else {
                         cout << "Invalid type of light indicated" << endl;
@@ -166,7 +173,6 @@ public:
                     cout << "Invalid light has been entered and ignored" << endl;
                 }
 
-                cout << "x:" << position.x << " ,y:" << position.y << " ,z:" << position.z << endl;
             }
 
         }
@@ -302,7 +308,9 @@ public:
 
                 for (TiXmlElement * models = aux->FirstChildElement();models;models = models -> NextSiblingElement()){
                     int r = 0, g = 0 ,b = 255;
-                    diffR = diffG = diffB = 0.0f;
+                    aR = aG = aB = 1.0f;
+                    diffR = diffG = diffB = 1.0f;
+                    sR = sG = sB = 1.0f;
 
                     if(models->Attribute("texture")) {
                         texture = * new string(models->Attribute("texture"));
