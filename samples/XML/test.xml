@@ -1,0 +1,1284 @@
+<scene>
+    <lights>
+    	<light type="SPOT" posY="70" dirY="-1" angle="10" outer="45" aR="0.1" aB="0.1" aG="0.1" />	
+    	<light type="POINT" posX="30" posZ="30" posY="30" aR="0.2" aB="0.2" aG="0.2" LINEAR="0.01"/>
+    </lights>
+    <group>
+    	<rotate axisX="1" axisZ="1" axisY="1" time="20"/>
+	    <group>
+	    	<group>
+	    		<translate Y="1"/>
+	    		<rotate axisX="1" angle="-90"/>
+	    		<models>
+	    			<model file="cometa.3d" texture="relva.jpg"/>
+	    		</models>
+	    	</group>
+	    	<group>
+	    		<translate X="5" Z="-5"/>
+	    		<group>
+		    		<group>
+			    		<translate X="0" Y="2" Z="0"/>
+						<models>
+							<model file="cube.3d" texture="mine_wood.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="0" Y="4" Z="0"/>
+						<models>
+							<model file="cube.3d" texture="mine_wood.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="0" Y="6" Z="0"/>
+						<models>
+							<model file="cube.3d" texture="mine_wood.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="0" Y="8" Z="0"/>
+						<models>
+							<model file="cube.3d" texture="mine_wood.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="8" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="4" Y="8" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="-2" Y="8" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="-4" Y="8" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="0" Y="8" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="8" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="8" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="-4" Y="8" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="4" Y="8" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="0" Y="8" Z="4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="8" Z="4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="8" Z="4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="0" Y="8" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="8" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="8" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="-4" Y="8" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="4" Y="8" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="0" Y="8" Z="-4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="8" Z="-4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="8" Z="-4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	
+			    	<group>
+			    		<translate X="0" Y="10" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="10" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="10" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="0" Y="10" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="10" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="10" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+
+			    	<group>
+			    		<translate X="0" Y="10" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="10" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="10" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="0" Y="12" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="12" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="12" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="0" Y="12" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="0" Y="12" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+		    	</group>
+	    	</group>
+	    	<group>
+	    		<translate X="-5" Z="5"/>
+	    		<group>
+		    		<group>
+			    		<translate X="0" Y="2" Z="0"/>
+						<models>
+							<model file="cube.3d" texture="mine_wood.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="0" Y="4" Z="0"/>
+						<models>
+							<model file="cube.3d" texture="mine_wood.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="0" Y="6" Z="0"/>
+						<models>
+							<model file="cube.3d" texture="mine_wood.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="0" Y="8" Z="0"/>
+						<models>
+							<model file="cube.3d" texture="mine_wood.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="8" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="4" Y="8" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="-2" Y="8" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="-4" Y="8" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="0" Y="8" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="8" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="8" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="-4" Y="8" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="4" Y="8" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="0" Y="8" Z="4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="8" Z="4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="8" Z="4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="0" Y="8" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="8" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="8" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="-4" Y="8" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="4" Y="8" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="0" Y="8" Z="-4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="8" Z="-4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="8" Z="-4"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	
+			    	<group>
+			    		<translate X="0" Y="10" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="10" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="10" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="0" Y="10" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="10" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="10" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+
+			    	<group>
+			    		<translate X="0" Y="10" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="10" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="10" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="0" Y="12" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+			    	<group>
+			    		<translate X="2" Y="12" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="-2" Y="12" Z="0"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+
+			    	<group>
+			    		<translate X="0" Y="12" Z="2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+
+			    	<group>
+			    		<translate X="0" Y="12" Z="-2"/>
+						<models>
+							<model file="cube2.3d" texture="leaf.png"/>
+						</models>
+			    	</group>
+		    	</group>
+	    	</group>
+	    	<group>
+				<group>
+					<translate X="-10" Y="0" Z="-10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-8" Y="0" Z="-10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-6" Y="0" Z="-10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-4" Y="0" Z="-10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-2" Y="0" Z="-10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="0" Y="0" Z="-10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="2" Y="0" Z="-10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="4" Y="0" Z="-10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="6" Y="0" Z="-10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="8" Y="0" Z="-10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="10" Y="0" Z="-10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-10" Y="0" Z="-8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-8" Y="0" Z="-8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-6" Y="0" Z="-8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-4" Y="0" Z="-8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-2" Y="0" Z="-8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="0" Y="0" Z="-8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="2" Y="0" Z="-8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="4" Y="0" Z="-8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="6" Y="0" Z="-8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="8" Y="0" Z="-8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="10" Y="0" Z="-8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-10" Y="0" Z="-6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-8" Y="0" Z="-6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-6" Y="0" Z="-6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-4" Y="0" Z="-6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-2" Y="0" Z="-6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="0" Y="0" Z="-6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="2" Y="0" Z="-6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="4" Y="0" Z="-6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="6" Y="0" Z="-6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="8" Y="0" Z="-6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="10" Y="0" Z="-6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-10" Y="0" Z="-4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-8" Y="0" Z="-4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-6" Y="0" Z="-4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-4" Y="0" Z="-4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-2" Y="0" Z="-4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="0" Y="0" Z="-4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="2" Y="0" Z="-4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="4" Y="0" Z="-4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="6" Y="0" Z="-4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="8" Y="0" Z="-4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="10" Y="0" Z="-4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-10" Y="0" Z="-2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-8" Y="0" Z="-2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-6" Y="0" Z="-2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-4" Y="0" Z="-2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-2" Y="0" Z="-2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="0" Y="0" Z="-2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="2" Y="0" Z="-2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="4" Y="0" Z="-2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="6" Y="0" Z="-2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="8" Y="0" Z="-2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="10" Y="0" Z="-2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-10" Y="0" Z="0"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-8" Y="0" Z="0"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-6" Y="0" Z="0"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-4" Y="0" Z="0"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-2" Y="0" Z="0"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="0" Y="0" Z="0"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="2" Y="0" Z="0"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="4" Y="0" Z="0"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="6" Y="0" Z="0"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="8" Y="0" Z="0"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="10" Y="0" Z="0"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-10" Y="0" Z="2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-8" Y="0" Z="2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-6" Y="0" Z="2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-4" Y="0" Z="2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-2" Y="0" Z="2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="0" Y="0" Z="2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="2" Y="0" Z="2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="4" Y="0" Z="2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="6" Y="0" Z="2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="8" Y="0" Z="2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="10" Y="0" Z="2"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-10" Y="0" Z="4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-8" Y="0" Z="4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-6" Y="0" Z="4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-4" Y="0" Z="4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-2" Y="0" Z="4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="0" Y="0" Z="4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="2" Y="0" Z="4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="4" Y="0" Z="4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="6" Y="0" Z="4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="8" Y="0" Z="4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="10" Y="0" Z="4"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-10" Y="0" Z="6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-8" Y="0" Z="6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-6" Y="0" Z="6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-4" Y="0" Z="6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-2" Y="0" Z="6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="0" Y="0" Z="6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="2" Y="0" Z="6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="4" Y="0" Z="6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="6" Y="0" Z="6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="8" Y="0" Z="6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="10" Y="0" Z="6"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-10" Y="0" Z="8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-8" Y="0" Z="8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-6" Y="0" Z="8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-4" Y="0" Z="8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-2" Y="0" Z="8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="0" Y="0" Z="8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="2" Y="0" Z="8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="4" Y="0" Z="8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="6" Y="0" Z="8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="8" Y="0" Z="8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="10" Y="0" Z="8"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-10" Y="0" Z="10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-8" Y="0" Z="10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-6" Y="0" Z="10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-4" Y="0" Z="10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="-2" Y="0" Z="10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="0" Y="0" Z="10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="2" Y="0" Z="10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="4" Y="0" Z="10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="6" Y="0" Z="10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="8" Y="0" Z="10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+				<group>
+					<translate X="10" Y="0" Z="10"/>
+					<models>
+						<model file="cube.3d" texture="mine_grass.png"/>
+					</models>
+				</group>
+	    	</group>
+	    </group>
+	   </group>
+</scene>
