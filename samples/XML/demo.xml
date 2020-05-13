@@ -2,9 +2,9 @@
     <background>
         <color r="1" g="1" b="1" />
     </background>
+    <cubemap map="STARS"/>
     <lights>
-        <light type="POINT" posX="10" diffB="1" aR="0.5"/>
-        
+        <light type="POINT" posX="0" diffB="1" aG="0.1" aB="0.1" aR="0.1"/>
     </lights>
     <group>
         <group>

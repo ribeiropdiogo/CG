@@ -44,8 +44,11 @@ int main(int argc, char *argv[]) {
             Box box(X, Y, Z);
             box.dump_new(file);
         } else if (argc == 7) {
-            Box box2(X, Y, Z, atoi(argv[6]));
+            Box box2(X, Y, Z, atoi(argv[6]), false);
             box2.dump_new(file);
+        } else if (argc == 8) {
+            Box box3(X, Y, Z, atoi(argv[6]), true);
+            box3.dump_new(file);
         } else {
             cout << "Wrong number of arguments!" << endl;
         }

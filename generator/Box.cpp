@@ -2,13 +2,16 @@
 #include <Vec3.h>
 #include "Box.h"
 #include <cmath>
+#include <glm/glm.hpp>
+
+using namespace glm;
 
 #define DIM 3
 
-Box::Box(float wx, float wy, float wz) : Box(wx,wy,wz,1) {}
+Box::Box(float wx, float wy, float wz) : Box(wx,wy,wz,1, false) {}
 
 Box::Box(float wx, float wy, float wz,
-        int divisions) : Figure(divisions, divisions) {
+        int divisions, bool uvMask) : Figure(divisions, divisions) {
 
     int nVertices = 0;
     float normals[] = {0.0f, 0.0f, 0.0f};
@@ -22,18 +25,21 @@ Box::Box(float wx, float wy, float wz,
     // Constroi todas as laterais.
     for(float & normal : normals) {
         normal = 1.0f;
-        nVertices += genLateral(normals,steps,divisions,nVertices);
+        nVertices += genLateral(normals,steps,divisions,nVertices, uvMask);
 
         normal = -1.0f;
-        nVertices += genLateral(normals,steps,divisions,nVertices);
+        nVertices += genLateral(normals,steps,divisions,nVertices, uvMask);
 
         normal = 0.0f;
     }
+
+    if(uvMask)
+        Box::addPersonalUVMask(divisions);
 }
 
 
 int Box::genLateral(float *normals, float *steps,
-               int divisions, int nVertices) {
+               int divisions, int nVertices, bool uvMask) {
     int k1, k2, nNew = 0;
 
     // Reconstroi os pesos
@@ -68,7 +74,8 @@ int Box::genLateral(float *normals, float *steps,
             Vec3 Pi = vstep * ( (s * (float)i) + (dlt * (float)j) ) + P0;  
             Figure::addVertice(Pi.getX(), Pi.getY(), Pi.getZ());
             Figure::addNormal(normals[0], normals[1], normals[2]);
-            Figure::addTexCoord((float) i / (float) divisions,
+            if(!uvMask)
+                Figure::addTexCoord((float) i / (float) divisions,
                     (float) j / (float) divisions);
             nNew++;
         }
@@ -96,4 +103,40 @@ int Box::getIndex(float *v) {
         ;
 
     return i % DIM;
+}
+
+void Box::addPersonalUVMask(int divisions) {
+    float v = 0.3333, u = 0.25;
+    float vv = v / (float) divisions;
+    float vu = u / (float) divisions;
+
+    // Positive X
+    genUVMask(vec2(3*u,v), vec2(vu,0), vec2(0,vv), divisions);
+
+    // Negative X
+    genUVMask(vec2(u,v), vec2(vu,0), vec2(0,vv), divisions);
+
+    // Positive Y
+    genUVMask(vec2(u,v), vec2(0,-vv), vec2(vu,0), divisions);
+
+    // Negative Y
+    genUVMask(vec2(2*u,2*v), vec2(0,vv), vec2(-vu,0), divisions);
+
+    // Positive Z
+    genUVMask(vec2(2*u,v), vec2(vu,0), vec2(0,vv), divisions);
+
+    // Negative Z
+    genUVMask(vec2(0,2*v), vec2(vu,0), vec2(0,-vv), divisions);
+}
+
+void Box::genUVMask(vec2 pos, vec2 du, vec2 dv, int divisions) {
+    for(int i = 0; i <= divisions; i++) {
+        vec2 p = pos + du * (float) i;
+
+        for(int j = 0; j <= divisions; j++) {
+            vec2 l = p + dv * (float) j;
+
+            Figure::addTexCoord(l.x, l.y);
+        }
+    }
 }

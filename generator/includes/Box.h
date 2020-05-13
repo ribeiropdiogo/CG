@@ -7,12 +7,15 @@
 
 
 #include "Figure.h"
+#include <glm/glm.hpp>
+
+using namespace glm;
 
 class Box : public Figure {
 public:
     Box(float wx, float wy, float wz);
     Box(float wx, float wy, float wz,
-            int divisions);
+            int divisions, bool uvMask);
 private:
     Vec3 kv = * new Vec3({0.0f, 0.0f, 1.0f});
     Vec3 iv = * new Vec3({1.0f, 0.0f, 0.0f});
@@ -25,7 +28,7 @@ private:
      * @return Número de vértices criados.
      */
     int genLateral(float *normals, float *steps,
-                    int divisions, int nVertices);
+                    int divisions, int nVertices, bool uvMask);
 
     /**
      * Indica em que indice se encontra a primeira casa não nula do array, ou 0 caso sejam todos nulos.
@@ -33,6 +36,8 @@ private:
      * @return Indica da primeira casa nao nula.
      */
     int getIndex(float *v);
+    void addPersonalUVMask(int divisions);
+    void genUVMask(vec2 pos, vec2 du, vec2 dv, int divisions);
 };
 
 #endif //GENERATOR_BOX_H
