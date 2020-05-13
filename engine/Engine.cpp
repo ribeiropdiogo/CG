@@ -8,6 +8,7 @@
 #include <Shader.h>
 #include <GL/freeglut.h>
 #include <mathAct.h>
+#include <unordered_map>
 
 #define MAX_LIGHT_UNITS 20
 
@@ -38,6 +39,8 @@ vector<Shader> progs;
 
 vector<string> skyBoxFaces;
 Shader *skyBoxShader= nullptr;
+
+unordered_map<string, GLuint> loadedTextures;
 
 float bruh[16] = {
         0.5f, 0.0, 0.0f, 1.0f,
@@ -259,28 +262,38 @@ DrawEvent Engine::newDrawing(const string& file, float * materialOptions,const s
 
 void Engine::loadTexture(int idx, string texture_name, GLuint *textures){
     if(!texture_name.empty()) {
-        unsigned int t, tw, th;
-        unsigned char *texData;
-        ilGenImages(1, &t);
-        ilBindImage(t);
+        if(loadedTextures.find(texture_name) == loadedTextures.end()) {
+            // Doesnt exist any texture by that name.
+            unsigned int t, tw, th;
+            unsigned char *texData;
+            ilGenImages(1, &t);
+            ilBindImage(t);
 
-        ilLoadImage((ILstring) texture_name.c_str());
-        tw = ilGetInteger(IL_IMAGE_WIDTH);
-        th = ilGetInteger(IL_IMAGE_HEIGHT);
-        ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-        texData = ilGetData();
+            ilLoadImage((ILstring) texture_name.c_str());
+            tw = ilGetInteger(IL_IMAGE_WIDTH);
+            th = ilGetInteger(IL_IMAGE_HEIGHT);
+            ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+            texData = ilGetData();
 
-        glBindTexture(GL_TEXTURE_2D, textures[idx]);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glBindTexture(GL_TEXTURE_2D, textures[idx]);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
+            glGenerateMipmap(GL_TEXTURE_2D);
+            loadedTextures[texture_name] = textures[idx];
+        }
+        else {
+            // If a texture with that name already exists.
+            textures[idx] = loadedTextures[texture_name];
+        }
+        }
+
 }
+
 
 void Engine::bindLights() {
     glBindBuffer(GL_UNIFORM_BUFFER, lights);

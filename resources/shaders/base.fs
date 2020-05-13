@@ -73,9 +73,8 @@ vec3 calcDirLight(Light light, vec3 normal, vec3 viewDir) {
  
 vec3 calcPointLight(Light light, vec3 normal, vec3 viewDir)
 {
-    vec3 norm = normalize(normal);
     vec3 lightDir = normalize(vec3(light.position) - fragPos);
-    float diff = max(dot(norm, lightDir), 0.0);
+    float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse = diff * vec3(light.diffuse);
     return (vec3(light.ambient) + diffuse);
 } 
@@ -135,5 +134,5 @@ void main() {
  	}
 
 
- 	FragColor = vec4(res, 1.0);//(ambient + diffuse + specular) * texColor;
+ 	FragColor = vec4(res, 1.0) * texColor;//(ambient + diffuse + specular) * texColor;
 }
