@@ -30,6 +30,8 @@ public:
     TransformEvent(float x, float y, float z, float angle);
     TransformEvent(float x, float y, float z, int laptime);
     void process(int milis);
+    TType getType();
+    void printItself();
 };
 
 #endif //GENERATOR_TRANSFORMEVENT_H

@@ -518,7 +518,7 @@ void Engine::processMouseButtons(int button, int state, int xx, int yy) {
             if (index > 0)
             {
                 idxFocus=index-1;
-                groups[idxFocus]->adjustCenter(groups,motion.checkSysTime(glutGet(GLUT_ELAPSED_TIME)));
+                groups[idxFocus]->adjustCenter(groups,timeT);
                 printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u,center x %f,center y %f,center z %f\n",
                        xx, yy, color[0], color[1], color[2], color[3], depth, index,groups[idxFocus]->getCenterX(),groups[idxFocus]->getCenterY(),groups[idxFocus]->getCenterZ());
                 focus= true;
@@ -543,7 +543,7 @@ void Engine::start(int *eargc, char **argv){
     glutInitWindowSize(800,800);
     glutCreateWindow(WIN_NAME.c_str());
 
-    glutFullScreen();
+    //glutFullScreen();
 
     motion.build_key_mappers();
     motion.build_special_mappers();

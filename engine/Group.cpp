@@ -98,7 +98,7 @@ void Group::adjustCenter(vector<Group*> groups,int milis) {
     for (auto & transformation : this->transformations) {
         transformation.process(milis);
     }
-    glm::vec4 mv = mt::getModelViewPos();
+    glm::vec4 mv = mt::getModelPos();
     mt::popMatrix();
     center[0] = mv[0]*center[3];
     center[1] = mv[1]*center[3];
@@ -109,7 +109,7 @@ void Group::adjustCenter(vector<Group*> groups,int milis) {
         center[0]/=center[3];
         center[1]/=center[3];
         center[2]/=center[3];
-        center[3]/=center[3];
+        center[3]=1.0;
     }
 }
 

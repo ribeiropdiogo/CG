@@ -52,7 +52,10 @@ TransformEvent::TransformEvent(float x, float y, float z, float angle)
 
 TransformEvent::TransformEvent(float x, float y, float z, int laptime)
     : TransformEvent(ROTATE, x, y, z, 360.0, laptime){}
-
+TType TransformEvent::getType()
+{
+    return m_type;
+}
 void TransformEvent::process(int milis) {
     float factor, k;
     int N = 1;
@@ -121,4 +124,9 @@ void TransformEvent::dealWithCatmullR(float milis) {
     mt::multMatix(glm::make_mat4(M));
     //glTranslatef(P.getX(), P.getY(), P.getZ());
     //glMultMatrixf(M);
+}
+
+void TransformEvent::printItself() {
+    cout <<"COORDS"<< m_x<<" " <<m_y<<" "<<m_z << endl;
+
 }

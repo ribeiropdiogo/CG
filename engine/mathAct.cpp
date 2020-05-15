@@ -89,3 +89,8 @@ glm::vec4 mt::getModelViewPos() {
     glm::mat4 mv = view * stack[N];
     return glm::vec4(mv[3][0], mv[3][1], mv[3][2], mv[3][3]);
 }
+
+glm::vec4 mt::getModelPos() {
+    glm::mat4 mv = stack[N];
+    return glm::vec4(mv[3][0], mv[3][1], mv[3][2], mv[3][3]);
+}
