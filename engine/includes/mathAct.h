@@ -27,6 +27,7 @@ namespace mt {
     void bindModelViewMatrix(GLuint id);
     void bindViewPos(GLuint id);
     void undoViewTranslation();
+    glm::vec4 getModelViewPos();
 }
 
 #endif //GENERATOR_MATHACT_H

@@ -22,7 +22,6 @@ Group::Group() {
     n_subgroups = 0;
     center[0]=center[1]=center[2]=0.0;
     center[3]=1.0;
-    tracing.resize(MAX_TRACE);
 }
 
 void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, GLuint * materials, GLuint lights, vector<Shader> progs) {
@@ -30,7 +29,7 @@ void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, GLuint * material
     unsigned int id = drawings[idx].getBufferId();
 
     glBindBufferBase(GL_UNIFORM_BUFFER, 1, materials[id]);
-    //glBindBuffer(GL_UNIFORM_BUFFER, materials[id]);
+
     glBindTexture(GL_TEXTURE_2D, textures[id]);
     glBindVertexArray(vaos[id]);
 
@@ -38,29 +37,6 @@ void Group::popDraw(int idx, GLuint * vaos, GLuint * textures, GLuint * material
 
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-
-}
-
-void Group::pushTrace(float *mat) {
-    Vec3 vec = (*new Vec3(mat[12], mat[13], mat[14]));
-    if(N < MAX_TRACE) {
-        tracing[N++] = vec;
-    }
-    else {
-        tracing[init] = vec;
-        init = (init + 1) % MAX_TRACE;
-    }
-}
-
-void Group::drawTracing() {
-    glBegin(GL_LINES);
-
-    for(int i = 0; i < N; i++) {
-        Vec3 tmp = tracing[(init + i) % MAX_TRACE];
-        glVertex3f(tmp.getX(), tmp.getY(), tmp.getZ());
-    }
-
-    glEnd();
 }
 
 void Group::pushTransformation(TransformEvent te) {
@@ -88,10 +64,7 @@ int Group::publish(GLuint * vaos, GLuint * textures, GLuint * materials, GLuint 
         glUniform1i(glGetUniformLocation(tmp.getID(), "ourTexture"), 0);
         blockIndex = glGetUniformBlockIndex(tmp.getID(), "Materials");
         glUniformBlockBinding(tmp.getID(), blockIndex, 1);
-        //glBindBufferBase(GL_UNIFORM_BUFFER, 0, lights);
-        //cout << blockIndex << endl;
     }
-    //mt::bindLight(progs[1].getID());
 
     for (int j = 0; j < drawings.size(); ++j) {
         popDraw(j, vaos, textures, materials, lights, progs);
@@ -112,9 +85,8 @@ void Group::setUpgroup(int upGroupIndex, vector<int> upGroupParents) {
     this->n_upGroups = upGroupParents;
     this->n_upGroups.push_back(upGroupIndex);
 }
-/*
+
 void Group::adjustCenter(vector<Group*> groups,int milis) {
-    float matrixf [16];
     mt::pushMatrix();//glPushMatrix();
     mt::identity();//glLoadIdentity();
     for (int ui : this->getUpgroup())
@@ -126,12 +98,12 @@ void Group::adjustCenter(vector<Group*> groups,int milis) {
     for (auto & transformation : this->transformations) {
         transformation.process(milis);
     }
-    glGetFloatv(GL_MODELVIEW_MATRIX,matrixf);
-    glPopMatrix();
-    center[0] = matrixf[12]*center[3];
-    center[1] = matrixf[13]*center[3];
-    center[2] = matrixf[14]*center[3];
-    center[3] = matrixf[15]*center[3];
+    glm::vec4 mv = mt::getModelViewPos();
+    mt::popMatrix();
+    center[0] = mv[0]*center[3];
+    center[1] = mv[1]*center[3];
+    center[2] = mv[2]*center[3];
+    center[3] = mv[3]*center[3];
     if (center[3]>1.0)
     {
         center[0]/=center[3];
@@ -139,7 +111,7 @@ void Group::adjustCenter(vector<Group*> groups,int milis) {
         center[2]/=center[3];
         center[3]/=center[3];
     }
-}*/
+}
 
 float Group::getCenterX() {
     return center[0];

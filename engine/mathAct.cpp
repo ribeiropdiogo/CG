@@ -84,3 +84,8 @@ void mt::bindViewPos(GLuint id) {
 void mt::undoViewTranslation() {
     view = glm::mat4(glm::mat3(view));
 }
+
+glm::vec4 mt::getModelViewPos() {
+    glm::mat4 mv = view * stack[N];
+    return glm::vec4(mv[3][0], mv[3][1], mv[3][2], mv[3][3]);
+}

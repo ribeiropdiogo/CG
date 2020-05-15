@@ -450,7 +450,7 @@ void Engine::renderScene(){
 
     glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
 
-    mt::identity();//    glLoadIdentity();
+    mt::identity();
 
     motion.place_camera(focus,lookX,lookY,lookZ);
 
@@ -494,10 +494,11 @@ void Engine::idleFunc()
         glutSetWindowTitle(title);
     }
     if (focus){
-        //groups[idxFocus]->adjustCenter(groups,timeT);
+        groups[idxFocus]->adjustCenter(groups,timeT);
         lookX=groups[idxFocus]->getCenterX();
         lookY=groups[idxFocus]->getCenterY();
-        lookZ=groups[idxFocus]->getCenterZ();}
+        lookZ=groups[idxFocus]->getCenterZ();
+    }
     glutPostRedisplay();
 }
 
@@ -517,7 +518,7 @@ void Engine::processMouseButtons(int button, int state, int xx, int yy) {
             if (index > 0)
             {
                 idxFocus=index-1;
-                //groups[idxFocus]->adjustCenter(groups,motion.checkSysTime(glutGet(GLUT_ELAPSED_TIME)));
+                groups[idxFocus]->adjustCenter(groups,motion.checkSysTime(glutGet(GLUT_ELAPSED_TIME)));
                 printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u,center x %f,center y %f,center z %f\n",
                        xx, yy, color[0], color[1], color[2], color[3], depth, index,groups[idxFocus]->getCenterX(),groups[idxFocus]->getCenterY(),groups[idxFocus]->getCenterZ());
                 focus= true;
@@ -567,14 +568,8 @@ void Engine::start(int *eargc, char **argv){
     glEnable(GL_DEPTH_TEST);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    //glEnableClientState(GL_NORMAL_ARRAY);
+
     glEnable(GL_CULL_FACE);
-
-    //glEnable(GL_LIGHTING);
-    //glEnable(GL_BLEND);
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    //glEnable(GL_LIGHT0);
-
 }
 
 void Engine::loop() {
@@ -588,8 +583,6 @@ void Engine::loop() {
                         "../../resources/shaders/skybox.fs");
         glUniform1i(glGetUniformLocation(skyBoxShader->getID(), "skybox"), 0);
     }
-
-    //skyBoxShader->use();
 
     bindAllObjects();
 

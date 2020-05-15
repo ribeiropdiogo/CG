@@ -119,14 +119,11 @@ vec3 calcSpotLight(Light light, vec3 fragPos, vec3 normal, vec3 viewDir) {
         float intensity = clamp((spotEffect - light.outerCutOff) / epsilon, 0.0, 1.0);
 
 		if(spotEffect > light.outerCutOff) {
-			ambient  = light.ambient  * mat.ambient;
+			ambient  = light.ambient  * mat.ambient * intensity;
     		diffuse  =  light.diffuse  * diff * mat.diffuse * intensity;
     		specular =  light.specular * spec * mat.specular * intensity;
     		color += vec3(ambient + diffuse + specular);
 		}
-        else {
-            color = vec3(light.ambient * mat.ambient) ;
-        }
     }
 
 	return color * attenuation;

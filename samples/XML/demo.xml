@@ -4,9 +4,9 @@
     </background>
     <cubemap map="STARS"/>
     <lights>
-        <light type="POINT" />
-        <light type="SPOT" posY="200" dirY="-1" angle="5" outer="5" diffR="1"/>
-        <light type="SPOT" posY="-200" dirY="1" angle="5" outer="5" diffR="1"/>
+        <light type="POINT" aR="1" aB="1" aG="1" diffR="1" LINEAR="0.01"/>
+        <light type="SPOT" posY="-200" dirY="1" angle="3" outer="3.6" LINEAR="0.02" />
+        <light type="SPOT" posY="200" dirY="-1" angle="3" outer="3.6" LINEAR="0.02" />
     </lights>
     <group>
         <group>
@@ -37,7 +37,7 @@
             <group>
                 <rotate time="5" axisY="1"/>
                 <models>
-                    <model file="sphere.3d" texture="planetas/sunmap.jpg" aR="1" aB="1" aG="1" shine="20"/>
+                    <model file="sphere.3d" texture="planetas/sunmap.jpg" aR="1" aB="1" aG="1" diffR="1" diffG="1" diffB="1" shine="0.1"/>
                 </models>
             </group>
         </group>
