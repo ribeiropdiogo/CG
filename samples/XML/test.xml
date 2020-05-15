@@ -1,10 +1,10 @@
 <scene>
     <lights>
-    	<light type="SPOT" posY="70" dirY="-1" angle="10" outer="45" aR="0.1" aB="0.1" aG="0.1" />	
-    	<light type="POINT" posX="30" posZ="30" posY="30" aR="0.2" aB="0.2" aG="0.2" LINEAR="0.01"/>
+    	<light type="SPOT" posY="40" dirY="-1" angle="10" outer="20" aR="0.1" aB="0.1" aG="0.1" LINEAR="0.02"/>
+    	<light type="POINT" posX="5" posZ="5" posY="5" aR="0.2" aB="0.2" aG="0.2" LINEAR="0.05"/>
     </lights>
     <group>
-    	<rotate axisX="1" axisZ="1" axisY="1" time="20"/>
+
 	    <group>
 	    	<group>
 	    		<translate Y="1"/>

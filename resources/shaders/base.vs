@@ -18,5 +18,5 @@ void main()
 
     texCoord = aTexCoord;
     normCoord = normalize(normalMatrix * aNormCoord);
-    fragPos = vec3( model * vec4(aPos,4));
+    fragPos = vec3( model * vec4(aPos,1));
 } 
