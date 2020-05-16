@@ -18,17 +18,19 @@ void parse_point_wvobj(string name, int *indexes, int* sizes) {
     stringstream ss(name);
 
     while( getline(ss,item,'/') ) {
-        num = stoi(item);
+        if(!item.empty()) {
+            num = stoi(item);
 
-        if(num < 0) {
-            num = sizes[i] + num;
-        } else
-            num--;
+            if(num < 0) {
+                num = sizes[i] + num;
+            } else
+                num--;
 
-        indexes[i++] = num;
+            indexes[i++] = num;
+        } else {
+            indexes[i++] = 1;
+        }
     }
-
-    cout << "indexes are " << indexes[0] << " " << indexes[1] << " " << indexes[2] << endl;
 }
 
 // Reads all of the materials associated with the specified name.
@@ -80,7 +82,7 @@ unordered_map<string,Material> parse_materials(string mtlib) {
                     // specifications of shininess.
                     mat->shininess = stof(tokens[1]);
                 }
-                else if(!tokens[0].compare("map_Ka")) {
+                else if(!tokens[0].compare("map_Kd")) {
                     // new texture found.
                     mat->idTexture = TexLoader::loadTexture(tokens[1].c_str());
                 }
@@ -145,21 +147,27 @@ Object3d* ObjLoader::loadWVObj(string file_name, GLuint id_tex) {
                     // if the material was previously observed.
                     if( materials.find(tokens[1]) != materials.end() ) {
                         // then, announce the new material.
-                        // obj->announce_material(materials[tokens[1]]);
+                        obj->announce_material(materials[tokens[1]]);
                     }
 
                 }
                 else if(!tokens[0].compare("f")) {
                     int indexes[3];
-                    int sizes[3] = {(int)points.size(), (int)normals.size(), (int)texcoord.size()};
+                    int sizes[3] = {(int)points.size(), (int)texcoord.size(), (int)normals.size()};
                     int N = tokens.size() - 3;
 
                     for(int i = 0; i < N; i++) {
                         for(int j = 0; j < 3; j++ ) {
+                            glm::vec2 tc = glm::vec2(0);
                             parse_point_wvobj(tokens[i+j+1],indexes,sizes);
+
+                            if(texcoord.size() != 0)
+                                tc = glm::vec2(texcoord[indexes[1]]);
+
                             obj->add_face_point(points[indexes[0]],
-                                    normals[indexes[1]],
-                                    texcoord[indexes[2]]);
+                                    normals[indexes[2]],
+                                    tc);
+                            //cout << "x: " << points[indexes[0]].x << ",y: " << points[indexes[0]].y << ",z: " << points[indexes[0]].z << endl;
                         }
                     }
 

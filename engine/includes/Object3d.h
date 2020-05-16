@@ -31,6 +31,7 @@ typedef struct material {
 
 class Object3d {
 private:
+    int used = 0;
     vector< GLuint >* material_bufs = nullptr;
     vector< GLuint >* obj_vaos = nullptr;
     vector< GLuint >* texture_ids = nullptr;

@@ -15,14 +15,16 @@ Object3d::Object3d(GLuint id_tex) {
     material_bufs = new vector<GLuint>();
     obj_vaos = new vector<GLuint>();
     texture_ids = new vector<GLuint>();
+    default_material.idTexture = id_tex;
     announce_material(default_material);
-    texture_ids->push_back(id_tex);
+    //texture_ids->push_back(id_tex);
 }
 
 void Object3d::announce_material(Material new_mat) {
     iu_info = new vector<GLfloat>();
     iu_index = new vector<GLuint>();
 
+    cout << " i have id texture " << new_mat.idTexture << endl;
     texture_ids->push_back(new_mat.idTexture);
 
     raw_obj_info.push_back(
@@ -31,7 +33,7 @@ void Object3d::announce_material(Material new_mat) {
 
 void Object3d::add_face_point(glm::vec3 position, glm::vec3 normal, glm::vec2 texcoord) {
     push_data_info(position, normal, texcoord);
-    iu_index->push_back((iu_index->size() - 1) / 8);
+    iu_index->push_back(used++);
 }
 
 void Object3d::add_point(glm::vec3 position, glm::vec3 normal, glm::vec2 texcoord) {
@@ -72,18 +74,9 @@ void Object3d::bind() {
     glGenBuffers(N, indexes);
     glGenBuffers(N, materials);
 
-    cout << "i have been asked to bind:" << endl;
-    cout << "\t" << N << " different materials." << endl;
-
     for(int i = 0; i < N; i++) {
         vector<GLfloat> tmp = *std::get<0>(std::get<1>(raw_obj_info[i]));
         vector<GLuint> indices = *std::get<1>(std::get<1>(raw_obj_info[i]));
-        //cout << "i have " << tmp.size() << " info for you" << endl;
-        //cout << "i have " << indices.size() << " indeces for you" << endl;
-
-        cout << "\t" << "for material " << i << endl;
-        cout << "\t\t" << tmp.size() << " different info." << endl;
-        cout << "\t\t" << indices.size() << " different indices." << endl;
 
         material_bufs->push_back(materials[i]);
         obj_vaos->push_back(VAOs[i]);
