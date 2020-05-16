@@ -109,21 +109,25 @@ void Engine::wrap_up_special(int key, int x, int y) {
     motion.up_special(key, x, y);
 }
 
-Object3d Engine::newDrawing(const string& file, float * materialOptions,const string& texture){
-    Object3d newObj(0);
+Object3d* Engine::newDrawing(const string& file, float * materialOptions,const string& texture){
+    Object3d *newObj = nullptr;
+    GLuint id_tex = 0;
+    string key = "(" + file + "," + texture + ")";
 
-    auto iter = loadedObj.find(file);
+    auto iter = loadedObj.find(key);
 
     if(iter != loadedObj.end()) {
         // Existe já armazenado em memoria
-        newObj = (iter->second);
+        newObj = &(iter->second);
     }
     else {
-        newObj = ObjLoader::loadFile(file);
-        loadedObj.insert({file, newObj});
+        id_tex = TexLoader::loadTexture(texture.c_str());
+        newObj = ObjLoader::loadFile(file, id_tex);
+
+        loadedObj.insert({key, *newObj});
     }
 
-    loadedEvents.push_back(newObj);
+    loadedEvents.push_back(*newObj);
 
     return newObj;
 }
@@ -163,9 +167,8 @@ int Engine::runGroups(int idx, int milis, vector<Shader> progs) {
         mt::pushMatrix();//glPushMatrix();
 
         glStencilFunc(GL_ALWAYS,idx+1,-1);
-        cout << "before publish " << endl;
+
         tmp = group->publish(VAOs, textures, materials, lights, progs, milis);
-        cout << "after publish " << endl;
 
         for(int j = 0; j < tmp; j++) {
             nprocd += runGroups(idx + nprocd, milis, progs);
@@ -193,11 +196,11 @@ void Engine::renderScene(){
 
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, lights);
 
-    cout << "before groups " << endl;
+    //cout << "before groups " << endl;
 
     runGroups(0, timeT, progs);
 
-    cout << "after groups " << endl;
+    //cout << "after groups " << endl;
 
     if(skyBoxFaces.size() == 6) {
         glEnable(GL_DEPTH_CLAMP);
@@ -340,11 +343,11 @@ void Engine::newGroup(){
 
 void Engine::newObj(const string& file,float * materialOptions, string texture){
 
-    Object3d event = newDrawing(file,materialOptions,texture);
+    Object3d * event = newDrawing(file,materialOptions,texture);
 
     if(!groups.empty()) {
         Group * last = groups.back();
-        last->pushDraw(event);
+        last->pushDraw(*event);
     }
 }
 

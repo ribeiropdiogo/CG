@@ -158,5 +158,5 @@ void main() {
  	}
 
 
- 	FragColor = vec4(res, 1.0) * texColor;//(ambient + diffuse + specular) * texColor;
+ 	FragColor = texColor;//vec4(res, 1.0) * texColor;//(ambient + diffuse + specular) * texColor;
 }

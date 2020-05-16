@@ -31,20 +31,14 @@ typedef struct material {
 
 class Object3d {
 private:
-    vector< GLuint > material_bufs;
-    // Every objects posseses a vector of all the corresponding materials
-    // Each materials with its corresponding VAOs, so buffer changing can
-    // be made amidst rendering. There is always atleast one material, the
-    // default material, all others must be announced using announce_material.
-    // obj_vaos is empty until the bind is called.
-    vector< GLuint > obj_vaos;
-    vector< GLuint > texture_ids;
-
+    vector< GLuint >* material_bufs = nullptr;
+    vector< GLuint >* obj_vaos = nullptr;
+    vector< GLuint >* texture_ids = nullptr;
     // Every object posses a vector of all the faces of vector associated with
     // it, to be able to generate vertex array buffers. There is always atleast one material, the
     // default material, all others must be announced using announce_material.
     // Besides the information of the vertex, indexes must also be added.
-    vector< tuple< Material,tuple< vector<GLfloat>,vector<GLuint> > > > raw_obj_info;
+    vector< tuple< Material,tuple< vector<GLfloat>*,vector<GLuint>* > > > raw_obj_info;
 
     // We do not need to know the number of vertexes, it is necessarly implicit
     // to each of the materials.
@@ -90,6 +84,7 @@ public:
     void bind();
 
     void draw(GLuint id_shader);
+    void set_texture_id(GLuint id_tex);
 };
 
 

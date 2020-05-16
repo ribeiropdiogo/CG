@@ -46,12 +46,9 @@ int Group::publish(GLuint * vaos, GLuint * textures, GLuint * materials, GLuint 
         mt::bindTrans(tmp.getID());
     }
 
-    cout <<" size is " << drawings.size()<<endl;
-    cout << "before draw" << endl;
     for (int j = 0; j < drawings.size(); ++j) {
         drawings[j].draw(progs[0].getID());
     }
-    cout << "after draw" << endl;
 
     return n_subgroups;
 }

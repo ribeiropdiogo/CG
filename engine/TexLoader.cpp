@@ -156,6 +156,7 @@ GLuint TexLoader::loadNormalTexture(const char* texture) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
         glGenerateMipmap(GL_TEXTURE_2D);
         loadedTextures[texture] = textureID;
+        cout << textureID << " , loading string " << texture << endl;
     }
     else {
         // If a texture with that name already exists.
@@ -166,8 +167,9 @@ GLuint TexLoader::loadNormalTexture(const char* texture) {
 }
 
 GLuint TexLoader::loadTexture(const char* texture) {
-    string file_name = "../../resources/texture/";
+    string file_name = "../../resources/textures/";
     file_name.append(texture);
+
     return isSuffixOf(file_name, ".obj") ? loadDDSTexture(file_name.c_str()) : loadNormalTexture(file_name.c_str());
 }
 

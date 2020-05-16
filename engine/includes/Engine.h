@@ -180,7 +180,7 @@ public:
 
     void newObj(const string& file, float * materialOptions, string texture);
 
-    Object3d newDrawing(const string& file, float * materialOptions, const string& texture);
+    Object3d* newDrawing(const string& file, float * materialOptions, const string& texture);
 
     void setBackgroundColor(float r, float g, float b);
 };
