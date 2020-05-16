@@ -7,9 +7,9 @@
 
 #include <vector>
 #include "TransformEvent.h"
-#include "DrawEvent.h"
 #include "EngineMotion.h"
 #include "Shader.h"
+#include "Object3d.h"
 #include <glm/glm.hpp>
 
 using namespace std;
@@ -18,16 +18,14 @@ class Group {
 private:
     static EngineMotion motion;
     vector<TransformEvent> transformations;
-    vector<DrawEvent> drawings;
+    vector<Object3d> drawings;
     GLfloat center [4];
     int n_subgroups;
     vector<int> n_upGroups;
-
-    void popDraw(int idx, GLuint * vaos, GLuint * textures,GLuint* materials,GLuint lights, vector<Shader> progs);
 public:
     Group();
     void pushTransformation(TransformEvent te);
-    void pushDraw(DrawEvent de);
+    void pushDraw(Object3d de);
 
     int publish(GLuint * vaos, GLuint * textures, GLuint* materials,GLuint lights, vector<Shader> progs, int milis);
     int addSubgroup();

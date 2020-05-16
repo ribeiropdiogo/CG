@@ -1,0 +1,41 @@
+//
+// Created by syrayse on 15/05/20.
+//
+
+#include "ObjLoader.h"
+#include "Common.h"
+
+Object3d ObjLoader::loadWVObj(string file_name) {
+    return Object3d(0);
+}
+
+Object3d ObjLoader::load3DObj(string file_name) {
+    float val;
+    Object3d obj = Object3d(0);
+    GLuint numVertices, tempI;
+
+    ifstream inFile(file_name);
+    inFile >> numVertices;
+
+    for (int i=0; i < numVertices; i++)
+    {
+        for (int j = 0; j < 8; j++) {
+            inFile >> val;
+            obj.add_atomic(val);
+        }
+    }
+    while (!inFile.eof())
+    {
+        inFile >> tempI;
+        obj.add_index(tempI);
+    }
+    inFile.close();
+
+    return obj;
+}
+
+Object3d ObjLoader::loadFile(string file_name) {
+    string path = "../../samples/3D/";
+    path.append(file_name);
+    return isSuffixOf(file_name, ".obj") ? loadWVObj(path) : load3DObj(path);
+}

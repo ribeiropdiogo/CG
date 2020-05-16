@@ -7,7 +7,6 @@
 
 #include <unordered_map>
 #include <vector>
-#include "DrawEvent.h"
 #include "Group.h"
 #include "EngineMotion.h"
 #include "IL/il.h"
@@ -28,7 +27,7 @@ private:
      */
     static EngineMotion motion;
 
-    vector<DrawEvent> loadedEvents;
+    vector<Object3d> loadedEvents;
 
     /**
      * Armazena pares <Nome_Ficheiro, Objeto> de forma
@@ -82,9 +81,6 @@ private:
      */
     Group * latestGroup();
 
-    void bindLights();
-    void setupLights();
-
 
     /**
      * Permite a criação de um novo DrawEvent, associado
@@ -98,12 +94,7 @@ private:
      * @param file Ficheiro que se pretende ler.
      * @return Evento criado.
      */
-    DrawEvent newDrawing(const string& file);
-
-    /**
-     * Guarda as texturas fornecidasdna estrutura devida.
-     */
-    void loadTexture(int idx, string texture, GLuint *textures);
+    Object3d newDrawing(const string& file);
 
     /**
      * Efetua o binding de todos os objetos, fazendo
@@ -148,14 +139,6 @@ private:
     static void processMouseButtons(int button, int state, int xx, int yy);
 
 public:
-    void addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular
-            , float att_constant, float att_linear, float att_quadratic);
-    void addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular
-            , float att_constant, float att_linear, float att_quadratic);
-    void addSpotLight(glm::vec3 position, glm::vec3 direction,
-                      glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular, float emissionAngle
-                , float outerCutOff, float att_constant, float att_linear, float att_quadratic);
-
     /**
      * Inicia o Engine, neste momento o Engine está
      * pronto a receber novos inputs, como grupos,
@@ -197,7 +180,7 @@ public:
 
     void newObj(const string& file, float * materialOptions, string texture);
 
-    DrawEvent newDrawing(const string& file, float * materialOptions, const string& texture);
+    Object3d newDrawing(const string& file, float * materialOptions, const string& texture);
 
     void setBackgroundColor(float r, float g, float b);
 };

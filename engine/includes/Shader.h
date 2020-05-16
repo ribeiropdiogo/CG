@@ -6,6 +6,7 @@
 #define GENERATOR_SHADER_H
 
 #include <string>
+#include <GL/glew.h>
 
 using namespace std;
 

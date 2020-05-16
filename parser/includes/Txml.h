@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <includes/Engine.h>
 #include "tinyxml.h"
+#include "lightSystem.h"
 
 string sea_cubemap[6] = {
         "sea/right.jpg",
@@ -153,15 +154,15 @@ public:
 
                     // Point light found
                     if( !strcmp(type,"POINT") ) {
-                        e->addPointLight(position, diffuse, ambient, specular, att_constant, att_linear, att_quadratic);
+                        lightSystem::addPointLight(position, diffuse, ambient, specular, att_constant, att_linear, att_quadratic);
                     }
                     // Directional light found
                     else if ( !strcmp(type,"DIR") ) {
-                        e->addDirectionalLight(direction, diffuse, ambient, specular, att_constant, att_linear, att_quadratic);
+                        lightSystem::addDirectionalLight(direction, diffuse, ambient, specular, att_constant, att_linear, att_quadratic);
                     }
                     // Spot light found
                     else if ( !strcmp(type,"SPOT") ) {
-                        e->addSpotLight(position, direction, diffuse, ambient, specular, glm::cos(cutoffAngle*M_PI/180.0f),
+                        lightSystem::addSpotLight(position, direction, diffuse, ambient, specular, glm::cos(cutoffAngle*M_PI/180.0f),
                                         glm::cos(outerCutOff*M_PI/180.0f), att_constant, att_linear, att_quadratic);
                     }
                     else {

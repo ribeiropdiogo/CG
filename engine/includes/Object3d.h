@@ -13,76 +13,83 @@
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
-#include <GL/glut.h>
+#include <GL/glew.h>
 #endif
 #include <vector>
+#include <glm/glm.hpp>
+#include <tuple>
 
 using namespace std;
 
+typedef struct material {
+    glm::vec4 ambient = glm::vec4(0.2, 0.2, 0.2, 1);
+    glm::vec4 diffuse = glm::vec4(0.8, 0.8, 0.8, 1);
+    glm::vec4 specular = glm::vec4(1, 1, 1, 1);
+    float shininess = 0.0f;
+    GLuint idTexture = 0;
+} Material;
+
 class Object3d {
 private:
-    int numVertices;
-    vector<GLfloat> vertices;
-    vector<GLuint> index;
+    vector< GLuint > material_bufs;
+    // Every objects posseses a vector of all the corresponding materials
+    // Each materials with its corresponding VAOs, so buffer changing can
+    // be made amidst rendering. There is always atleast one material, the
+    // default material, all others must be announced using announce_material.
+    // obj_vaos is empty until the bind is called.
+    vector< GLuint > obj_vaos;
+    vector< GLuint > texture_ids;
 
+    // Every object posses a vector of all the faces of vector associated with
+    // it, to be able to generate vertex array buffers. There is always atleast one material, the
+    // default material, all others must be announced using announce_material.
+    // Besides the information of the vertex, indexes must also be added.
+    vector< tuple< Material,tuple< vector<GLfloat>,vector<GLuint> > > > raw_obj_info;
+
+    // We do not need to know the number of vertexes, it is necessarly implicit
+    // to each of the materials.
+
+    // Cache each of the vector, to avoid uncessary tuple acces in raw_obj_info.
+    vector<GLfloat> * iu_info = nullptr;
+    vector<GLuint> * iu_index = nullptr;
 public:
-    Object3d() {
-        numVertices = 0;
-    }
-    /* A função loadObject começa por ir buscar
-    o ficheiro que contem a informação dos vertices
-    (é utilizada a concatenação com a string ../ para que se possam
-    por os ficheiros dentro da pasta parser e não dentro da pasta cmake-build-debug*/
-    void loadObject(string filePath)
-    {
-        //destroyObject();
-        char * string = strdup(filePath.c_str());
-        char * workdir = strdup("../../samples/3D/");
-        workdir = (char*) realloc(workdir, strlen(workdir) + strlen(string) + 1);
-        char * useThis = strcat(workdir,string);
-        float val;
-        unsigned int tempI;
-        ifstream inFile(useThis);
-        inFile >> numVertices;
+    Object3d(GLuint id_tex);
 
-        /* alocado estado para um array de floats grande o suficiente para gerir todos os vertices do objeto */
-        for (int i=0;i<numVertices;i++)
-        {
-            for (int j = 0; j < 8; j++) {
-                inFile >> val;
-                vertices.push_back(val);
-            }
-        }
-        while (!inFile.eof())
-        {
-            inFile >> tempI;
-            index.push_back(tempI);
-        }
-        inFile.close();
-    }
+    /*
+     * An announce must be made for each new material being processed,
+     * from now on, other faced defined will be stored in the iu_info.
+     */
+    void announce_material(Material new_mat, GLuint id_tex);
 
-    // Função simples para eliminar o objeto
-    void destroyObject()
-    {
-        numVertices=0;
-        vertices.clear();
-        index.clear();
-    }
+    /**
+     * Adds a face to the objects, append to the last material.
+     *
+     * A face point assumes that the ordering is being done sequentially,
+     * if you want to use specific indexes, you must add_point and then add index.
+     *
+     * @param position Position of the point.
+     * @param normal Normal of the point to be added.
+     * @param texcoord Texture coordinate associated.
+     */
+    void add_face_point(glm::vec3 position, glm::vec3 normal, glm::vec2 texcoord);
 
-    int getNumVertices() {
-        return numVertices;
-    }
+    /**
+     * Adds a point and assumes the point will be later indexed using add_index.
+     * @param position Position of the point.
+     * @param normal Normal of the point to be added.
+     * @param texcoord Texture coordinate associated.
+     */
+    void add_point(glm::vec3 position, glm::vec3 normal, glm::vec2 texcoord) ;
 
-    vector<GLfloat> getPontos()
-    {
-        return vertices;
-    }
+    void add_atomic(float atomic) ;
 
-    vector<GLuint> getIndices()
-    {
-        return index;
-    }
+    void add_index(GLuint new_index) ;
 
+    void push_data_info(glm::vec3 position, glm::vec3 normal, glm::vec2 texcoords) ;
+
+    void bind();
+
+    void draw(GLuint id_shader);
 };
 
 

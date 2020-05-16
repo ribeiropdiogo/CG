@@ -14,7 +14,7 @@ link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
 include_directories(includes)
 
-add_library(${PROJECT_NAME} includes/DrawEvent.h DrawEvent.cpp includes/TransformEvent.h TransformEvent.cpp includes/Group.h Group.cpp includes/Engine.h includes/EngineMotion.h EngineMotion.cpp Engine.cpp includes/Vec3.h Vec3.cpp includes/CRSpline.h CRSpline.cpp includes/Shader.h Shader.cpp includes/mathAct.h mathAct.cpp)
+add_library(${PROJECT_NAME} includes/TransformEvent.h TransformEvent.cpp includes/Group.h Group.cpp includes/Engine.h includes/EngineMotion.h EngineMotion.cpp Engine.cpp includes/Vec3.h Vec3.cpp includes/CRSpline.h CRSpline.cpp includes/Shader.h Shader.cpp includes/mathAct.h mathAct.cpp includes/ObjLoader.h ObjLoader.cpp includes/TexLoader.h TexLoader.cpp includes/lightSystem.h lightSystem.cpp Object3d.cpp includes/Common.h Common.cpp)
 
 if(NOT OPENGL_FOUND)
     message(ERROR " OPENGL not found!")
