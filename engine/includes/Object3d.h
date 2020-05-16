@@ -53,7 +53,7 @@ public:
      * An announce must be made for each new material being processed,
      * from now on, other faced defined will be stored in the iu_info.
      */
-    void announce_material(Material new_mat, GLuint id_tex);
+    void announce_material(Material new_mat);
 
     /**
      * Adds a face to the objects, append to the last material.
