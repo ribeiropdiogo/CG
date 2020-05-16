@@ -1,0 +1,9 @@
+newmtl pasted__a90d7cc1_dds
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.30 0.30 0.30
+Tf 1.00 1.00 1.00
+map_Kd a90d7cc1.dds
+Ni 1.50
+Ks 1.00 1.00 1.00
+Ns 10.00
