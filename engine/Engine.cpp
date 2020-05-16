@@ -134,6 +134,8 @@ Object3d* Engine::newDrawing(const string& file, float * materialOptions,const s
 
 void Engine::bindAllObjects() {
 
+    lightSystem::bind();
+
     for(auto elem : loadedEvents) {
         elem.bind();
     }
@@ -194,7 +196,7 @@ void Engine::renderScene(){
 
     motion.place_camera(focus,lookX,lookY,lookZ);
 
-    glBindBufferBase(GL_UNIFORM_BUFFER, 0, lights);
+    lightSystem::activate(progs[0].getID());
 
     //cout << "before groups " << endl;
 

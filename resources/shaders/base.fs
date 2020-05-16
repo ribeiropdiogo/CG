@@ -38,8 +38,8 @@ struct Light {
 };
 
 struct Material {
-	vec4 diffuse;
     vec4 ambient;
+	vec4 diffuse;
     vec4 specular;
     float shininess;
 };
@@ -157,6 +157,5 @@ void main() {
 
  	}
 
-
- 	FragColor = texColor;//vec4(res, 1.0) * texColor;//(ambient + diffuse + specular) * texColor;
+ 	FragColor = vec4(res,1) * texColor;
 }

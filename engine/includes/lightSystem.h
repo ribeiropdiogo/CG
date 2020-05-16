@@ -21,6 +21,7 @@ public:
     static void bind();
     static void setup();
     static GLuint getID();
+    static void activate(GLuint id_shader);
 };
 
 #endif //GENERATOR_LIGHTSYSTEM_H

@@ -154,6 +154,7 @@ public:
 
                     // Point light found
                     if( !strcmp(type,"POINT") ) {
+                        //ambient = glm::vec3(1);
                         lightSystem::addPointLight(position, diffuse, ambient, specular, att_constant, att_linear, att_quadratic);
                     }
                     // Directional light found
@@ -162,6 +163,7 @@ public:
                     }
                     // Spot light found
                     else if ( !strcmp(type,"SPOT") ) {
+
                         lightSystem::addSpotLight(position, direction, diffuse, ambient, specular, glm::cos(cutoffAngle*M_PI/180.0f),
                                         glm::cos(outerCutOff*M_PI/180.0f), att_constant, att_linear, att_quadratic);
                     }

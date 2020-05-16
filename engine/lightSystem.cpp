@@ -2,6 +2,7 @@
 // Created by syrayse on 16/05/20.
 //
 
+#include <iostream>
 #include "lightSystem.h"
 
 #define MAX_LIGHT_UNITS 20
@@ -15,13 +16,13 @@ GLuint lights;
 
 typedef struct light {
     // Color components
-    float diffuse[4];
-    float ambient[4] ;
-    float specular[4];
+    glm::vec4 diffuse;
+    glm::vec4 ambient;
+    glm::vec4 specular;
 
     // extrinsic light props
-    float position[4] = {0.0, 0.0, 0.0};
-    float direction[4] = {0.0, 0.0, 0.0,0.0};
+    glm::vec4 position;
+    glm::vec4 direction;
     int isOn;
     int type;
 
@@ -41,16 +42,11 @@ Light lighting[MAX_LIGHT_UNITS];
 
 void setupColorComponents(glm::vec3 diffuse,
                           glm::vec3 ambient, glm::vec3 specular) {
-    int i;
     Light* light = lighting + usedLights;
-    for(i = 0; i < 3; i++) {
-        light->diffuse[i] = diffuse[i];
-        light->ambient[i] = ambient[i];
-        light->specular[i] = specular[i];
-    }
-    light->diffuse[i] = 1;
-    light->ambient[i] = 1;
-    light->specular[i] = 1;
+
+    light->ambient = glm::vec4(ambient, 1.0);
+    light->diffuse = glm::vec4(diffuse, 1.0);
+    light->specular = glm::vec4(specular, 1.0);
 }
 
 void setupAttenuation(Light * light, float att_constant, float att_linear, float att_quadratic) {
@@ -62,15 +58,14 @@ void setupAttenuation(Light * light, float att_constant, float att_linear, float
 void lightSystem::addPointLight(glm::vec3 position, glm::vec3 diffuse, glm::vec3 ambient, glm::vec3 specular
         , float att_constant, float att_linear, float att_quadratic) {
     Light* light = lighting + usedLights;
-    //lighting[usedLights].isOn = 1;
+
     light->isOn = 1;
-    //cout << light.isOn << endl;
+
     light->type = POINT_LIGHT;
     setupColorComponents(diffuse, ambient, specular);
-    for(int i = 0; i < 3; i++) {
-        light->position[i] = position[i];
-    }
-    light->position[3] = 1;
+
+    light->position = glm::vec4(position, 1.0f);
+
     setupAttenuation(light, att_constant, att_linear, att_quadratic);
     usedLights++;
 }
@@ -82,10 +77,9 @@ void lightSystem::addDirectionalLight(glm::vec3 direction, glm::vec3 diffuse, gl
     light->isOn = 1;
     light->type = DIRECTIONAL_LIGHT;
     setupColorComponents(diffuse, ambient, specular);
-    for(int i = 0; i < 3; i++) {
-        light->direction[i] = direction[i];
-    }
-    light->direction[3] = 1;
+
+    light->direction = glm::vec4(direction, 1.0f);
+
     setupAttenuation(light, att_constant, att_linear, att_quadratic);
     usedLights++;
 }
@@ -98,14 +92,13 @@ void lightSystem::addSpotLight(glm::vec3 position, glm::vec3 direction,
     light->isOn = 1;
     light->type = SPOT_LIGHT;
     setupColorComponents(diffuse, ambient, specular);
-    for(int i = 0; i < 3; i++) {
-        light->position[i] = position[i];
-        light->direction[i] = direction[i];
-    }
-    light->position[3] = 1;
-    light->direction[3] = 1;
+
+    light->position = glm::vec4(position, 1.0f);
+    light->direction = glm::vec4(direction, 1.0f);
+
     light->emissionAngle = emissionAngle;
     light->outerCutOff = outerCutOff;
+
     setupAttenuation(light, att_constant, att_linear, att_quadratic);
     usedLights++;
 }
@@ -118,6 +111,14 @@ void lightSystem::bind() {
     glBufferData(GL_UNIFORM_BUFFER, MAX_LIGHT_UNITS*sizeof(Light), lighting, GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+    std::cout << sizeof(struct light) << " is the light" << std::endl;
+}
+
+void lightSystem::activate(GLuint id_shader) {
+    GLuint blockIndex = glGetUniformBlockIndex(id_shader, "Lights");
+    glUniformBlockBinding(id_shader, blockIndex, 0);
+    glBindBufferBase(GL_UNIFORM_BUFFER, 0, lights);
 }
 
 void lightSystem::setup() {

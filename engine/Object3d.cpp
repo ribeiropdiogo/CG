@@ -118,6 +118,7 @@ void Object3d::draw(GLuint id_shader) {
         blockIndex = glGetUniformBlockIndex(id_shader, "Materials");
         glUniformBlockBinding(id_shader, blockIndex, 1);
 
+
         vector<GLuint> indices = *std::get<1>(std::get<1>(raw_obj_info[i]));
 
         glBindBufferBase(GL_UNIFORM_BUFFER, 1, (*material_bufs)[i]);

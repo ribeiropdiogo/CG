@@ -25,7 +25,7 @@ typedef struct material {
     glm::vec4 ambient = glm::vec4(0.2, 0.2, 0.2, 1);
     glm::vec4 diffuse = glm::vec4(0.8, 0.8, 0.8, 1);
     glm::vec4 specular = glm::vec4(1, 1, 1, 1);
-    float shininess = 0.0f;
+    float shininess = 100.0f;
     GLuint idTexture = 0;
 } Material;
 
