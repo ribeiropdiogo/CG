@@ -91,28 +91,28 @@ public:
      * Permite comunicar ao Engine que um novo grupo acaba de
      * ser criado e está de momento a ser processado.
      */
-    void newGroup();
+    static void newGroup();
 
     /**
      * Adiciona uma nova transformação, associando esta ao grupo
      * mas recente.
      * @param te Transformação a ser associada.
      */
-    void newTransform(TransformEvent te);
+    static void newTransform(TransformEvent te);
 
-    void addSubgroup(int group);
+    static void addSubgroup(int group);
 
-    vector<int> addUpgroup(int upGroup,int group);
+    static vector<int> addUpgroup(int upGroup,int group);
 
-    void appendCubeMapFace(string face);
+    static void appendCubeMapFace(string face);
 
-    void initialCamera(float x, float y, float z);
+    static void initialCamera(float x, float y, float z);
 
     void newObj(const string& file, string texture, Material material);
 
     Object3d* newDrawing(const string& file, const string& texture, Material material);
 
-    void setBackgroundColor(float r, float g, float b);
+    static void setBackgroundColor(float r, float g, float b);
 };
 
 #endif //GENERATOR_ENGINE_H
