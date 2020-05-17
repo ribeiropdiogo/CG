@@ -177,10 +177,6 @@ void EngineMotion::build_special_mappers() {
     specialMappers[GLUT_KEY_RIGHT] = look_right;
 }
 
-int EngineMotion::getFrustumState() {
-    return frustumOn;
-}
-
 int EngineMotion::checkSysTime(int milis) {
     return milis;
 }

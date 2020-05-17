@@ -60,8 +60,6 @@ namespace EngineMotion {
 
     void build_special_mappers();
 
-    int getFrustumState();
-
     int checkSysTime(int milis);
 
     void setCamera(float x, float y, float z);

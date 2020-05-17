@@ -8,13 +8,11 @@
 
 #else
 #include <GL/glew.h>
-#include <GL/glut.h>
 #include <Shader.h>
 #include <mathAct.h>
 
 #endif
 #include "Group.h"
-#include "IL/il.h"
 
 Group::Group() {
     n_subgroups = 0;
