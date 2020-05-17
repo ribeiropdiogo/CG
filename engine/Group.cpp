@@ -16,8 +16,6 @@
 #include "Group.h"
 #include "IL/il.h"
 
-EngineMotion Group::motion;
-
 Group::Group() {
     n_subgroups = 0;
     center[0]=center[1]=center[2]=0.0;
@@ -32,22 +30,20 @@ void Group::pushDraw(Object3d de) {
     drawings.push_back(de);
 }
 
-int Group::publish(GLuint * vaos, GLuint * textures, GLuint * materials, GLuint lights, vector<Shader> progs, int milis) {
+int Group::publish(Shader shader, int milis) {
     for (auto & transformation : transformations) {
         transformation.process(milis);
     }
 
-    for(int i = 0; i < progs.size(); i++) {
-        Shader tmp = progs[i];
-        tmp.use();
-        mt::bindModelViewMatrix(tmp.getID());
-        mt::bindNormalMatrix(tmp.getID());
-        mt::bindViewPos(progs[0].getID());
-        mt::bindTrans(tmp.getID());
-    }
+    GLuint id = shader.getID();
+    shader.use();
+    mt::bindModelViewMatrix(id);
+    mt::bindNormalMatrix(id);
+    mt::bindViewPos(id);
+    mt::bindTrans(id);
 
     for (int j = 0; j < drawings.size(); ++j) {
-        drawings[j].draw(progs[0].getID());
+        drawings[j].draw(id);
     }
 
     return n_subgroups;
@@ -67,8 +63,8 @@ void Group::setUpgroup(int upGroupIndex, vector<int> upGroupParents) {
 }
 
 void Group::adjustCenter(vector<Group*> groups,int milis) {
-    mt::pushMatrix();//glPushMatrix();
-    mt::identity();//glLoadIdentity();
+    mt::pushMatrix();
+    mt::identity();
     for (int ui : this->getUpgroup())
     {
         for (auto & transformation : groups[ui]->transformations) {

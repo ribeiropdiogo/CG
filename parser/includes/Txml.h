@@ -55,7 +55,6 @@ public:
         float r, g, b;
         TiXmlElement * models;
         const char * type;
-        r = g = b = 0.0f;
 
         for (models=pElem->FirstChildElement();models;models=models->NextSiblingElement()) {
 
@@ -218,14 +217,11 @@ public:
         float diffR, diffG, diffB,
                 aR, aG, aB,
                 sR, sG, sB, shine;
-        diffR = diffG = diffB = 0.0f;
-        aR = aG = aB = 0.0f;
-        shine = 50.0f;
-        sR = sG = sB = 1.0f;
 
-        bool timeDep = false;
+
+        bool timeDep;
         int hCurrent;
-        x=y=z=angle=0;
+
         int count = 0;
         for (aux=elem->FirstChildElement();aux;aux=aux->NextSiblingElement())
         {
@@ -311,9 +307,10 @@ public:
 
                 for (TiXmlElement * models = aux->FirstChildElement();models;models = models -> NextSiblingElement()){
                     int r = 0, g = 0 ,b = 255;
-                    aR = aG = aB = 1.0f;
-                    diffR = diffG = diffB = 1.0f;
+                    aR = aG = aB = 0.2f;
+                    diffR = diffG = diffB = 0.8f;
                     sR = sG = sB = 1.0f;
+                    shine = 100.0f;
 
                     if(models->Attribute("texture")) {
                         texture = * new string(models->Attribute("texture"));
@@ -357,13 +354,14 @@ public:
                         shine = (float) atof(models->Attribute("shine"));
                     }
 
-                    float props[13] = {diffR,diffG,diffB, 1.0f,
-                                       aR,   aG,   aB, 1.0f,
-                                       sR,   sG,   sB, 1.0f,
-                                       shine};
+                    Material props;
+                    props.ambient = glm::vec4(aR, aG, aB, 1.0f);
+                    props.diffuse = glm::vec4(diffR, diffG, diffB, 1.0f);
+                    props.specular = glm::vec4(sR, sG, sB, 1.0f);
+                    props.shininess = shine;
 
                     if(models->Attribute("file"))
-                        e->newObj(models->Attribute("file"),props, texture);
+                        e->newObj(models->Attribute("file"), texture, props);
                     texture.erase();
 
                 }

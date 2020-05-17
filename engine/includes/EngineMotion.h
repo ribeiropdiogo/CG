@@ -5,8 +5,7 @@
 #ifndef GENERATOR_ENGINEMOTION_H
 #define GENERATOR_ENGINEMOTION_H
 
-class EngineMotion {
-public:
+namespace EngineMotion {
     /**
      * Responsavel pelo processamento de eventos associados
      * a *ASCII key stokes*, por parte do *Engine*.
@@ -18,7 +17,7 @@ public:
      * @param x Posição do rato no eixo X, quando a tecla é pressionada.
      * @param y Posição do rato no eixo Y, quando a tecla é pressionada.
      */
-    virtual void handle_ascii(unsigned char key, int x, int y);
+    void handle_ascii(unsigned char key, int x, int y);
 
     /**
      * Responsavel pelo processamento de eventos associados
@@ -31,11 +30,11 @@ public:
      * @param x Posição do rato no eixo X, quando a tecla é pressionada.
      * @param y Posição do rato no eixo Y, quando a tecla é pressionada.
      */
-    virtual void handle_special(int key, int x, int y);
+    void handle_special(int key, int x, int y);
 
-    virtual void up_ascii(unsigned char key, int xn, int yn);
+    void up_ascii(unsigned char key, int xn, int yn);
 
-    virtual void up_special(int key, int xn, int yn);
+    void up_special(int key, int xn, int yn);
 
     /**
      * Responsavel pela colocação da camâra ao renderizar
@@ -46,7 +45,7 @@ public:
      *      2) Posicionamento da camâra relativo à origem.
      *      3) Polygon Mode considerado atualmente.
      */
-    virtual void place_camera(bool focused,float lookX,float lookY,float lookZ);
+    void place_camera(bool focused,float lookX,float lookY,float lookZ);
 
     /**
      * Permite definr a tela de projeção, acedendo à
@@ -55,11 +54,11 @@ public:
      * @param w Largura da tela.
      * @param h Altura da tela.
      */
-    virtual void projection_size(int w, int h);
+    void projection_size(int w, int h);
 
-    virtual void build_key_mappers();
+    void build_key_mappers();
 
-    virtual void build_special_mappers();
+    void build_special_mappers();
 
     int getFrustumState();
 

@@ -10,21 +10,18 @@
 
 using namespace std;
 
-Object3d::Object3d(GLuint id_tex) {
-    Material default_material = Material();
+Object3d::Object3d(GLuint id_tex, Material material) {
     material_bufs = new vector<GLuint>();
     obj_vaos = new vector<GLuint>();
     texture_ids = new vector<GLuint>();
-    default_material.idTexture = id_tex;
-    announce_material(default_material);
-    //texture_ids->push_back(id_tex);
+    material.idTexture = id_tex;
+    announce_material(material);
 }
 
 void Object3d::announce_material(Material new_mat) {
     iu_info = new vector<GLfloat>();
     iu_index = new vector<GLuint>();
 
-    cout << " i have id texture " << new_mat.idTexture << endl;
     texture_ids->push_back(new_mat.idTexture);
 
     raw_obj_info.push_back(
@@ -42,7 +39,6 @@ void Object3d::add_point(glm::vec3 position, glm::vec3 normal, glm::vec2 texcoor
 
 void Object3d::add_atomic(float atomic) {
     iu_info->push_back(atomic);
-    //cout << "iu_info has size " << iu_info->size() << endl;
 }
 
 void Object3d::add_index(GLuint new_index) {
@@ -133,8 +129,4 @@ void Object3d::draw(GLuint id_shader) {
         glBindTexture(GL_TEXTURE_2D, 0);
 
     }
-}
-
-void Object3d::set_texture_id(GLuint id_tex) {
-
 }

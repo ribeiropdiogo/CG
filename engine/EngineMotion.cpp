@@ -19,22 +19,21 @@ typedef void (*EMKeyProc)();
 
 GLfloat mode = GL_FILL; // GL_FILL, GL_LINE; GL_POINT
 GLfloat speed = 0.1f;
-float angle = 45, ratio=1;
-float nearP = 1.0f, farP = 100.0f;
+float angle = 45;
 int frustumOn = 1;
 bool inFocus=false, paused=false;
 
 // angle of rotation for the camera direction
 float alpha=0.0, beta=0.0f;
+
 // actual vector representing the camera's direction
 glm::vec3 l(0.0f, 0.0f, -1.0f);
-//float lx=0.0f,lz=-1.0f, ly=0.0f;
-// XZ position of the camera
+
 glm::vec3 p(0.0, 1.0f,5.0f);
 glm::vec3 up(0.0f,1.0f,0.0f);
-//float x=0.0f,z=5.0f,y=1.0f;
+
 glm::vec3 focusV(1.0,0.0,0.0);
-glm::vec3 holdL(1.0,0.0,0.0);
+
 float range=1;
 
 unordered_map<unsigned char, EMKeyProc> keyboardMappers;
@@ -75,7 +74,7 @@ void pauseplay();
 ###################################################################
 */
 
-void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
+void EngineMotion::handle_ascii(unsigned char key, int , int ) {
     if(keyboardMappers.find(key) != keyboardMappers.end()) {
         keyboardActive.insert(key);
 
@@ -83,7 +82,7 @@ void EngineMotion::handle_ascii(unsigned char key, int xn, int yn) {
     }
 }
 
-void EngineMotion::handle_special(int key, int xn, int yn) {
+void EngineMotion::handle_special(int key, int, int ) {
     if(specialMappers.find(key) != specialMappers.end()) {
         specialActive.insert(key);
 
@@ -91,7 +90,7 @@ void EngineMotion::handle_special(int key, int xn, int yn) {
     }
 }
 
-void EngineMotion::up_ascii(unsigned char key, int xn, int yn) {
+void EngineMotion::up_ascii(unsigned char key, int , int) {
     if(keyboardMappers.find(key) != keyboardMappers.end()) {
         keyboardActive.erase(key);
 
@@ -99,7 +98,7 @@ void EngineMotion::up_ascii(unsigned char key, int xn, int yn) {
     }
 }
 
-void EngineMotion::up_special(int key, int xn, int yn) {
+void EngineMotion::up_special(int key, int, int ) {
     if(specialMappers.find(key) != specialMappers.end()) {
         specialActive.erase(key);
 
@@ -116,7 +115,7 @@ void EngineMotion::place_camera(bool focused,float lookX,float lookY,float lookZ
             range=1;
             inFocus=true;
         }
-        focusV = glm::vec3(lookX, lookY, lookZ);//*(new Vec3(lookX,lookY,lookZ));
+        focusV = glm::vec3(lookX, lookY, lookZ);
         l = glm::normalize(focusV * (-1.0f));
         p = focusV * range;
         apply_active_keys_focused();
@@ -265,32 +264,28 @@ void reset_world() {
     speed = 0.1f;
     beta = 0.0f;
     alpha = 0.0f;
-    l = glm::vec3(0.0f, 0.0f, -1.0f);//*(new Vec3(0.0f, 0.0f, -1.0f));
-    p = glm::vec3(0.0f, 1.0f, 5.0f);//*(new Vec3(0.0f, 1.0f, 5.0f));
+    l = glm::vec3(0.0f, 0.0f, -1.0f);
+    p = glm::vec3(0.0f, 1.0f, 5.0f);
 }
 
 void look_up() {
     beta -= speed / 10;
     l = glm::vec3(sin(alpha), -sin(beta), -cos(alpha));
-    //l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
 }
 
 void look_down() {
     beta += speed / 10;
     l = glm::vec3(sin(alpha), -sin(beta), -cos(alpha));
-    //l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
 }
 
 void look_left() {
     alpha -= speed / 10;
     l = glm::vec3(sin(alpha), -sin(beta), -cos(alpha));
-    //l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
 }
 
 void look_right() {
     alpha += speed / 10;
     l = glm::vec3(sin(alpha), -sin(beta), -cos(alpha));
-    //l = (*new Vec3(sin(alpha), -sin(beta), -cos(alpha)));
 }
 
 void frustummode(){
@@ -302,5 +297,5 @@ void pauseplay() {
 }
 
 void EngineMotion::setCamera(float x, float y, float z){
-    p = glm::vec3(x, y, z);//p.set(x,y,z);
+    p = glm::vec3(x, y, z);
 }

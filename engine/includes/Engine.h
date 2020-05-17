@@ -21,12 +21,6 @@ private:
      */
     const string WIN_NAME = "CG@DI-UM";
 
-    /**
-     * Motor de processamento de movimentos
-     * que dá suport básico ao atual Engine.
-     */
-    static EngineMotion motion;
-
     vector<Object3d> loadedEvents;
 
     /**
@@ -43,66 +37,12 @@ private:
      */
     static vector<Group*> groups;
 
-    static GLuint* VAOs;
-    static GLuint* VBOs;
-    static GLuint* materials;
-    static GLuint lights;
-
-    /**
-     * Numero de objetos distintos já encontrados.
-     */
-    unsigned int numObjs = 0;
-
-    /**
-     * Buffer dos vértices, que permite um desenho eficiente.
-     */
-    static GLuint * buffers;
-
-    /**
-     * Indexes dos vértices, que um desenho eficiente.
-     */
-    static GLuint * indexes;
-
-    /**
-     * Buffer das texturas.
-     */
-    static GLuint * normals;
-
-    /**
-     * Buffer das coordenadas das texturas.
-     */
-    static GLuint * texCoords;
-
-    /**
-     * Calcula o grupo mais recente a ser encontrado,
-     * correspondente àquele que de momento está a ser
-     * processado.
-     * @return Grupo mais recente.
-     */
-    Group * latestGroup();
-
-
-    /**
-     * Permite a criação de um novo DrawEvent, associado
-     * a um determinado ficheiro.
-     *
-     * Se o ficheiro já tiver sido anteriormente processado,
-     * então o DrawEvent originado terá sido anteriormente
-     * criado. Caso contrário, a função cria o respectivo
-     * DrawEvent.
-     *
-     * @param file Ficheiro que se pretende ler.
-     * @return Evento criado.
-     */
-    Object3d newDrawing(const string& file);
-
     /**
      * Efetua o binding de todos os objetos, fazendo
      * a respectiva geração dos  buffers de indexs
      * e vertices, armazenando-os desta forma em memória de buffer.
      */
     void bindAllObjects();
-    void bindMaterials();
 
     /**
      * Função que dá inicio ao processamento hierarquico
@@ -115,7 +55,7 @@ private:
      *
      * @param idx Ponto de partida.
      */
-    static int runGroups(int idx, int milis, vector<Shader> progs);
+    static int runGroups(int idx, int milis);
 
     /**
      * Efetuar a renderização do Engine, processando
@@ -131,11 +71,6 @@ private:
     static void renderScene();
     static void idleFunc();
 
-    static void wrap_proj(int w, int h);
-    static void wrap_ascii(unsigned char key, int x, int y);
-    static void wrap_special(int key, int x, int y);
-    static void wrap_up_ascii(unsigned char key, int x, int y);
-    static void wrap_up_special(int key, int x, int y);
     static void processMouseButtons(int button, int state, int xx, int yy);
 
 public:
@@ -151,11 +86,6 @@ public:
      * entidades ao subsistema do engine.
      */
     void loop();
-
-    /**
-     * Termina o Engine.
-     */
-    void close();
 
     /**
      * Permite comunicar ao Engine que um novo grupo acaba de
@@ -178,9 +108,9 @@ public:
 
     void initialCamera(float x, float y, float z);
 
-    void newObj(const string& file, float * materialOptions, string texture);
+    void newObj(const string& file, string texture, Material material);
 
-    Object3d* newDrawing(const string& file, float * materialOptions, const string& texture);
+    Object3d* newDrawing(const string& file, const string& texture, Material material);
 
     void setBackgroundColor(float r, float g, float b);
 };

@@ -12,13 +12,16 @@
 
 using namespace std;
 
-class TexLoader {
-private:
-    static GLuint loadDDSTexture(const char* texture);
-    static GLuint loadNormalTexture(const char* texture);
-public:
-    static GLuint loadTexture(const char* texture);
-    static GLuint loadCubemapTexture(vector<string> faces);
-};
+namespace TexLoader {
+    GLuint loadNormalTexture(const string texture);
+
+    GLuint loadTexture(const string texture);
+
+    GLuint loadCubemapTexture(vector<std::string> faces);
+
+    void bindSkybox();
+    void renderSkybox();
+    void addSkyboxFace(string face);
+}
 
 #endif //GENERATOR_TEXLOADER_H

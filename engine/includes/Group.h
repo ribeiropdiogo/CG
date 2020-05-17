@@ -16,7 +16,6 @@ using namespace std;
 
 class Group {
 private:
-    static EngineMotion motion;
     vector<TransformEvent> transformations;
     vector<Object3d> drawings;
     GLfloat center [4];
@@ -27,7 +26,7 @@ public:
     void pushTransformation(TransformEvent te);
     void pushDraw(Object3d de);
 
-    int publish(GLuint * vaos, GLuint * textures, GLuint* materials,GLuint lights, vector<Shader> progs, int milis);
+    int publish(Shader shader, int milis);
     int addSubgroup();
     vector<int> getUpgroup();
     void setUpgroup(int upGroupIndex,vector<int> upGroupParents);

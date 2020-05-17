@@ -36,7 +36,6 @@ void parse_point_wvobj(string name, int *indexes, int* sizes) {
 // Reads all of the materials associated with the specified name.
 // used must provide the necessary mtlib
 unordered_map<string,Material> parse_materials(string mtlib) {
-    float indexes[3];
     string line, name;
     ifstream file(OBJ_FOLDER + mtlib);
     bool first_found = true;
@@ -101,7 +100,7 @@ unordered_map<string,Material> parse_materials(string mtlib) {
     return *materials;
 }
 
-Object3d* ObjLoader::loadWVObj(string file_name, GLuint id_tex) {
+Object3d* ObjLoader::loadWVObj(string file_name, GLuint id_tex, Material material) {
     string line, name;
     ifstream file(OBJ_FOLDER + file_name);
     vector<glm::vec3> points;
@@ -109,7 +108,7 @@ Object3d* ObjLoader::loadWVObj(string file_name, GLuint id_tex) {
     vector<glm::vec2> texcoord;
     unordered_map<string,Material> materials;
 
-    Object3d* obj = new Object3d(id_tex);
+    Object3d* obj = new Object3d(id_tex, material);
 
     if(file.is_open()) {
 
@@ -187,9 +186,9 @@ Object3d* ObjLoader::loadWVObj(string file_name, GLuint id_tex) {
     return obj;
 }
 
-Object3d* ObjLoader::load3DObj(string file_name, GLuint id_tex) {
+Object3d* ObjLoader::load3DObj(string file_name, GLuint id_tex, Material material) {
     float val;
-    Object3d* obj = new Object3d(id_tex);
+    Object3d* obj = new Object3d(id_tex, material);
     GLuint numVertices, tempI;
 
     ifstream inFile(file_name);
@@ -212,8 +211,8 @@ Object3d* ObjLoader::load3DObj(string file_name, GLuint id_tex) {
     return obj;
 }
 
-Object3d* ObjLoader::loadFile(string file_name, GLuint id_tex) {
+Object3d* ObjLoader::loadFile(string file_name, GLuint id_tex, Material material) {
     string path = OBJ_FOLDER;
     path.append(file_name);
-    return isSuffixOf(file_name, ".obj") ? loadWVObj(path, id_tex) : load3DObj(path, id_tex);
+    return isSuffixOf(file_name, ".obj") ? loadWVObj(path, id_tex, material) : load3DObj(path, id_tex, material);
 }
