@@ -135,6 +135,10 @@ void main() {
 	vec3 viewDir = normalize(viewPos - vec3(fragPos));
 
  	vec4 texColor = texture(ourTexture, texCoord);
+
+	if(texColor.a < 0.1)
+        discard;
+
  	vec3 res = vec3(0.0);
 
  	for(int i = 0; i < MAX_LIGHT_UNITS; i++) {

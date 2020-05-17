@@ -41,7 +41,11 @@ else (WIN32) #Linux and Mac
     include_directories(${GLUT_INCLUDE_DIR})
     link_directories(${GLUT_LIBRARY_DIRS})
     add_definitions(${GLUT_DEFINITIONS})
-    target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
+    find_package(DevIL REQUIRED)
+    link_libraries(${IL_LIBRARIES} )
+    include_directories(${IL_INCLUDE_DIR})
+
+    target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${GLEW_LIBRARIES} ${IL_LIBRARIES})
     if(NOT GLUT_FOUND)
         message(ERROR ": GLUT not found!")
     endif(NOT GLUT_FOUND)

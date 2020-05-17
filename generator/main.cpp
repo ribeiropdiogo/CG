@@ -17,21 +17,33 @@ char * redir(char * file);
 
 int main(int argc, char *argv[]) {
 
+    float width, height, ceil;
+    char *file;
 
     string figure = argv[1];
 
     if (figure == "plane") {
         //plane -> size & file
-        float size = atof(argv[2]);
-        char *file = redir(argv[3]);
+        width = atof(argv[2]);
+        height = atof(argv[3]);
+        Plane *p = nullptr;
 
-        Plane p(size);
+        if(argc == 5) {
+            file = redir(argv[4]);
+            p = new Plane(width, height);
 
-        if (argc == 4)
-            p.dump_new(file);
-        else
+        } else if(argc == 7) {
+            ceil = atof(argv[4]);
+            string h = argv[5];
+            file = redir(argv[6]);
+            p = new Plane(width, height, ceil, h);
+        }
+        else {
             cout << "Wrong number of arguments!" << endl;
+            return 1;
+        }
 
+        p->dump_new(file);
     } else if (figure == "box") {
 
         //box -> X,Y,Z dimensions & file

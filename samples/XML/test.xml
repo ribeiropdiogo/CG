@@ -1,7 +1,4 @@
 <scene>
-	<background>
-		<color r="1" g="1" b="1" />
-	</background>
 	<cubemap map="STARS"/>
     <lights>
 		<light type="SPOT" posY="40" dirY="-1" angle="10" outer="20" aR="0.1" aB="0.1" aG="0.1" LINEAR="0.02"/>

@@ -2,13 +2,14 @@
     <background>
         <color r="1" g="1" b="1" />
     </background>
-
+    <cubemap map="STARS"/>
     <lights>
-        <light type="POINT" aR="1" aB="1" aG="1" diffR="1" LINEAR="0.01"/>
+        <light type="POINT" aR="1" aB="1" aG="1" diffR="1" />
         <light type="SPOT" posY="-200" dirY="1" angle="3" outer="3.6" LINEAR="0.02" />
         <light type="SPOT" posY="200" dirY="-1" angle="3" outer="3.6" LINEAR="0.02" />
     </lights>
     <group>
+    	<scale axisX="2" axisY="2" axisZ="2"/>
         <group>
             <scale axisX="50" axisY="50" axisZ="50"/>
             <group>
