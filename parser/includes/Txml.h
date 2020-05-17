@@ -216,7 +216,7 @@ public:
         float x,y,z,angle, time;
         float diffR, diffG, diffB,
                 aR, aG, aB,
-                sR, sG, sB, shine;
+                sR, sG, sB, shine,alpha;
 
 
         bool timeDep;
@@ -311,6 +311,7 @@ public:
                     diffR = diffG = diffB = 0.8f;
                     sR = sG = sB = 1.0f;
                     shine = 100.0f;
+                    alpha = 1.0f;
 
                     if(models->Attribute("texture")) {
                         texture = * new string(models->Attribute("texture"));
@@ -349,13 +350,18 @@ public:
                         sB = (float) atof(models->Attribute("sB"));
                     }
 
+                    if(models->Attribute("alpha")) {
+                        alpha = (float) atof(models->Attribute("alpha"));
+                    }
+
+
                     // representa o shine
                     if(models->Attribute("shine")) {
                         shine = (float) atof(models->Attribute("shine"));
                     }
 
                     Material props;
-                    props.ambient = glm::vec4(aR, aG, aB, 1.0f);
+                    props.ambient = glm::vec4(aR, aG, aB, alpha);
                     props.diffuse = glm::vec4(diffR, diffG, diffB, 1.0f);
                     props.specular = glm::vec4(sR, sG, sB, 1.0f);
                     props.shininess = shine;

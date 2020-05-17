@@ -161,5 +161,5 @@ void main() {
 
  	}
 
- 	FragColor = vec4(res,1) * texColor;
+ 	FragColor = vec4(res,mat.ambient.w) * texColor;
 }
