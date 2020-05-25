@@ -1,10 +1,3 @@
-//
-// Created by syrayse on 10/03/20.
-//
-// 0 is a scale
-// 1 is a rotation
-// 2 is a translation
-
 #include "TransformEvent.h"
 #ifdef __APPLE__
 #include <GLUT/glut.h>
@@ -52,10 +45,7 @@ TransformEvent::TransformEvent(float x, float y, float z, float angle)
 
 TransformEvent::TransformEvent(float x, float y, float z, int laptime)
     : TransformEvent(ROTATE, x, y, z, 360.0, laptime){}
-TType TransformEvent::getType()
-{
-    return m_type;
-}
+
 void TransformEvent::process(int milis) {
     float factor, k;
     int N = 1;
@@ -85,15 +75,12 @@ void TransformEvent::process(int milis) {
     switch (m_type) {
         case SCALE:
             mt::scale(glm::vec3(m_x, m_y, m_z)*k);
-            //glScalef(k*m_x, k*m_y, k*m_z);
             break;
         case ROTATE:
             mt::rotate(k*m_angle * (M_PI / 180.0f), glm::vec3(m_x, m_y, m_z));
-            //glRotatef(k*m_angle, m_x, m_y, m_z);
             break;
         case TRANSLATE:
             mt::translate(glm::vec3(m_x, m_y, m_z)*k);
-            //glTranslatef(k*m_x, k*m_y, k*m_z);
             break;
         case CATMULLROM:
             dealWithCatmullR(k);
@@ -108,25 +95,18 @@ void TransformEvent::dealWithCatmullR(float milis) {
 
     // Rotação
     glm::vec3 Xi = glm::normalize(spline->getGradientAt(milis));
-    glm::vec3 Zi = glm::normalize(glm::cross(Xi, Yii));//Xi.crossprod(*Yii)).normalize();
-    glm::vec3 Yi = glm::normalize(glm::cross(Zi, Xi));//(Zi.crossprod(Xi)).normalize();
+    glm::vec3 Zi = glm::normalize(glm::cross(Xi, Yii));
+    glm::vec3 Yi = glm::normalize(glm::cross(Zi, Xi));
 
-    Yii = glm::vec3(Yi);//Yii->set(Yi.getX(), Yi.getY(), Yi.getZ());
+    Yii = glm::vec3(Yi);
 
     float M[16] = {
-            Xi.x,  Xi.y,  Xi.z,  0.0f,
-            Yi.x,  Yi.y,  Yi.z,  0.0f,
-            Zi.x,  Zi.y,  Zi.z,  0.0f,
-            0.0f,       0.0f,       0.0f,       1.0f
+            Xi.x, Xi.y, Xi.z, 0.0f,
+            Yi.x, Yi.y, Yi.z, 0.0f,
+            Zi.x, Zi.y, Zi.z, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
     };
 
     mt::translate(P);
     mt::multMatix(glm::make_mat4(M));
-    //glTranslatef(P.getX(), P.getY(), P.getZ());
-    //glMultMatrixf(M);
-}
-
-void TransformEvent::printItself() {
-    cout <<"COORDS"<< m_x<<" " <<m_y<<" "<<m_z << endl;
-
 }

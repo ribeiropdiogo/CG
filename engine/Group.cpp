@@ -1,7 +1,3 @@
-//
-// Created by syrayse on 10/03/20.
-//
-
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #include <EngineMotion.h>

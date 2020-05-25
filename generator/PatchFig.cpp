@@ -1,7 +1,3 @@
-//
-// Created by syrayse on 05/04/20.
-//
-
 #include "PatchFig.h"
 #include <fstream>
 #include <sstream>
@@ -19,7 +15,7 @@ PatchFig::PatchFig(char *file, int tessellation)
 }
 
 void PatchFig::loadFile(char *file) {
-    int n_controlps, j;
+    int n_controlps = 0, j;
     float ps[3];
     string line, lineElem;
 
@@ -42,7 +38,7 @@ void PatchFig::loadFile(char *file) {
 
     inFile >> n_controlps;
 
-    vector<Vec3> controlps(n_controlps);
+    vector<glm::vec3> controlps(n_controlps);
 
     getline(inFile, line);
 
@@ -57,7 +53,7 @@ void PatchFig::loadFile(char *file) {
             j++;
         }
 
-        controlps[i] = *new Vec3(ps[0], ps[1], ps[2]);
+        controlps[i] = glm::vec3(ps[0], ps[1], ps[2]);
     }
 
     inFile.close();
@@ -76,11 +72,11 @@ void PatchFig::buildPatches(int tessellation) {
 
         for (j = 0; j <= tessellation; j++) {
             for (i = 0; i <= tessellation; i++) {
-                Vec3 p = bs->getBezierSufPoint(du*(float)i, dv*(float)j, id);
-                Vec3 n = bs->getBezierSufNorm(du*(float)i, dv*(float)j, id);
+                glm::vec3 p = bs->getBezierSufPoint(du * (float) i, dv * (float) j, id);
+                glm::vec3 n = bs->getBezierSufNorm(du * (float) i, dv * (float) j, id);
 
-                Figure::addVertice(p.getX(), p.getY(), p.getZ());
-                Figure::addNormal(n.getX(), n.getY(), n.getZ());
+                Figure::addVertice(p.x, p.y, p.z);
+                Figure::addNormal(n.x, n.y, n.z);
                 Figure::addTexCoord(du * (float) i, dv * (float) j);
             }
         }

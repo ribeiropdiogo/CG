@@ -1,5 +1,6 @@
 #include <cmath>
 #include "Sphere.h"
+
 Sphere::Sphere(float radius, int stacks, int slices) : Figure(stacks, slices) {
     double al = 2*M_PI / slices;
     double be = M_PI / stacks;

@@ -3,7 +3,6 @@
 #include <IL/il.h>
 #include <iostream>
 
-
 using namespace std;
 
 float getHeight(unsigned char * mat, int i, int j, unsigned int tw, float ceil) {

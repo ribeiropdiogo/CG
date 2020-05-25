@@ -1,9 +1,6 @@
-//
-// Created by Diogo Ribeiro on 07/04/2020.
-//
 #include <cmath>
 #include <iostream>
-#include <Vec3.h>
+#include <glm/glm.hpp>
 #include "Torus.h"
 
 Torus::Torus(float R, float r, int stacks, int slices) : Figure(stacks, slices) {
@@ -15,18 +12,18 @@ Torus::Torus(float R, float r, int stacks, int slices) : Figure(stacks, slices) 
     float x,y,z;
 
 
-    for (int i = 0; i <= slices; i++){
+    for (int i = 0; i <= slices; i++) {
         phi = 0.0;
 
-        for (int j = 0; j <= stacks; j++){
-            x = (R+r*cos(phi))*cos(theta);
-            y = r*sin(phi);
-            z = (R+r*cos(phi))*sin(theta);
-            Torus::addVertice((float)x,(float)y,(float)z);
-            Vec3 p = Torus::getGradient(phi,theta,r,R).normalize();
-            Figure::addNormal(p.getX(), p.getY(), p.getZ());
-            Figure::addTexCoord((float)i / (float)slices,
-                                (float)j / (float)stacks);
+        for (int j = 0; j <= stacks; j++) {
+            x = (R + r * cos(phi)) * cos(theta);
+            y = r * sin(phi);
+            z = (R + r * cos(phi)) * sin(theta);
+            Torus::addVertice((float) x, (float) y, (float) z);
+            glm::vec3 p = glm::normalize(Torus::getGradient(phi, theta, r, R));
+            Figure::addNormal(p.x, p.y, p.z);
+            Figure::addTexCoord((float) i / (float) slices,
+                                (float) j / (float) stacks);
             phi += phiinc;
         }
 
@@ -46,18 +43,18 @@ Torus::Torus(float R, float r, int stacks, int slices) : Figure(stacks, slices) 
     }
 }
 
-Vec3 Torus::getGradient(float u, float v, float r, float R) {
+glm::vec3 Torus::getGradient(float u, float v, float r, float R) {
     // Calcular du.
-    Vec3 du = * new Vec3(
-            -r*cos(v)*sin(u),
-            r*cos(u),
-            -r*sin(v)*sin(u));
+    glm::vec3 du = glm::vec3(
+            -r * cos(v) * sin(u),
+            r * cos(u),
+            -r * sin(v) * sin(u));
 
     // Calcular dv.
-    Vec3 dv = * new Vec3(
-            -R*sin(v) - r*sin(v)*cos(u),
+    glm::vec3 dv = glm::vec3(
+            -R * sin(v) - r * sin(v) * cos(u),
             0.0f,
-            R*cos(v) + r*cos(v)*cos(u));
+            R * cos(v) + r * cos(v) * cos(u));
 
-    return du.crossprod(dv);
+    return glm::normalize(glm::cross(du, dv));
 }

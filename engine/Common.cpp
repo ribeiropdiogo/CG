@@ -1,6 +1,3 @@
-//
-// Created by syrayse on 16/05/20.
-//
 #include "Common.h"
 
 bool isSuffixOf (std::string const &fullString, std::string const &ending) {

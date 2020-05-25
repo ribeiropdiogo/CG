@@ -1,7 +1,3 @@
-//
-// Created by ruimendes on 11/03/20.
-//
-
 #ifndef GENERATOR_TXML_H
 #define GENERATOR_TXML_H
 
@@ -31,32 +27,31 @@ string stars_cubemap[6] = {
 
 class Txml {
 private:
-    char * sampleDir = strdup("../../samples/XML/");
-    TiXmlElement * pElemGlobal;
-    TiXmlHandle hRootGlobal=0;
-    const char * info;
-    int x=0;
+    char *sampleDir = strdup("../../samples/XML/");
+    TiXmlElement *pElemGlobal;
+    TiXmlHandle hRootGlobal = 0;
+    const char *info;
+    int x = 0;
 
-    void preLoadCubemap(Engine *e, string * cubemap) {
-        for(int i = 0; i < 6; i++) {
+    static void preLoadCubemap(Engine *e, string *cubemap) {
+        for (int i = 0; i < 6; i++) {
             e->appendCubeMapFace(cubemap[i]);
         }
     }
 
 public:
 
-    void loadFile(char * string)
-    {
-        sampleDir=(char *) realloc(sampleDir,strlen(sampleDir)+strlen(string)+1);
-        strcat(sampleDir,string);
+    void loadFile(char *string) {
+        sampleDir = (char *) realloc(sampleDir, strlen(sampleDir) + strlen(string) + 1);
+        strcat(sampleDir, string);
     }
 
-    void setupLightingSpecs(Engine *e, TiXmlElement* pElem) {
+    static void setupLightingSpecs(Engine *e, TiXmlElement *pElem) {
         float r, g, b;
-        TiXmlElement * models;
-        const char * type;
+        TiXmlElement *models;
+        const char *type;
 
-        for (models=pElem->FirstChildElement();models;models=models->NextSiblingElement()) {
+        for (models = pElem->FirstChildElement(); models; models = models->NextSiblingElement()) {
 
             glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
             glm::vec3 direction = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -180,21 +175,21 @@ public:
         }
     }
 
-    void backgroundSpec(Engine *e, TiXmlElement* elem) {
+    static void backgroundSpec(Engine *e, TiXmlElement *elem) {
         float r, g, b;
-        TiXmlElement * aux;
+        TiXmlElement *aux;
         r = g = b = 0.0f;
 
-        for (aux=elem->FirstChildElement();aux;aux=aux->NextSiblingElement()) {
+        for (aux = elem->FirstChildElement(); aux; aux = aux->NextSiblingElement()) {
 
-            const char* s = aux->Value();
+            const char *s = aux->Value();
 
-            if(!strcmp(s,"color")) {
-                if(aux->Attribute("r"))
+            if (!strcmp(s, "color")) {
+                if (aux->Attribute("r"))
                     r = atof(aux->Attribute("r"));
-                if(aux->Attribute("g"))
+                if (aux->Attribute("g"))
                     g = atof(aux->Attribute("g"));
-                if(aux->Attribute("b"))
+                if (aux->Attribute("b"))
                     b = atof(aux->Attribute("b"));
             }
 
@@ -203,20 +198,19 @@ public:
         }
     }
 
-    void loadGroup(Engine * e,TiXmlElement * elem, bool isSub, int * parentGroup,int * currentGroup,int * latestGroup)
-    {
+    static void
+    loadGroup(Engine *e, TiXmlElement *elem, bool isSub, int *parentGroup, int *currentGroup, int *latestGroup) {
         e->newGroup();
-        if (isSub)
-        {
+        if (isSub) {
             e->addSubgroup(*parentGroup);
-            e->addUpgroup(*parentGroup,*currentGroup);
+            e->addUpgroup(*parentGroup, *currentGroup);
         }
-        TiXmlElement * aux;
+        TiXmlElement *aux;
         string texture;
-        float x,y,z,angle, time;
+        float x, y, z, angle, time;
         float diffR, diffG, diffB,
                 aR, aG, aB,
-                sR, sG, sB, shine,alpha;
+                sR, sG, sB, shine, alpha;
 
 
         bool timeDep;
@@ -394,21 +388,21 @@ public:
 
         if (strcmp(line, "scene") == 0) {
             pElem = hRoot.FirstChildElement().Element();
-            for (pElem; pElem; pElem = pElem->NextSiblingElement()) {
 
-                if (strcmp(pElem->Value(),"group")==0)
-                    loadGroup(e,pElem,false,&parentGroup,&currentGroup,&latestGroup);
-                else if(strcmp(pElem->Value(),"camera") == 0){
+            for (; pElem; pElem = pElem->NextSiblingElement()) {
+
+                if (strcmp(pElem->Value(), "group") == 0)
+                    loadGroup(e, pElem, false, &parentGroup, &currentGroup, &latestGroup);
+                else if (strcmp(pElem->Value(), "camera") == 0) {
                     float posX = 0, posY = 0, posZ = 0;
-                    if(pElem->Attribute("posX"))
+                    if (pElem->Attribute("posX"))
                         posX = (float) atof(pElem->Attribute("posX"));
-                    if(pElem->Attribute("posY"))
+                    if (pElem->Attribute("posY"))
                         posY = (float) atof(pElem->Attribute("posY"));
-                    if(pElem->Attribute("posZ"))
+                    if (pElem->Attribute("posZ"))
                         posZ = (float) atof(pElem->Attribute("posZ"));
-                    e->initialCamera(posX,posY,posZ);
-                }
-                else if(strcmp(pElem->Value(),"cubemap") == 0) {
+                    e->initialCamera(posX, posY, posZ);
+                } else if (strcmp(pElem->Value(), "cubemap") == 0) {
                     if(pElem->Attribute("map")) {
                         const char * prdef = pElem->Attribute("map");
                         if(!strcmp( prdef, "SEA" ))

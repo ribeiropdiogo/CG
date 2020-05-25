@@ -10,30 +10,6 @@ Figure::Figure(int stacks, int slices) {
     m_slices = slices;
 }
 
-int Figure::getStacks() {
-    return m_stacks;
-}
-
-int Figure::getSlices() {
-    return m_slices;
-}
-
-int Figure::getVerticeSize() {
-    return m_vertices.size();
-}
-
-int Figure::getIndexSize() {
-    return m_indexes.size();
-}
-
-vector<float> Figure::getVertices() {
-    return m_vertices;
-}
-
-vector<int> Figure::getIndexes() {
-    return m_indexes;
-}
-
 void Figure::addVertice(float x, float y, float z) {
     m_vertices.push_back(x);
     m_vertices.push_back(y);
@@ -65,14 +41,6 @@ void Figure::dump_new(char * file) {
     }
 
     outfile.close();
-}
-
-vector<float> Figure::getNormals() {
-    return m_normals;
-}
-
-vector<float> Figure::getTexCoords() {
-    return m_tex;
 }
 
 void Figure::addNormal(float x, float y, float z) {

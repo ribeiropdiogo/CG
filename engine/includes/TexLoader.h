@@ -1,7 +1,3 @@
-//
-// Created by syrayse on 16/05/20.
-//
-
 #ifndef GENERATOR_TEXLOADER_H
 #define GENERATOR_TEXLOADER_H
 
@@ -24,4 +20,4 @@ namespace TexLoader {
     void addSkyboxFace(string face);
 }
 
-#endif //GENERATOR_TEXLOADER_H
+#endif

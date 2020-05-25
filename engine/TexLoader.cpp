@@ -1,7 +1,3 @@
-//
-// Created by syrayse on 16/05/20.
-//
-
 #include "TexLoader.h"
 #include <IL/il.h>
 #include <iostream>

@@ -1,7 +1,3 @@
-//
-// Created by syrayse on 15/05/20.
-//
-
 #include "ObjLoader.h"
 #include "Common.h"
 #include <unordered_map>
@@ -187,9 +183,9 @@ Object3d* ObjLoader::loadWVObj(string file_name, GLuint id_tex, Material materia
 }
 
 Object3d* ObjLoader::load3DObj(string file_name, GLuint id_tex, Material material) {
-    float val;
-    Object3d* obj = new Object3d(id_tex, material);
-    GLuint numVertices, tempI;
+    float val = 0.0f;
+    Object3d *obj = new Object3d(id_tex, material);
+    GLuint numVertices = 0, tempI = 0;
 
     ifstream inFile(file_name);
     inFile >> numVertices;

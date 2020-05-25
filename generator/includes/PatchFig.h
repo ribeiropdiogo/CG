@@ -1,12 +1,8 @@
-//
-// Created by syrayse on 05/04/20.
-//
-
 #ifndef GENERATOR_PATCHFIG_H
 #define GENERATOR_PATCHFIG_H
 
 #include "Figure.h"
-#include "Vec3.h"
+#include <glm/glm.hpp>
 #include "BezierSuf.h"
 
 class PatchFig : public Figure {
@@ -19,4 +15,4 @@ public:
     PatchFig(char *file, int tessellation);
 };
 
-#endif //GENERATOR_PATCHFIG_H
+#endif

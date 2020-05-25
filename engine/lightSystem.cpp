@@ -1,7 +1,3 @@
-//
-// Created by syrayse on 16/05/20.
-//
-
 #include <iostream>
 #include "lightSystem.h"
 
@@ -111,8 +107,6 @@ void lightSystem::bind() {
     glBufferData(GL_UNIFORM_BUFFER, MAX_LIGHT_UNITS*sizeof(Light), lighting, GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
-    std::cout << sizeof(struct light) << " is the light" << std::endl;
 }
 
 void lightSystem::activate(GLuint id_shader) {
@@ -126,8 +120,4 @@ void lightSystem::setup() {
     for(int i = 0; i < MAX_LIGHT_UNITS; i++) {
         lighting[i].isOn = 0;
     }
-}
-
-GLuint lightSystem::getID() {
-    return lights;
 }

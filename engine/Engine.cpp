@@ -170,7 +170,7 @@ void Engine::start(int *eargc, char **argv){
     glutInitWindowSize(800,800);
     glutCreateWindow(WIN_NAME.c_str());
 
-    //glutFullScreen();
+    glutFullScreen();
 
     EngineMotion::build_key_mappers();
     EngineMotion::build_special_mappers();
@@ -209,7 +209,6 @@ void Engine::loop() {
 
     glutMainLoop();
 }
-
 
 void Engine::newGroup(){
     groups.push_back(new Group());

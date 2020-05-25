@@ -1,7 +1,3 @@
-//
-// Created by syrayse on 08/05/20.
-//
-
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -42,18 +38,6 @@ unsigned int Shader::getID() {
 
 void Shader::use() {
     glUseProgram(ID);
-}
-
-void Shader::setBool(const string &name, bool value) const {
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
-}
-
-void Shader::setInt(const string &name, int value) const {
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
-}
-
-void Shader::setFloat(const string &name, float value) const {
-    glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
 string Shader::loadCodeFile(const char *path) {

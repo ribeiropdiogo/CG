@@ -4,7 +4,6 @@
 #endif
 #include <math.h>
 #include <iostream>
-#include <Vec3.h>
 #include "EngineMotion.h"
 #include <unordered_map>
 #include <unordered_set>

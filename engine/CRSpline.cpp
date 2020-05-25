@@ -1,6 +1,3 @@
-//
-// Created by syrayse on 02/04/20.
-//
 #include "CRSpline.h"
 
 CRSpline::CRSpline(vector<glm::vec3> points, bool loop) {
@@ -51,7 +48,7 @@ glm::vec3 CRSpline::getGradientAt(float t) {
     getPointIndexes(t, inds);
     t = t - (float)(int)t;
     float q0, q1, q2, q3,
-            tt = t * t, ttt = tt * t;
+            tt = t * t;
     q0 = -0.5f*(3*tt) + 2*t - 0.5f;
     q1 = 1.5f*(3*tt) - 2.5f*2*t;
     q2 = -1.5f*(3*tt) + 2.0f*2*t + 0.5f;

@@ -1,11 +1,3 @@
-//
-// Created by syrayse on 16/05/20.
-//
-
-//
-// Created by ruimendes on 26/02/20.
-//
-
 #include "Object3d.h"
 
 using namespace std;

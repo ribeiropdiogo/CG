@@ -1,9 +1,7 @@
-//
-// Created by angelo on 28/02/20.
-//
 #include <iostream>
 #include <fstream>
 #include <math.h>
+#include <glm/glm.hpp>
 #include "Cone.h"
 
 using namespace std;
@@ -16,7 +14,7 @@ Cone::Cone(float radius, float height, int stacks, int slices)
     float currentRadius = radius;
     float x, z;
     float ratio = 1 / (radius / height);
-    int i, t1, t2, k1, k2, count;
+    int i, k1, k2;
 
     Figure::addVertice(0.0, 0.0, 0.0);
     Figure::addNormal(0.0f, -1.0f, 0.0f);
@@ -68,11 +66,11 @@ void Cone::polarVertex(float al, float radius, float sz, int j,float ratio) {
     float px = radius * sin(angle);
     float py = sz;
     float pz = radius * cos(angle);
-    Vec3 grad = Cone::getGradient(angle, ratio).normalize();
+    glm::vec3 grad = glm::normalize(Cone::getGradient(angle, ratio));
     Figure::addVertice(px, py, pz);
-    Figure::addNormal(grad.getX(), grad.getY(), grad.getZ());
+    Figure::addNormal(grad.x, grad.y, grad.z);
 }
 
-Vec3 Cone::getGradient(float angle, float c) {
-    return * new Vec3(c*sin(angle), 1.0f, c*cos(angle));
+glm::vec3 Cone::getGradient(float angle, float c) {
+    return glm::vec3(c * sin(angle), 1.0f, c * cos(angle));
 }

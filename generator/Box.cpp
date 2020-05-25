@@ -1,5 +1,3 @@
-#include <iostream>
-#include <Vec3.h>
 #include "Box.h"
 #include <cmath>
 #include <glm/glm.hpp>
@@ -48,35 +46,35 @@ int Box::genLateral(float *normals, float *steps,
                    steps[2] * (float) divisions};
 
     // Cria vetor de steps
-    Vec3 vstep = * new Vec3(steps);
+    glm::vec3 vstep = glm::vec3(steps[0], steps[1], steps[2]);
 
     // Importa normals para forma de Vec3.
-    Vec3 norm = * new Vec3(normals);
+    glm::vec3 norm = glm::vec3(normals[0], normals[1], normals[2]);
 
     // Calcula o vetor delta.
     float nx = normals[0];
-    Vec3 dlt = kv * (-nx) + iv * (1 - abs(nx));
+    glm::vec3 dlt = kv * (-nx) + iv * (1 - abs(nx));
 
     // Calcula o vetor s.
-    Vec3 s = (dlt.crossprod(norm)).normalize();
+    glm::vec3 s = glm::normalize(glm::cross(dlt, norm));
 
     // Define o ponto inicial.
-    float *dltv = dlt.getVec();
-    float *sv = s.getVec();
-    float *nv = norm.getVec();
+    float *dltv = &dlt[0];
+    float *sv = &s[0];
+    float *nv = &norm[0];
     int in = getIndex(nv), idlt = getIndex(dltv), is = getIndex(sv);
-    Vec3 P0 = norm * (wts[in]/2) - dlt * (wts[idlt] / 2) - s * (wts[is] / 2);
+    glm::vec3 P0 = norm * (wts[in] / 2) - dlt * (wts[idlt] / 2) - s * (wts[is] / 2);
 
     // Colocar todos os vertices.
-    for(int j = 0; j <= divisions; j++) {
+    for (int j = 0; j <= divisions; j++) {
 
-        for(int i = 0; i <= divisions; i++) {
-            Vec3 Pi = vstep * ( (s * (float)i) + (dlt * (float)j) ) + P0;  
-            Figure::addVertice(Pi.getX(), Pi.getY(), Pi.getZ());
+        for (int i = 0; i <= divisions; i++) {
+            glm::vec3 Pi = vstep * ((s * (float) i) + (dlt * (float) j)) + P0;
+            Figure::addVertice(Pi.x, Pi.y, Pi.z);
             Figure::addNormal(normals[0], normals[1], normals[2]);
-            if(!uvMask)
+            if (!uvMask)
                 Figure::addTexCoord((float) i / (float) divisions,
-                    (float) j / (float) divisions);
+                                    (float) j / (float) divisions);
             nNew++;
         }
 

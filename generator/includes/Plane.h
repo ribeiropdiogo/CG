@@ -8,11 +8,11 @@
 
 class Plane : public Figure {
 private:
-    glm::vec2 specs;        // Vector with width and height.
+    glm::vec2 specs;
 
 public:
     Plane(float width, float height);
     Plane(float width, float height, float ceil, std::string height_map);
 };
 
-#endif //GENERATOR_PLANE_H
+#endif

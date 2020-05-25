@@ -1,10 +1,3 @@
-//
-// Created by syrayse on 09/03/20.
-//
-// 0 is a scale
-// 1 is a rotation
-// 2 is a translation
-
 #ifndef GENERATOR_TRANSFORMEVENT_H
 #define GENERATOR_TRANSFORMEVENT_H
 
@@ -30,8 +23,6 @@ public:
     TransformEvent(float x, float y, float z, float angle);
     TransformEvent(float x, float y, float z, int laptime);
     void process(int milis);
-    TType getType();
-    void printItself();
 };
 
-#endif //GENERATOR_TRANSFORMEVENT_H
+#endif
