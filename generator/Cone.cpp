@@ -7,7 +7,7 @@
 using namespace std;
 
 Cone::Cone(float radius, float height, int stacks, int slices)
-    : Figure(stacks, slices) {
+        : Figure() {
     float oneSlice = (M_PI * 2.0f) / slices;
     float oneStack = height / (float) stacks;
     float oneRadius = radius / (float) stacks;

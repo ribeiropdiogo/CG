@@ -9,7 +9,7 @@ using namespace glm;
 Box::Box(float wx, float wy, float wz) : Box(wx,wy,wz,1, false) {}
 
 Box::Box(float wx, float wy, float wz,
-        int divisions, bool uvMask) : Figure(divisions, divisions) {
+         int divisions, bool uvMask) : Figure() {
 
     int nVertices = 0;
     float normals[] = {0.0f, 0.0f, 0.0f};
@@ -17,7 +17,7 @@ Box::Box(float wx, float wy, float wz,
     float steps[DIM];
 
     // Constroi os steps necessarios.
-    for(int i = 0; i < DIM; i++)
+    for (int i = 0; i < DIM; i++)
         steps[i] = weights[i] / (float) divisions;
     
     // Constroi todas as laterais.

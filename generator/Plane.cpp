@@ -9,7 +9,7 @@ float getHeight(unsigned char * mat, int i, int j, unsigned int tw, float ceil) 
     return (float) (mat[tw*i+j]/255.0) * ceil ;
 }
 
-Plane::Plane(float width, float height) : Figure(1,1) {
+Plane::Plane(float width, float height) : Figure() {
     specs = glm::vec2(width, height);
     float half_width = specs.x / 2;
     float half_height = specs.y / 2;
@@ -19,7 +19,7 @@ Plane::Plane(float width, float height) : Figure(1,1) {
     Figure::addVertice(-half_width, 0.0, half_height);
     Figure::addVertice(half_width, 0.0, half_height);
 
-    for(int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)
         Figure::addNormal(0.0f, 1.0f, 0.0f);
 
     for(int i = 0; i <= 1; i++)
@@ -32,10 +32,10 @@ Plane::Plane(float width, float height) : Figure(1,1) {
 
 
 Plane::Plane(float width, float height, float ceil, string height_map)
-            : Figure(1, 1) {
+        : Figure() {
     specs = glm::vec2(width, height);
     GLuint slices,          // stacks are width related.
-            stacks;         // stacks are height related.
+    stacks;         // stacks are height related.
 
     unsigned int t, tw, th;
     unsigned char *imageData;

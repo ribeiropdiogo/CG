@@ -3,14 +3,14 @@
 #include "MobiusStrip.h"
 
 MobiusStrip::MobiusStrip(int stacks, int slices)
-        : Figure(stacks, slices) {
+        : Figure() {
     float u, v;
     float du = 2.0f * M_PI / (float) slices;
     float dv = 2.0f / (float) stacks;
     int k1 = 0, k2 = 0, nV = 0, tmp = 0;
 
     // Adiciona todos os vertices necessarios.
-    for(int k = 1; k >= -1; k-=2) {
+    for (int k = 1; k >= -1; k -= 2) {
         for (int j = 0; j <= stacks; j++) {
 
             for (int i = 0; i <= slices; i++) {

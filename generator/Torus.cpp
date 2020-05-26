@@ -3,13 +3,13 @@
 #include <glm/glm.hpp>
 #include "Torus.h"
 
-Torus::Torus(float R, float r, int stacks, int slices) : Figure(stacks, slices) {
+Torus::Torus(float R, float r, int stacks, int slices) : Figure() {
     int k1, k2;
-    float thetainc = 2.0f*M_PI / slices;
-    float phiinc = 2*M_PI / stacks;
+    float thetainc = 2.0f * M_PI / slices;
+    float phiinc = 2 * M_PI / stacks;
     float theta = 0.0, phi;
 
-    float x,y,z;
+    float x, y, z;
 
 
     for (int i = 0; i <= slices; i++) {

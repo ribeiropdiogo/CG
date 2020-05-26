@@ -5,10 +5,7 @@
 #include <iostream>
 #include "Figure.h"
 
-Figure::Figure(int stacks, int slices) {
-    m_stacks = stacks;
-    m_slices = slices;
-}
+Figure::Figure() {}
 
 void Figure::addVertice(float x, float y, float z) {
     m_vertices.push_back(x);

@@ -1,13 +1,13 @@
 #include <cmath>
 #include "Sphere.h"
 
-Sphere::Sphere(float radius, int stacks, int slices) : Figure(stacks, slices) {
-    double al = 2*M_PI / slices;
+Sphere::Sphere(float radius, int stacks, int slices) : Figure() {
+    double al = 2 * M_PI / slices;
     double be = M_PI / stacks;
     int k1, k2;
 
     // Para cada stack
-    for (int j =   0; j <= stacks; j++) {
+    for (int j = 0; j <= stacks; j++) {
 
         // Para cada slices
         for (int i = 0; i <= slices; i++) {

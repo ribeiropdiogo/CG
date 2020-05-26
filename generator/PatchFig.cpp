@@ -6,7 +6,7 @@
 using namespace std;
 
 PatchFig::PatchFig(char *file, int tessellation)
-    : Figure(0, 0) {
+        : Figure() {
     // Inits data necessary for the patch proc.
     loadFile(file);
 
