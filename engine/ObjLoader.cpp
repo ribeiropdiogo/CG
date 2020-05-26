@@ -90,9 +90,6 @@ unordered_map<string,Material> parse_materials(string mtlib) {
 
     }
 
-    cout << "just read file with exactly " << materials->size() << " entries" << endl;
-
-
     return *materials;
 }
 
@@ -162,7 +159,6 @@ Object3d* ObjLoader::loadWVObj(string file_name, GLuint id_tex, Material materia
                             obj->add_face_point(points[indexes[0]],
                                     normals[indexes[2]],
                                     tc);
-                            //cout << "x: " << points[indexes[0]].x << ",y: " << points[indexes[0]].y << ",z: " << points[indexes[0]].z << endl;
                         }
                     }
 
@@ -173,11 +169,6 @@ Object3d* ObjLoader::loadWVObj(string file_name, GLuint id_tex, Material materia
         }
 
     }
-
-    cout << "finished reading with the following stats:" << endl;
-    cout << "\tpoints:\t" << points.size() << endl;
-    cout << "\tnormals:\t" << normals.size() << endl;
-    cout << "\ttexcoords:\t" << texcoord.size() << endl;
 
     return obj;
 }

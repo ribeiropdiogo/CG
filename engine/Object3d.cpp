@@ -101,11 +101,9 @@ void Object3d::draw(GLuint id_shader) {
     GLuint N = raw_obj_info.size();
 
     for(int i = 0; i < N; i++) {
-
         glUniform1i(glGetUniformLocation(id_shader, "ourTexture"), 0);
         blockIndex = glGetUniformBlockIndex(id_shader, "Materials");
         glUniformBlockBinding(id_shader, blockIndex, 1);
-
 
         vector<GLuint> indices = *std::get<1>(std::get<1>(raw_obj_info[i]));
 
