@@ -1,0 +1,79 @@
+<scene>
+	<background>
+		<color r="0" g="0" b="0" />
+	</background>
+	<cubemap map="SEA"/>
+	<lights>
+		<light type="SPOT" posY="60" posZ="60" dirY="-1" dirX="-1" angle="40" outer="80" aR="0.1" aB="0.1" aG="0.1" LINEAR="0.02"/>
+		<light type="POINT" posY="50" posX="-100" aR="0.2" aB="0.2" aG="0.2" />
+	</lights>
+	<group>
+		<group>
+			<models>
+				<model file="plano.3d" texture="relva.jpg"/>
+			</models>
+		</group>
+		<group>
+			<translate Y="10" />
+			<models>
+				<model file="plano2.3d" texture="water.jpg" alpha="0.6" shine="40" aB="1"/>
+			</models>
+		</group>
+		<group>
+			<models>
+				<model file="walk.3d" texture="sand.jpg" shine="40"/>
+			</models>
+		</group>
+		<group>
+			<models>
+				<model file="walk2.3d" texture="cobble.jpg" shine="40"/>
+			</models>
+		</group>
+		<group>
+			<translate Y="30" X="-100" Z="-5"/>
+			<group>
+				<translate time="20">
+                    <point Z="0" Y="0" X="0"/>
+                    <point Z="0" Y="0" X="-25"/>
+                    <point Z="0" Y="0" X="-50"/>
+                    <point Z="0" Y="0" X="-100"/>
+                </translate>
+                <rotate axisY="1" angle="90"/>
+				<models>
+					<model file="scorpion.obj"/>
+				</models>
+			</group>
+			<group>
+				<translate time="20">
+                    <point Z="0" Y="0" X="10"/>
+                    <point Z="0" Y="0" X="-15"/>
+                    <point Z="0" Y="0" X="-40"/>
+                    <point Z="0" Y="0" X="-90"/>
+                </translate>
+                <rotate axisY="1" angle="90"/>
+				<models>
+					<model file="scorpion.obj"/>
+				</models>
+			</group>
+			<group>
+				<translate time="20">
+                    <point Z="0" Y="0" X="20"/>
+                    <point Z="0" Y="0" X="-5"/>
+                    <point Z="0" Y="0" X="-30"/>
+                    <point Z="0" Y="0" X="-80"/>
+                </translate>
+                <rotate axisY="1" angle="90"/>
+				<models>
+					<model file="scorpion.obj"/>
+				</models>
+			</group>
+		</group>
+		<group>
+			<scale axisX="40" axisY="40" axisZ="40"/>
+			<rotate axisY="1" angle="-90"/>
+			<models>
+				<model file="athena.obj" texture="cobble.jpg"/>
+			</models>
+		</group>
+	</group>
+</scene>

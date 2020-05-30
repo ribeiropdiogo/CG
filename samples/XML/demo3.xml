@@ -1,11 +1,23 @@
 <scene>
 	<cubemap map="STARS"/>
     <lights>
-		<light type="SPOT" posY="40" dirY="-1" angle="10" outer="20" aR="0.1" aB="0.1" aG="0.1" LINEAR="0.02"/>
-    	<light type="POINT" posX="5" posZ="5" posY="5" aR="0.2" aB="0.2" aG="0.2" LINEAR="0.02"/>
+		<light type="SPOT" posY="200" dirY="-1" angle="10" outer="20" aR="0.1" aB="0.1" aG="0.1"/>
+    	<light type="POINT" posX="20" posZ="20" posY="20" aR="0.2" aB="0.2" aG="0.2" LINEAR="0.02"/>
     </lights>
     <group>
 	    <group>
+	    	<group>
+	    		<translate Y="-50" />
+				<models>
+					<model file="plano.3d" texture="relva.jpg"/>
+				</models>
+			</group>
+	    	<group>
+				<translate Y="0.8" />
+				<models>
+					<model file="plano2.3d" texture="water.jpg" alpha="0.3" shine="40" aB="1"/>
+				</models>
+			</group>
 	    	<group>
 	    		<translate Y="1"/>
 	    		<models>

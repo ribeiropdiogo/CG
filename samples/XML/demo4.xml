@@ -1,0 +1,49 @@
+<scene>
+	<background>
+          <color r="1" g="1" b="1" />
+      </background>
+    	<lights>
+		<light type="SPOT" posY="40" dirY="-1" angle="10" outer="20" aR="0.1" aB="0.1" aG="0.1" LINEAR="0.02"/>
+    		<light type="POINT" posX="5" posZ="5" posY="5" aR="0.2" aB="0.2" aG="0.2" LINEAR="0.02"/>
+		<light type="DIR" dirX="-1" dirZ="-1" aR="0.2" aB="0.2" aG="0.2"/>
+    	</lights>
+    	<group>
+		<group>
+			<rotate angle="-90" axisX="1"/>
+		    	<models>
+			    	<model file="dumbo.3d" texture="realleafs.png"/>
+		    	</models>
+		</group>
+		<group>
+			<translate X="-10"/>
+			<rotate time="10" axisY="1"/>
+		    	<models>
+			    	<model file="strip.3d" texture="relva.jpg"/>
+		    	</models>
+		</group>
+		<group>
+			<translate X="10"/>
+			<rotate time="10" axisX="1"/>
+		    	<models>
+			    	<model file="torus.3d" texture="sand.jpg"/>
+		    	</models>
+		</group>
+		<group>
+			<translate Z="-10"/>
+			<rotate time="10" axisY="1"/>
+		    	<models>
+			    	<model file="cone.3d" texture="relva.jpg"/>
+		    	</models>
+		</group>
+		<group>
+			<translate Z="10"/>
+			<rotate time="10" axisY="1"/>
+			<group>
+				<rotate angle="-90" axisX="1"/>
+				<models>
+			    		<model file="teapot.3d" texture="relva.jpg"/>
+		    		</models>
+			</group>
+		</group>
+    	</group>
+</scene>
